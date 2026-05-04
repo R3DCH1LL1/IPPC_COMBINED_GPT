@@ -12,8 +12,25 @@ const CLO_LABEL={1:'Financial system',2:'Regulations & conduct',3:'Debt & struct
 const REF_MAP={
   'Financial Markets':'Ch. 1.1 Structure of Malaysia’s Financial Markets','Market Structure':'Ch. 1.3 Market Structure','Market Participants':'Ch. 1.4 Market Participants','Regulators':'Ch. 1.5 Regulatory Authorities, Acts and Guidelines','Islamic Banking':'Ch. 1.2 Islamic Banking','BNM':'Ch. 1.5.1 Bank Negara Malaysia',
   'Guidelines':'Ch. 2.1 Roles and Responsibilities of Licensed Organisation','Product Disclosure':'Ch. 2.1.2 Product Disclosures','KYC':'Ch. 2.2.4 Know-Your-Client and Financial Needs Analysis','CMSA':'Ch. 2.2.1 Capital Markets and Services Act 2007','FSA':'Ch. 2.2.6 Secrecy Requirement and Permitted Disclosures','FEA Rules':'Ch. 2.3.2 BNM Foreign Exchange Policy Notices','PIDM':'Ch. 2.4 Deposit Insurance','AML':'Ch. 2.5 AML/CFT','Sophisticated Investors':'Ch. 2.3.1 Categories of Sophisticated Investors','Qualifications':'Ch. 2.2.2 Qualifications for Performing Regulated Activities','Fit and Proper':'Ch. 2.2.3 Fit and Proper Requirements','Conduct':'Ch. 2.2.4.9 Code of Conduct and Ethics',
-  'Debt Securities':'Ch. 3.3 What are Debt Securities?','Bonds':'Ch. 3.7 Yield Measures / 3.9 Bond Risks','Derivatives':'Ch. 3.12 Understanding Derivatives','Structured Products':'Ch. 3.10–3.14 Structured Products','Portfolio':'Ch. 2.2.4.8 Risk-Return Analysis'
+  'Debt Securities':'Ch. 3.3 What are Debt Securities?','Bonds':'Ch. 3.7 Yield Measures / 3.9 Bond Risks','Derivatives':'Ch. 3.12 Understanding Derivatives','Structured Products':'Ch. 3.10–3.14 Structured Products','Portfolio':'Ch. 2.2.4.8 Risk-Return Analysis',
+  'Acts, Schedules, Fines & Penalties':'Key Acts, schedules, breaches, fines and penalties'
 };
+
+const LEGAL_FILTER_TOPIC='Acts, Schedules, Fines & Penalties';
+const LEGAL_FILTER_RE=/\b(CMSA|Capital Markets and Services Act|FSA|Financial Services Act|IFSA|Islamic Financial Services Act|AMLA|Anti-Money Laundering(?:,|\b)|Malaysia Deposit Insurance Corporation Act|PIDM Act|Central Bank of Malaysia Act|Securities Commission Act|Companies Act|Development Financial Institutions Act|Labuan Financial Services Authority Act|Schedule\s*(?:2|7|11)|S\.\s*\d+[A-Z]?|Section\s*\d+[A-Z]?|Sections\s*\d+[A-Z]?|fine|fines|penalt(?:y|ies)|imprisonment|offen[cs]e|offender|breach(?:es)?|contravention|contravene(?:s|d)?|non[-\s]?compliance|permitted disclosure|secrecy|unauthorised disclosure|false\s*\/\s*misleading|misleading information|market manipulation|insider trading|tipping[-\s]?off|client order priority|dealing as principal|reasonable basis|prospectus requirement|regulated activities)\b/i;
+const LEGAL_FILTER_TOPICS=new Set(['CMSA','FSA','AML']);
+function isLegalFilterQuestion(q){
+  const text=`${q?.topic||''} ${q?.text||''} ${(q?.options||[]).join(' ')}`;
+  return LEGAL_FILTER_TOPICS.has(q?.topic)||LEGAL_FILTER_RE.test(text);
+}
+function matchesTopicFilter(q,t){
+  return t===LEGAL_FILTER_TOPIC?isLegalFilterQuestion(q):q.topic===t;
+}
+function matchesAnyTopic(q,topicSet){
+  if(!topicSet?.size) return true;
+  return [...topicSet].some(t=>matchesTopicFilter(q,t));
+}
+
 const HISTORY_KEY='ippc_attempt_history_v2';
 const WRONG_KEY='ippc_wrong_question_ids_v2';
 const THEME_KEY='ippc_theme_v1';
@@ -62,8 +79,9 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='anti-repetition-v1';
+const DATA_VERSION='v63-acts-schedules-fines-filter';
 async function fetchPackedData(){
+  if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
   // The .gz file is still included for future optimisation, but JSON is the runtime source of truth.
   try{return await readJsonResponse(await fetch(`/questions.packed.json?v=${DATA_VERSION}`,{cache:'no-store'}));}
@@ -106,7 +124,51 @@ async function loadPacked(){
   })));
 }
 function Pill({children}){return <span className="soft-pill">{children}</span>}
-function CalcHelper({q}){if(!q||q.clo!==3)return null;return <div className="calc-helper"><strong>Formula helper</strong><div>{q.topic==='Bonds'||q.topic==='Debt Securities'?'Bond price and yield move inversely. Current yield = annual coupon / market price. Approx YTM ≈ [coupon + (par − price)/years] / [(par + price)/2].':q.topic==='Structured Products'?'Principal protected products commonly combine a zero-coupon deposit/bond component with an option/derivative payoff. Participation payoff = principal × participation rate × underlying gain, subject to product terms.':q.topic==='Derivatives'?'Option premium = intrinsic value + time value. Call payoff = max(S − K, 0); put payoff = max(K − S, 0).':'Use the payoff formula and identify principal, return component, underlying movement, and product risks.'}</div></div>}
+function isCalculationQuestion(q){return Boolean(q?.calc)||qStyle(q)==='Calculation'||difficulty(q)==='Calculation'||/\bFormula\s*:/i.test(String(q?.explanation||''));}
+function extractExplanationFormula(explanation){
+  const text=String(explanation||'');
+  const match=text.match(/Formula:\s*([\s\S]*?)(?:\n\s*(?:Working|Check|Calculation cue|Exam cue|Why this is correct|Why the other options are wrong):|$)/i);
+  if(!match) return '';
+  return match[1].replace(/\n{3,}/g,'\n\n').trim();
+}
+function extractCalculationCue(explanation){
+  const text=String(explanation||'');
+  const match=text.match(/Calculation cue:\s*([\s\S]*?)(?:\n\s*(?:Answer|Formula|Working|Check|Exam cue|Why this is correct|Why the other options are wrong):|$)/i);
+  return match?match[1].replace(/\n{3,}/g,'\n\n').trim():'';
+}
+function formulaFallback(q){
+  const body=`${q?.text||''} ${q?.options?.join(' ')||''} ${q?.topic||''}`.toLowerCase();
+  if(/current yield/.test(body))return 'Current yield = Annual coupon ÷ Current market price × 100.';
+  if(/ytm|yield to maturity/.test(body))return 'Approximate YTM = [Annual coupon + (Par − Price) ÷ years] ÷ [(Par + Price) ÷ 2] × 100.';
+  if(/duration|modified duration|price change/.test(body))return 'Approximate % price change = −Modified duration × Change in yield.';
+  if(/discount yield/.test(body))return 'Discount yield = [(Face − Price) ÷ Face] × [365 ÷ Days] × 100.';
+  if(/effective yield|annualised yield|annualized yield/.test(body))return 'Effective annualised yield = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days] × 100.';
+  if(/real interest|inflation/.test(body))return 'Approximate real interest rate ≈ Nominal interest rate − Inflation rate.';
+  if(/pidm|deposit insurance|coverage/.test(body))return 'Insured amount = lower of eligible deposit balance and PIDM coverage limit per depositor per member institution.';
+  if(/exchange rate|usd|foreign currency|ringgit|rm per/.test(body))return 'Converted amount = Foreign currency amount × quoted exchange rate.';
+  if(/allocation|portfolio/.test(body))return 'Allocation amount = Portfolio value × Target allocation percentage.';
+  if(/score|pass|correct answers|percentage/.test(body))return 'Score percentage = Correct answers ÷ Total questions × 100.';
+  if(/zero[- ]coupon|zcb|znid|present value|principal[- ]protected/.test(body))return 'Present value / zero-coupon cost = Future value ÷ (1 + yield)^n.';
+  if(/participation/.test(body))return 'Investor return = Principal × Underlying gain × Participation rate; total payoff adds protected principal where applicable.';
+  if(/call option|call intrinsic|call payoff/.test(body))return 'Call payoff / intrinsic value = max(Spot − Strike, 0). Breakeven = Strike + Premium.';
+  if(/put option|put payoff|put intrinsic/.test(body))return 'Put payoff / intrinsic value = max(Strike − Spot, 0). Breakeven = Strike − Premium.';
+  if(/option premium|time value|intrinsic value/.test(body))return 'Option premium = Intrinsic value + Time value.';
+  if(q?.topic==='Bonds'||q?.topic==='Debt Securities')return 'Bond price and yield move inversely. Current yield = annual coupon ÷ market price. Approximate YTM uses coupon plus annualised capital gain/loss over average of par and price.';
+  if(q?.topic==='Structured Products')return 'Structured product payoff depends on the product terms. Principal protected products usually combine a zero-coupon component with a derivative/option payoff.';
+  if(q?.topic==='Derivatives')return 'Option premium = intrinsic value + time value. Call = right to buy; put = right to sell.';
+  return '';
+}
+function CalcHelper({q}){
+  if(!q)return null;
+  const exact=extractExplanationFormula(q.explanation);
+  const fallback=formulaFallback(q);
+  const formula=exact||fallback;
+  if(!formula)return null;
+  const cue=extractCalculationCue(q.explanation);
+  const isExact=Boolean(exact);
+  return <div className="calc-helper"><strong>{isExact?'Relevant formula':'Formula reference'}</strong><div className="formula-lines">{formula.split('\n').filter(Boolean).map((line,i)=><p key={i}>{line}</p>)}</div>{cue&&<div className="formula-cue"><strong>How to use it:</strong> {cue}</div>}{isCalculationQuestion(q)&&!isExact&&<div className="formula-cue"><strong>Check:</strong> Use the full worked calculation in the explanation after answering.</div>}</div>
+}
+
 
 
 function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sharedToggleTheme=()=>{}}){
@@ -117,9 +179,9 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
   useEffect(()=>{try{localStorage.setItem('ippc_compact_v1',compact?'1':'0')}catch{}},[compact]);
   useEffect(()=>{if(!running)return;const t=setInterval(()=>setSeconds(s=>s<=1?(setRunning(false),submit(),0):s-1),1000);return()=>clearInterval(t)},[running]);
   useEffect(()=>setBankPage(1),[query,bankSet,bankTopic,bankClo,bankDiff,bankStyle]);
-  const allTopics=useMemo(()=>[...new Set(bank.map(q=>q.topic))].sort(),[bank]);
+  const allTopics=useMemo(()=>{const base=[...new Set(bank.map(q=>q.topic))].sort();return bank.some(isLegalFilterQuestion)?[LEGAL_FILTER_TOPIC,...base]:base},[bank]);
   const setNumbers=useMemo(()=>[...new Set(bank.map(q=>q.set))].sort((a,b)=>a-b),[bank]);
-  const available=useMemo(()=>bank.filter(q=>sets.has(q.set)&&(!topics.size||topics.has(q.topic))&&(!clo.size||clo.has(q.clo))),[bank,sets,topics,clo]);
+  const available=useMemo(()=>bank.filter(q=>sets.has(q.set)&&matchesAnyTopic(q,topics)&&(!clo.size||clo.has(q.clo))),[bank,sets,topics,clo]);
   const sessionAvailableCount=mode==='wrong'?getWrong().size:available.length;
   const current=qs[idx], selected=answers[current?.id], correct=selected===current?.answer;
   const answeredCount=Object.keys(answers).length, flaggedCount=Object.values(flags).filter(Boolean).length, progressPct=qs.length?Math.round(answeredCount/qs.length*100):0;
@@ -151,7 +213,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
   function toggleTheme(){setTheme(t=>{const next=t==='dark'?'light':'dark';try{localStorage.setItem(THEME_KEY,next)}catch{};sharedToggleTheme();return next})}
   function finishSession(){if(window.confirm('Finish this session and submit your answers?')) submit()}
   const normalizedQuery=query.trim().toLowerCase();
-  const filteredBank=bank.filter(q=>(bankSet==='all'||q.set===+bankSet)&&(bankTopic==='all'||q.topic===bankTopic)&&(bankClo==='all'||q.clo===+bankClo)&&(bankDiff==='all'||difficulty(q)===bankDiff)&&(bankStyle==='all'||qStyle(q)===bankStyle)&&(`${q.text} ${q.options.join(' ')} ${q.explanation}`.toLowerCase().includes(normalizedQuery)));
+  const filteredBank=bank.filter(q=>(bankSet==='all'||q.set===+bankSet)&&(bankTopic==='all'||matchesTopicFilter(q,bankTopic))&&(bankClo==='all'||q.clo===+bankClo)&&(bankDiff==='all'||difficulty(q)===bankDiff)&&(bankStyle==='all'||qStyle(q)===bankStyle)&&(`${q.text} ${q.options.join(' ')} ${q.explanation}`.toLowerCase().includes(normalizedQuery)));
   const pageSize=24,pageCount=Math.max(1,Math.ceil(filteredBank.length/pageSize)),visibleBank=filteredBank.slice((bankPage-1)*pageSize,bankPage*pageSize);
   const reviewQs=qs.filter(q=>review==='all'||(review==='wrong'&&answers[q.id]!==q.answer)||(review==='flagged'&&flags[q.id])||(review==='unanswered'&&answers[q.id]==null)||String(q.clo)===review);
   const topWeak=history[0]?.clo?.slice().sort((a,b)=>a.pct-b.pct)[0];
@@ -360,6 +422,11 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
 function NotesPortal({onBack,onMock,theme,toggleTheme}){
   const [settingsOpen,setSettingsOpen]=useState(false);
+  const offlineNotes=typeof window!=='undefined'?window.__IPPC_NOTES_HTML__:'';
+  const openNotesFull=()=>{
+    if(offlineNotes){const w=window.open('','_blank');if(w){w.document.open();w.document.write(offlineNotes);w.document.close();}}
+    else window.open('/notes/index.html','_blank');
+  };
   const switchTheme=()=>{ toggleTheme(); };
   return <div className={`notes-portal-shell theme-${theme}`}>
     <header className="portal-topbar">
@@ -370,7 +437,7 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
       <div className="portal-topbar-actions">
         <button className="secondary-btn portal-short" onClick={onBack}><span className="wide-label">Study Suite Menu</span><span className="short-label">Menu</span></button>
         <button className="secondary-btn portal-short" onClick={onMock}><span className="wide-label">Mock Test Page</span><span className="short-label">Test</span></button>
-        <button className="primary-btn portal-short" onClick={()=>window.open('/notes/index.html','_blank')}><span className="wide-label">Open full page</span><span className="short-label">Full</span></button>
+        <button className="primary-btn portal-short" onClick={openNotesFull}><span className="wide-label">Open full page</span><span className="short-label">Full</span></button>
         <button className="theme-toggle-btn notes-theme-btn" onClick={()=>setSettingsOpen(true)} aria-label="Open notes settings"><span aria-hidden="true">⚙︎</span></button>
       </div>
     </header>
@@ -383,12 +450,12 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
         </div>
         <div className="settings-body">
           <button className="settings-row" onClick={switchTheme}><span>Theme</span><strong>{theme==='dark'?'Dark':'Light'}</strong></button>
-          <button className="settings-row" onClick={()=>window.open('/notes/index.html','_blank')}><span>Full notes page</span><strong>Open</strong></button>
+          <button className="settings-row" onClick={openNotesFull}><span>Full notes page</span><strong>Open</strong></button>
           <button className="settings-row" onClick={()=>setSettingsOpen(false)}><span>Close settings</span><strong>Done</strong></button>
         </div>
       </aside>
     </div>}
-    <iframe className="notes-frame" title="IPPC Study Notes" src={`/notes/index.html?theme=${theme}`} />
+    <iframe className="notes-frame" title="IPPC Study Notes" src={offlineNotes?undefined:`/notes/index.html?theme=${theme}`} srcDoc={offlineNotes||undefined} />
   </div>
 }
 

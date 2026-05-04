@@ -5735,3 +5735,4 @@ input,select{padding:13px 15px;background:rgba(9,17,34,.72)}
 .theme-light .nav-cell-current-dot{background:#fff0cb;border-color:#e4be72;box-shadow:0 0 0 1px rgba(255,255,255,.75)}
 .theme-light .nav-cell-flag-dot{background:#f1e9ff;color:#6941b1;border-color:#bfa1ec;box-shadow:0 0 0 1px rgba(255,255,255,.75)}
 @media (max-width:640px){.drawer-status-grid{grid-template-columns:1fr}.drawer-nav-grid{grid-template-columns:repeat(3,minmax(0,1fr));}.nav-cell{min-height:52px}}
+.formula-lines p{margin:6px 0;line-height:1.45}.formula-cue{margin-top:10px;font-size:.92rem;opacity:.9}
