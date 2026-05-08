@@ -368,7 +368,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 }
 
 
-const REPORT_PDF_PATH='/IPPC_Question_Bank_Analytical_Report_V79_Presentation_Style.pdf#toolbar=0&navpanes=0&scrollbar=1';
+const REPORT_PDF_PATH='/IPPC_Question_Bank_Analytical_Report_V86_Pages_2_9_12_Fixed.pdf#toolbar=0&navpanes=0&scrollbar=1';
 const PRINTABLE_NOTES_PDF_PATH='/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
 const PRINTABLE_NOTES_VIEW_PATH=PRINTABLE_NOTES_PDF_PATH+'#toolbar=0&navpanes=0&scrollbar=1';
 const PRINTABLE_NOTES_PAGE_COUNT=38;
@@ -441,7 +441,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
         <div className="portal-card-icon">📊</div>
         <div>
           <span className="eyebrow muted">Review quality</span>
-          <h2>V79 Analytical Report</h2>
+          <h2>V86 Analytical Report</h2>
           <p>View the deep-audited question bank report inside the suite. This option is view-only from the landing page.</p>
         </div>
         <span className="portal-arrow">View →</span>
@@ -467,7 +467,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     <header className="portal-topbar">
       <button className="brand-btn" onClick={onBack}>
         <span className="brand-mark">IPPC</span>
-        <span className="brand-sub">V79 Analytical Report</span>
+        <span className="brand-sub">V86 Analytical Report</span>
       </button>
       <div className="portal-topbar-actions">
         <button className="secondary-btn portal-short" onClick={onBack}><span className="wide-label">Study Suite Menu</span><span className="short-label">Menu</span></button>
@@ -489,7 +489,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
         </div>
       </aside>
     </div>}
-    <iframe className="notes-frame report-frame" title="IPPC V79 Analytical Report" src={REPORT_PDF_PATH} />
+    <iframe className="notes-frame report-frame" title="IPPC V86 Analytical Report" src={REPORT_PDF_PATH} />
   </div>
 }
 
