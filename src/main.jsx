@@ -79,7 +79,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v90-hard-mode-refined';
+const DATA_VERSION='v108-final-cleaned-audit';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -369,7 +369,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 }
 
 
-const REPORT_PDF_PATH='/IPPC_Question_Bank_Analytical_Report_V97.pdf#toolbar=0&navpanes=0&scrollbar=1';
+const REPORT_PDF_PATH='/IPPC_Question_Bank_Analytical_Report_V117.pdf#toolbar=0&navpanes=0&scrollbar=1';
 const PRINTABLE_NOTES_PDF_PATH='/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
 const PRINTABLE_NOTES_VIEW_PATH=PRINTABLE_NOTES_PDF_PATH+'#toolbar=0&navpanes=0&scrollbar=1';
 const PRINTABLE_NOTES_PAGE_COUNT=38;
@@ -442,8 +442,8 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
         <div className="portal-card-icon">📊</div>
         <div>
           <span className="eyebrow muted">Review quality</span>
-          <h2>V97 Analytical Report</h2>
-          <p>View the deep-audited question bank report inside the suite. This option is view-only from the landing page.</p>
+          <h2>V117 Analytical Report</h2>
+          <p>View the V117 final audit report inside the suite, updated after the Round 18 zero-flag audit.</p>
         </div>
         <span className="portal-arrow">View →</span>
       </button>
@@ -468,7 +468,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     <header className="portal-topbar">
       <button className="brand-btn" onClick={onBack}>
         <span className="brand-mark">IPPC</span>
-        <span className="brand-sub">V97 Analytical Report</span>
+        <span className="brand-sub">V117 Analytical Report</span>
       </button>
       <div className="portal-topbar-actions">
         <button className="secondary-btn portal-short" onClick={onBack}><span className="wide-label">Study Suite Menu</span><span className="short-label">Menu</span></button>
@@ -490,7 +490,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
         </div>
       </aside>
     </div>}
-    <iframe className="notes-frame report-frame" title="IPPC V97 Analytical Report" src={REPORT_PDF_PATH} />
+    <iframe className="notes-frame report-frame" title="IPPC V117 Analytical Report" src={REPORT_PDF_PATH} />
   </div>
 }
 
