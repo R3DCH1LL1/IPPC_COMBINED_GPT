@@ -79,7 +79,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v108-final-cleaned-audit';
+const DATA_VERSION='v124-explanation-ui-polished';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -168,6 +168,74 @@ function CalcHelper({q}){
   const cue=extractCalculationCue(q.explanation);
   const isExact=Boolean(exact);
   return <div className="calc-helper"><strong>{isExact?'Relevant formula':'Formula reference'}</strong><div className="formula-lines">{formula.split('\n').filter(Boolean).map((line,i)=><p key={i}>{line}</p>)}</div>{cue&&<div className="formula-cue"><strong>How to use it:</strong> {cue}</div>}{isCalculationQuestion(q)&&!isExact&&<div className="formula-cue"><strong>Check:</strong> Use the full worked calculation in the explanation after answering.</div>}</div>
+}
+
+
+function answerLetter(index){return index==null?'—':String.fromCharCode(65+Number(index));}
+function splitExplanationSections(raw){
+  const text=String(raw||'').replace(/\s+/g,' ').replace(/\s+([,.;:])/g,'$1').trim();
+  const markers=['Statement-by-statement analysis:','Why this is correct:','Why the other options are wrong:'];
+  const markerPattern=new RegExp(`\\s+(${markers.map(m=>m.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')})`,'g');
+  const normalized=text.replace(markerPattern,'\n$1');
+  const answerMatch=normalized.match(/^Answer:\s*([A-D])\s*-\s*([\s\S]*?)(?=\n(?:Statement-by-statement analysis:|Why this is correct:|Why the other options are wrong:)|$)/i);
+  const answerLetterValue=answerMatch?.[1]||'';
+  const answerText=(answerMatch?.[2]||'').trim();
+  const pick=(label,nextLabels=[])=>{
+    const start=normalized.indexOf(label);
+    if(start<0)return '';
+    const from=start+label.length;
+    let end=normalized.length;
+    nextLabels.forEach(next=>{
+      const i=normalized.indexOf(next,from);
+      if(i>=0&&i<end)end=i;
+    });
+    return normalized.slice(from,end).trim();
+  };
+  return {
+    answerLetterValue,
+    answerText,
+    correct:pick('Why this is correct:',['Statement-by-statement analysis:','Why the other options are wrong:']),
+    statements:pick('Statement-by-statement analysis:',['Why this is correct:','Why the other options are wrong:']),
+    wrong:pick('Why the other options are wrong:',[])
+  };
+}
+function textBlocks(text){
+  return String(text||'').split(/(?<=[.!?])\s+(?=(?:[A-Z0-9“']|RM|CLO|PIDM|BNM|SC|FSA|IFSA|CMSA|AMLA))/).map(t=>t.trim()).filter(Boolean);
+}
+function wrongOptionBlocks(text){
+  return String(text||'').split(/(?=\b[A-D]\s-\s)/g).map(t=>t.trim()).filter(Boolean);
+}
+function statementBlocks(text){
+  return String(text||'').split(/(?=\b(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Wrong)\s+-)/g).map(t=>t.trim()).filter(Boolean);
+}
+function ExplanationPanel({q,selected,correct,compact=false}){
+  const parsed=splitExplanationSections(q?.explanation||'');
+  const correctLetter=answerLetter(q?.answer);
+  const selectedLetter=answerLetter(selected);
+  const answerLabel=parsed.answerText||q?.options?.[q?.answer]||'';
+  const statusText=selected==null?'Review answer':correct?'Correct':'Incorrect';
+  const statusClass=selected==null?'review':correct?'correct':'incorrect';
+  return <div className={`${correct?'explanation-card okay':'explanation-card notokay'} modern-explanation ${compact?'compact-explanation':''}`.trim()}>
+    <div className="explanation-hero">
+      <div className="explanation-hero-main">
+        <span className={`explanation-status ${statusClass}`}>{statusText}</span>
+        <h3>Answer {correctLetter}</h3>
+        <p>{answerLabel}</p>
+      </div>
+      <div className="explanation-meta-grid">
+        <div><span>Your choice</span><strong>{selected==null?'Not selected':selectedLetter}</strong></div>
+        <div><span>Topic</span><strong>{q?.topic||'—'}</strong></div>
+        <div><span>Reference</span><strong>{REF_MAP[q?.topic]||`CLO ${q?.clo||'—'}`}</strong></div>
+      </div>
+    </div>
+    <div className="explanation-sections">
+      {parsed.correct&&<section className="explanation-section why-correct"><div className="explanation-section-title"><span>01</span><h4>Why this is correct</h4></div>{textBlocks(parsed.correct).map((line,i)=><p key={i}>{line}</p>)}</section>}
+      {parsed.statements&&<section className="explanation-section statement-review"><div className="explanation-section-title"><span>02</span><h4>Statement-by-statement review</h4></div><div className="statement-grid">{statementBlocks(parsed.statements).map((line,i)=><div key={i} className={/\bWrong\b/i.test(line)?'statement-pill statement-wrong':'statement-pill statement-correct'}>{line}</div>)}</div></section>}
+      {q?.calc&&<section className="explanation-section worked-calc"><div className="explanation-section-title"><span>{parsed.statements?'03':'02'}</span><h4>Worked calculation</h4></div><pre>{q.calc}</pre></section>}
+      {parsed.wrong&&<section className="explanation-section wrong-options"><div className="explanation-section-title"><span>{parsed.statements||q?.calc?'04':'03'}</span><h4>Why the other options are wrong</h4></div><div className="wrong-option-grid">{wrongOptionBlocks(parsed.wrong).map((line,i)=><div key={i} className="wrong-option-note">{line}</div>)}</div></section>}
+      {!parsed.correct&&!parsed.statements&&!parsed.wrong&&<section className="explanation-section"><div className="explanation-section-title"><span>01</span><h4>Explanation</h4></div>{textBlocks(q?.explanation||'').map((line,i)=><p key={i}>{line}</p>)}</section>}
+    </div>
+  </div>;
 }
 
 
@@ -340,11 +408,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 
         <div className="confidence-row"><span>Confidence:</span>{['confident','guessed','unsure'].map(c=><button key={c} className={conf[current.id]===c?'chip chip-on':'chip'} onClick={()=>setConf(v=>({...v,[current.id]:c}))}>{c}</button>)}</div>
 
-        {showAns&&<div className={correct?'explanation-card okay':'explanation-card notokay'}>
-          <div className="explanation-topline"><strong>{correct?'Correct':'Incorrect'}</strong><span>Correct answer: {String.fromCharCode(65+current.answer)}</span></div>
-          {current.calc&&<pre>{current.calc}</pre>}
-          <p>{current.explanation}</p>
-        </div>}
+        {showAns&&<ExplanationPanel q={current} selected={selected} correct={correct}/>}
 
         <div className="button-row split-mobile test-action-bar">
           <button className="secondary-btn mobile-nav-button action-btn" onClick={()=>setNavOpen(true)}><span className="action-icon">☰</span><span className="action-label">Navigator</span></button>

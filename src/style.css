@@ -6405,3 +6405,200 @@ input,select{padding:13px 15px;background:rgba(9,17,34,.72)}
 .theme-light .bank-calc code{
   color: #2b2117 !important;
 }
+
+/* V124 explanation tab polish: structured learner-facing answer panel */
+.modern-explanation{
+  margin-top:20px;
+  padding:0!important;
+  overflow:hidden;
+  border-radius:24px!important;
+  background:linear-gradient(180deg,rgba(16,28,54,.96),rgba(9,17,34,.92))!important;
+  border:1px solid rgba(124,167,255,.22)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.055)!important;
+}
+.modern-explanation.okay{border-color:rgba(59,208,138,.42)!important;}
+.modern-explanation.notokay{border-color:rgba(255,122,122,.42)!important;}
+.explanation-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  gap:18px;
+  padding:22px;
+  background:radial-gradient(circle at top left,rgba(124,167,255,.18),transparent 40%),rgba(255,255,255,.025);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.explanation-hero-main h3{
+  margin:8px 0 8px;
+  font-size:1.35rem;
+  letter-spacing:-.02em;
+}
+.explanation-hero-main p{
+  margin:0;
+  color:var(--text);
+  font-weight:750;
+  line-height:1.55;
+  font-size:1.02rem;
+}
+.explanation-status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  width:max-content;
+  padding:7px 11px;
+  border-radius:999px;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.12);
+}
+.explanation-status.correct{background:rgba(59,208,138,.16);color:#d8ffea;border-color:rgba(59,208,138,.42)}
+.explanation-status.incorrect{background:rgba(255,122,122,.14);color:#ffe3e3;border-color:rgba(255,122,122,.42)}
+.explanation-status.review{background:rgba(245,213,139,.16);color:#ffefbf;border-color:rgba(245,213,139,.38)}
+.explanation-meta-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  align-content:start;
+}
+.explanation-meta-grid div{
+  padding:12px 13px;
+  border-radius:16px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.07);
+}
+.explanation-meta-grid div:last-child{grid-column:1 / -1;}
+.explanation-meta-grid span{
+  display:block;
+  color:var(--muted);
+  font-size:.73rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  font-weight:850;
+  margin-bottom:4px;
+}
+.explanation-meta-grid strong{
+  display:block;
+  color:var(--text);
+  font-size:.9rem;
+  line-height:1.35;
+}
+.explanation-sections{
+  display:grid;
+  gap:14px;
+  padding:18px 22px 22px;
+}
+.explanation-section{
+  padding:16px;
+  border-radius:19px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.07);
+}
+.explanation-section.why-correct{background:rgba(59,208,138,.075);border-color:rgba(59,208,138,.22)}
+.explanation-section.wrong-options{background:rgba(255,122,122,.055);border-color:rgba(255,122,122,.18)}
+.explanation-section.worked-calc{background:rgba(124,167,255,.06);border-color:rgba(124,167,255,.18)}
+.explanation-section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.explanation-section-title span{
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:rgba(245,213,139,.16);
+  border:1px solid rgba(245,213,139,.26);
+  color:#ffe7a8;
+  font-size:.76rem;
+  font-weight:950;
+}
+.explanation-section-title h4{
+  margin:0;
+  font-size:.98rem;
+  letter-spacing:-.01em;
+}
+.explanation-section p{
+  margin:8px 0 0;
+  color:#dbe6f8;
+  line-height:1.72;
+  white-space:normal!important;
+}
+.statement-grid,.wrong-option-grid{
+  display:grid;
+  gap:10px;
+}
+.statement-pill,.wrong-option-note{
+  padding:12px 13px;
+  border-radius:14px;
+  background:rgba(6,11,22,.42);
+  border:1px solid rgba(255,255,255,.07);
+  color:#dbe6f8;
+  line-height:1.58;
+}
+.statement-pill{position:relative;padding-left:42px;}
+.statement-pill:before{
+  content:'✓';
+  position:absolute;
+  left:13px;
+  top:12px;
+  width:20px;
+  height:20px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  font-size:.72rem;
+  font-weight:900;
+  background:rgba(59,208,138,.18);
+  color:#caffe0;
+}
+.statement-wrong:before{content:'×';background:rgba(255,122,122,.16);color:#ffd5d5;}
+.wrong-option-note::first-letter{font-weight:900;}
+.modern-explanation pre{
+  margin:10px 0 0;
+  white-space:pre-wrap;
+  background:rgba(6,11,22,.86)!important;
+  padding:15px 16px!important;
+  border-radius:16px!important;
+  border:1px solid rgba(124,167,255,.16)!important;
+  overflow:auto;
+  color:#f2f6fd;
+  line-height:1.65;
+}
+.theme-light .modern-explanation{
+  background:linear-gradient(180deg,#fffdf7,#fff7ec)!important;
+  border-color:#dfcfb9!important;
+  box-shadow:0 22px 60px rgba(84,64,38,.12)!important;
+}
+.theme-light .explanation-hero{
+  background:radial-gradient(circle at top left,rgba(211,161,64,.16),transparent 42%),#fff9ef;
+  border-bottom-color:#e8d9c4;
+}
+.theme-light .explanation-section,
+.theme-light .explanation-meta-grid div,
+.theme-light .statement-pill,
+.theme-light .wrong-option-note{
+  background:#fffaf2;
+  border-color:#e5d7c4;
+  color:#2b2117;
+}
+.theme-light .explanation-section.why-correct{background:#f3fff5;border-color:#bfe6c9}
+.theme-light .explanation-section.wrong-options{background:#fff5f2;border-color:#ecc8be}
+.theme-light .explanation-section.worked-calc{background:#f6f9ff;border-color:#d5dfef}
+.theme-light .explanation-hero-main p,
+.theme-light .explanation-meta-grid strong{color:#2b2117;}
+.theme-light .explanation-section p{color:#3b3024;}
+.theme-light .explanation-section-title span{background:#fff3d6;border-color:#e6c777;color:#7b5712;}
+.theme-light .modern-explanation pre{background:#fffaf2!important;color:#2b2117!important;border-color:#dfcfb9!important;}
+@media(max-width:760px){
+  .explanation-hero{grid-template-columns:1fr;padding:16px;gap:14px;}
+  .explanation-sections{padding:14px 16px 16px;gap:12px;}
+  .explanation-section{padding:13px;border-radius:16px;}
+  .explanation-meta-grid{grid-template-columns:1fr;}
+  .explanation-meta-grid div:last-child{grid-column:auto;}
+  .explanation-hero-main h3{font-size:1.12rem;}
+  .explanation-hero-main p{font-size:.92rem;}
+  .explanation-section p,.statement-pill,.wrong-option-note{font-size:.88rem;line-height:1.55;}
+  .statement-pill{padding-left:38px;}
+}
