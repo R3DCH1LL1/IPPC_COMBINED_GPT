@@ -79,7 +79,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v124-explanation-ui-polished';
+const DATA_VERSION='v125-explanation-tab-formatted';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -172,41 +172,92 @@ function CalcHelper({q}){
 
 
 function answerLetter(index){return index==null?'—':String.fromCharCode(65+Number(index));}
+function normalizeExplanationText(raw){
+  const markerWords=[
+    'Statement-by-statement analysis:',
+    'Why this is correct:',
+    'Why this answer is correct:',
+    'Worked calculation:',
+    'Why the other options are wrong:'
+  ];
+  let text=String(raw||'')
+    .replace(/\s+/g,' ')
+    .replace(/\s+([,.;:])/g,'$1')
+    .replace(/\.\s*\./g,'.')
+    .trim();
+  markerWords.forEach(marker=>{
+    const escaped=marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    text=text.replace(new RegExp(`\\s*(${escaped})\\s*`,'gi'), '\n$1 ');
+  });
+  return text.replace(/^\n+/,'').trim();
+}
 function splitExplanationSections(raw){
-  const text=String(raw||'').replace(/\s+/g,' ').replace(/\s+([,.;:])/g,'$1').trim();
-  const markers=['Statement-by-statement analysis:','Why this is correct:','Why the other options are wrong:'];
-  const markerPattern=new RegExp(`\\s+(${markers.map(m=>m.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')})`,'g');
-  const normalized=text.replace(markerPattern,'\n$1');
-  const answerMatch=normalized.match(/^Answer:\s*([A-D])\s*-\s*([\s\S]*?)(?=\n(?:Statement-by-statement analysis:|Why this is correct:|Why the other options are wrong:)|$)/i);
+  const normalized=normalizeExplanationText(raw);
+  const labels=[
+    'Statement-by-statement analysis:',
+    'Why this is correct:',
+    'Why this answer is correct:',
+    'Worked calculation:',
+    'Why the other options are wrong:'
+  ];
+  const answerMatch=normalized.match(/^Answer:\s*([A-D])\s*-\s*([\s\S]*?)(?=\n(?:Statement-by-statement analysis:|Why this is correct:|Why this answer is correct:|Worked calculation:|Why the other options are wrong:)|$)/i);
   const answerLetterValue=answerMatch?.[1]||'';
   const answerText=(answerMatch?.[2]||'').trim();
-  const pick=(label,nextLabels=[])=>{
-    const start=normalized.indexOf(label);
+  const pick=(label,nextLabels=labels)=>{
+    const start=normalized.toLowerCase().indexOf(label.toLowerCase());
     if(start<0)return '';
     const from=start+label.length;
     let end=normalized.length;
-    nextLabels.forEach(next=>{
-      const i=normalized.indexOf(next,from);
+    nextLabels.filter(next=>next.toLowerCase()!==label.toLowerCase()).forEach(next=>{
+      const i=normalized.toLowerCase().indexOf(next.toLowerCase(),from);
       if(i>=0&&i<end)end=i;
     });
     return normalized.slice(from,end).trim();
   };
+  const correct=pick('Why this is correct:')||pick('Why this answer is correct:');
   return {
     answerLetterValue,
     answerText,
-    correct:pick('Why this is correct:',['Statement-by-statement analysis:','Why the other options are wrong:']),
-    statements:pick('Statement-by-statement analysis:',['Why this is correct:','Why the other options are wrong:']),
-    wrong:pick('Why the other options are wrong:',[])
+    correct,
+    statements:pick('Statement-by-statement analysis:'),
+    calc:pick('Worked calculation:'),
+    wrong:pick('Why the other options are wrong:')
   };
 }
 function textBlocks(text){
-  return String(text||'').split(/(?<=[.!?])\s+(?=(?:[A-Z0-9“']|RM|CLO|PIDM|BNM|SC|FSA|IFSA|CMSA|AMLA))/).map(t=>t.trim()).filter(Boolean);
+  return String(text||'')
+    .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Wrong)\s+-)/g,'\n')
+    .split(/\n+|(?<=[.!?])\s+(?=(?:[A-Z0-9“']|RM|CLO|PIDM|BNM|SC|FSA|IFSA|CMSA|AMLA))/)
+    .map(t=>t.trim())
+    .filter(Boolean);
 }
 function wrongOptionBlocks(text){
-  return String(text||'').split(/(?=\b[A-D]\s-\s)/g).map(t=>t.trim()).filter(Boolean);
+  return String(text||'')
+    .replace(/\s+(?=[A-D]\s[-–]\s)/g,'\n')
+    .split(/\n+/g)
+    .map(t=>t.trim())
+    .filter(Boolean);
 }
 function statementBlocks(text){
-  return String(text||'').split(/(?=\b(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Wrong)\s+-)/g).map(t=>t.trim()).filter(Boolean);
+  return String(text||'')
+    .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Wrong)\s+-)/g,'\n')
+    .split(/\n+/g)
+    .map(t=>t.trim())
+    .filter(Boolean);
+}
+function optionNoteLabel(line){
+  const m=String(line||'').match(/^([A-D])\s[-–]\s([\s\S]*)$/);
+  if(!m)return null;
+  return {letter:m[1],body:m[2].trim()};
+}
+function WrongOptionNote({line}){
+  const parsed=optionNoteLabel(line);
+  if(!parsed)return <div className="wrong-option-note">{line}</div>;
+  return <div className="wrong-option-note parsed-wrong-option"><span className="wrong-option-letter">{parsed.letter}</span><span>{parsed.body}</span></div>;
+}
+function StatementNote({line}){
+  const wrong=/\bWrong\b/i.test(line);
+  return <div className={wrong?'statement-pill statement-wrong':'statement-pill statement-correct'}>{line}</div>;
 }
 function ExplanationPanel({q,selected,correct,compact=false}){
   const parsed=splitExplanationSections(q?.explanation||'');
@@ -215,6 +266,24 @@ function ExplanationPanel({q,selected,correct,compact=false}){
   const answerLabel=parsed.answerText||q?.options?.[q?.answer]||'';
   const statusText=selected==null?'Review answer':correct?'Correct':'Incorrect';
   const statusClass=selected==null?'review':correct?'correct':'incorrect';
+  let sectionNumber=1;
+  const sectionLabel=()=>String(sectionNumber++).padStart(2,'0');
+  const sections=[];
+  if(parsed.correct){
+    sections.push(<section key="correct" className="explanation-section why-correct"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Why this is correct</h4></div>{textBlocks(parsed.correct).map((line,i)=><p key={i}>{line}</p>)}</section>);
+  }
+  if(parsed.statements){
+    sections.push(<section key="statements" className="explanation-section statement-review"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Statement-by-statement review</h4></div><div className="statement-grid">{statementBlocks(parsed.statements).map((line,i)=><StatementNote key={i} line={line}/>)}</div></section>);
+  }
+  if(q?.calc||parsed.calc){
+    sections.push(<section key="calc" className="explanation-section worked-calc"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Worked calculation</h4></div><pre>{q?.calc||parsed.calc}</pre></section>);
+  }
+  if(parsed.wrong){
+    sections.push(<section key="wrong" className="explanation-section wrong-options"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Why the other options are wrong</h4></div><div className="wrong-option-grid">{wrongOptionBlocks(parsed.wrong).map((line,i)=><WrongOptionNote key={i} line={line}/>)}</div></section>);
+  }
+  if(!sections.length){
+    sections.push(<section key="plain" className="explanation-section"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Explanation</h4></div>{textBlocks(q?.explanation||'').map((line,i)=><p key={i}>{line}</p>)}</section>);
+  }
   return <div className={`${correct?'explanation-card okay':'explanation-card notokay'} modern-explanation ${compact?'compact-explanation':''}`.trim()}>
     <div className="explanation-hero">
       <div className="explanation-hero-main">
@@ -228,15 +297,10 @@ function ExplanationPanel({q,selected,correct,compact=false}){
         <div><span>Reference</span><strong>{REF_MAP[q?.topic]||`CLO ${q?.clo||'—'}`}</strong></div>
       </div>
     </div>
-    <div className="explanation-sections">
-      {parsed.correct&&<section className="explanation-section why-correct"><div className="explanation-section-title"><span>01</span><h4>Why this is correct</h4></div>{textBlocks(parsed.correct).map((line,i)=><p key={i}>{line}</p>)}</section>}
-      {parsed.statements&&<section className="explanation-section statement-review"><div className="explanation-section-title"><span>02</span><h4>Statement-by-statement review</h4></div><div className="statement-grid">{statementBlocks(parsed.statements).map((line,i)=><div key={i} className={/\bWrong\b/i.test(line)?'statement-pill statement-wrong':'statement-pill statement-correct'}>{line}</div>)}</div></section>}
-      {q?.calc&&<section className="explanation-section worked-calc"><div className="explanation-section-title"><span>{parsed.statements?'03':'02'}</span><h4>Worked calculation</h4></div><pre>{q.calc}</pre></section>}
-      {parsed.wrong&&<section className="explanation-section wrong-options"><div className="explanation-section-title"><span>{parsed.statements||q?.calc?'04':'03'}</span><h4>Why the other options are wrong</h4></div><div className="wrong-option-grid">{wrongOptionBlocks(parsed.wrong).map((line,i)=><div key={i} className="wrong-option-note">{line}</div>)}</div></section>}
-      {!parsed.correct&&!parsed.statements&&!parsed.wrong&&<section className="explanation-section"><div className="explanation-section-title"><span>01</span><h4>Explanation</h4></div>{textBlocks(q?.explanation||'').map((line,i)=><p key={i}>{line}</p>)}</section>}
-    </div>
+    <div className="explanation-sections">{sections}</div>
   </div>;
 }
+
 
 
 
@@ -420,7 +484,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
       </section>
     </main>}
 
-    {screen==='results'&&<main className="page page-results"><section className="surface score-hero"><div className="score-badge-wrap"><div className={pct>=70?'score-badge score-pass':'score-badge score-fail'}>{pct}%</div></div><div className="score-copy"><span className="eyebrow muted">Session complete</span><h1>{pct>=70?'Pass':'Keep practising'}</h1><p>You scored <strong>{score}</strong> out of <strong>{qs.length}</strong>. Wrong questions are saved automatically for targeted practice.</p></div></section><section className="results-grid"><div className="surface info-card"><div className="section-head compact"><div><h2>Performance summary</h2><p>Confidence and mistake review are now available below.</p></div></div><div className="summary-grid"><div className="mini-stat"><span>Correct</span><strong>{score}</strong></div><div className="mini-stat"><span>Wrong</span><strong>{wrongIds.length}</strong></div><div className="mini-stat"><span>Flagged</span><strong>{flaggedCount}</strong></div><div className="mini-stat"><span>Guessed / unsure</span><strong>{guessedUnsureCount}</strong></div></div><div className="priority-grid"><div className="priority-card high"><span>High priority</span><strong>{wrongConfidentCount}</strong><p>Wrong but marked confident</p></div><div className="priority-card"><span>Reinforce</span><strong>{correctGuessedCount}</strong><p>Correct but guessed or unsure</p></div></div></div><div className="surface info-card"><div className="section-head compact"><div><h2>CLO breakdown</h2><p>Use this to target weaker sections.</p></div></div><div className="breakdown-list">{[1,2,3].map(c=>{const group=qs.filter(q=>q.clo===c);const s=group.reduce((a,q)=>a+(answers[q.id]===q.answer?1:0),0);const cp=group.length?Math.round(s/group.length*100):0;return <div key={c} className="breakdown-item"><div className="breakdown-head"><div><strong>CLO {c}</strong><span>{CLO_LABEL[c]}</span></div><b>{s}/{group.length}</b></div><div className="progress-track slim"><div className="progress-fill" style={{width:`${cp}%`}}/></div></div>})}</div></div></section><section className="surface review-panel"><div className="section-head"><div><h2>Review mode</h2><p>Work through the highest-value review steps first.</p></div><div className="chip-group">{['wrong','flagged','unanswered','all','1','2','3'].map(r=><button key={r} className={review===r?'chip chip-on':'chip'} onClick={()=>setReview(r)}>{['1','2','3'].includes(r)?`CLO ${r}`:r}</button>)}</div></div><div className="review-steps"><button onClick={()=>setReview('wrong')}><strong>1</strong><span>Review wrong answers</span></button><button onClick={()=>setReview('flagged')}><strong>2</strong><span>Check flagged questions</span></button><button onClick={()=>setReview('unanswered')}><strong>3</strong><span>Finish unanswered items</span></button><button onClick={()=>start('wrong')}><strong>4</strong><span>Retry wrong questions</span></button></div><div className="bank-list upgraded-list">{reviewQs.map(q=><details key={q.id} className="bank-item upgraded-bank-item"><summary><div className="bank-card-head"><div className="summary-meta"><Pill>{q.id}</Pill><Pill>{q.topic}</Pill><Pill>{difficulty(q)}</Pill><Pill>{qStyle(q)}</Pill><Pill>{qualityLabel(q)}</Pill><Pill>{conf[q.id]||'no confidence tag'}</Pill></div><span className={answers[q.id]===q.answer?'answer-badge':'answer-badge wrong-badge'}>{answers[q.id]===q.answer?'Correct':'Wrong'} · Ans {String.fromCharCode(65+q.answer)}</span></div><QuestionText text={q.text} className="summary-text"/></summary><div className="bank-card-body"><div className="bank-card-actions"><button className="secondary-btn" onClick={()=>navigator.clipboard?.writeText(`${q.text}\n\nA. ${q.options[0]}\nB. ${q.options[1]}\nC. ${q.options[2]}\nD. ${q.options[3]}`)}>Copy question</button><button className="secondary-btn" onClick={()=>{setBankTopic(q.topic);setBankPage(1)}}>Practice this topic</button></div><ol className="bank-options">{q.options.map((o,i)=><li key={i} className={i===q.answer?'answer-hit':answers[q.id]===i?'user-wrong':''}><span className="bank-option-label">{String.fromCharCode(65+i)}</span><span>{o}</span></li>)}</ol><p className="bank-explanation"><strong>Reference:</strong> {REF_MAP[q.topic]}<br/>{q.explanation}</p></div></details>)}</div><div className="button-row results-actions"><button className="secondary-btn" onClick={()=>start('wrong')}>Practice wrong questions</button><button className="primary-btn" onClick={()=>start('generated')}>Generate fresh mock</button></div></section></main>}
+    {screen==='results'&&<main className="page page-results"><section className="surface score-hero"><div className="score-badge-wrap"><div className={pct>=70?'score-badge score-pass':'score-badge score-fail'}>{pct}%</div></div><div className="score-copy"><span className="eyebrow muted">Session complete</span><h1>{pct>=70?'Pass':'Keep practising'}</h1><p>You scored <strong>{score}</strong> out of <strong>{qs.length}</strong>. Wrong questions are saved automatically for targeted practice.</p></div></section><section className="results-grid"><div className="surface info-card"><div className="section-head compact"><div><h2>Performance summary</h2><p>Confidence and mistake review are now available below.</p></div></div><div className="summary-grid"><div className="mini-stat"><span>Correct</span><strong>{score}</strong></div><div className="mini-stat"><span>Wrong</span><strong>{wrongIds.length}</strong></div><div className="mini-stat"><span>Flagged</span><strong>{flaggedCount}</strong></div><div className="mini-stat"><span>Guessed / unsure</span><strong>{guessedUnsureCount}</strong></div></div><div className="priority-grid"><div className="priority-card high"><span>High priority</span><strong>{wrongConfidentCount}</strong><p>Wrong but marked confident</p></div><div className="priority-card"><span>Reinforce</span><strong>{correctGuessedCount}</strong><p>Correct but guessed or unsure</p></div></div></div><div className="surface info-card"><div className="section-head compact"><div><h2>CLO breakdown</h2><p>Use this to target weaker sections.</p></div></div><div className="breakdown-list">{[1,2,3].map(c=>{const group=qs.filter(q=>q.clo===c);const s=group.reduce((a,q)=>a+(answers[q.id]===q.answer?1:0),0);const cp=group.length?Math.round(s/group.length*100):0;return <div key={c} className="breakdown-item"><div className="breakdown-head"><div><strong>CLO {c}</strong><span>{CLO_LABEL[c]}</span></div><b>{s}/{group.length}</b></div><div className="progress-track slim"><div className="progress-fill" style={{width:`${cp}%`}}/></div></div>})}</div></div></section><section className="surface review-panel"><div className="section-head"><div><h2>Review mode</h2><p>Work through the highest-value review steps first.</p></div><div className="chip-group">{['wrong','flagged','unanswered','all','1','2','3'].map(r=><button key={r} className={review===r?'chip chip-on':'chip'} onClick={()=>setReview(r)}>{['1','2','3'].includes(r)?`CLO ${r}`:r}</button>)}</div></div><div className="review-steps"><button onClick={()=>setReview('wrong')}><strong>1</strong><span>Review wrong answers</span></button><button onClick={()=>setReview('flagged')}><strong>2</strong><span>Check flagged questions</span></button><button onClick={()=>setReview('unanswered')}><strong>3</strong><span>Finish unanswered items</span></button><button onClick={()=>start('wrong')}><strong>4</strong><span>Retry wrong questions</span></button></div><div className="bank-list upgraded-list">{reviewQs.map(q=><details key={q.id} className="bank-item upgraded-bank-item"><summary><div className="bank-card-head"><div className="summary-meta"><Pill>{q.id}</Pill><Pill>{q.topic}</Pill><Pill>{difficulty(q)}</Pill><Pill>{qStyle(q)}</Pill><Pill>{qualityLabel(q)}</Pill><Pill>{conf[q.id]||'no confidence tag'}</Pill></div><span className={answers[q.id]===q.answer?'answer-badge':'answer-badge wrong-badge'}>{answers[q.id]===q.answer?'Correct':'Wrong'} · Ans {String.fromCharCode(65+q.answer)}</span></div><QuestionText text={q.text} className="summary-text"/></summary><div className="bank-card-body"><div className="bank-card-actions"><button className="secondary-btn" onClick={()=>navigator.clipboard?.writeText(`${q.text}\n\nA. ${q.options[0]}\nB. ${q.options[1]}\nC. ${q.options[2]}\nD. ${q.options[3]}`)}>Copy question</button><button className="secondary-btn" onClick={()=>{setBankTopic(q.topic);setBankPage(1)}}>Practice this topic</button></div><ol className="bank-options">{q.options.map((o,i)=><li key={i} className={i===q.answer?'answer-hit':answers[q.id]===i?'user-wrong':''}><span className="bank-option-label">{String.fromCharCode(65+i)}</span><span>{o}</span></li>)}</ol><ExplanationPanel q={q} selected={answers[q.id]} correct={answers[q.id]===q.answer} compact/></div></details>)}</div><div className="button-row results-actions"><button className="secondary-btn" onClick={()=>start('wrong')}>Practice wrong questions</button><button className="primary-btn" onClick={()=>start('generated')}>Generate fresh mock</button></div></section></main>}
 
     {screen==='history'&&<main className="page"><section className="surface bank-panel"><div className="section-head"><div><h2>Saved progress</h2><p>Attempts are saved locally on this device.</p></div><button className="secondary-btn" onClick={()=>{localStorage.removeItem(HISTORY_KEY);localStorage.removeItem(WRONG_KEY);setHistory([])}}>Clear history</button></div><div className="bank-list">{history.length?history.map(h=><div className="blueprint-item" key={h.id}><div><strong>{h.pct}% · {h.score}/{h.total}</strong><span>{new Date(h.date).toLocaleString()} · {h.mode} · {h.wrong} wrong · {h.flagged} flagged</span></div><div className="toolbar-pills">{h.clo.map(c=><Pill key={c.clo}>CLO {c.clo}: {c.pct}%</Pill>)}</div></div>):<div className="empty-card"><h3>No history yet</h3><p>Finish a session to see score trends and weak CLOs here.</p></div>}</div></section></main>}
 
@@ -428,7 +492,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 
     {screen==='history'&&<main className="page"><section className="surface bank-panel"><div className="section-head"><div><h2>Saved progress</h2><p>Attempts are saved locally on this device.</p></div><button className="secondary-btn" onClick={()=>{localStorage.removeItem(HISTORY_KEY);localStorage.removeItem(WRONG_KEY);setHistory([])}}>Clear history</button></div><div className="bank-list">{history.length?history.map(h=><div className="blueprint-item" key={h.id}><div><strong>{h.pct}% · {h.score}/{h.total}</strong><span>{new Date(h.date).toLocaleString()} · {h.mode} · {h.wrong} wrong · {h.flagged} flagged</span></div><div className="toolbar-pills">{h.clo.map(c=><Pill key={c.clo}>CLO {c.clo}: {c.pct}%</Pill>)}</div></div>):<div className="empty-card"><h3>No history yet</h3><p>Finish a session to see score trends and weak CLOs here.</p></div>}</div></section></main>}
 
-    {screen==='bank'&&<main className="page page-bank"><section className="surface bank-panel bank-panel-upgraded"><div className="bank-hero"><div><span className="eyebrow">Question library</span><h2>Search the full IPPC bank with cleaner navigation.</h2><p>Filter by set, topic, CLO, difficulty, and question style. Each card now includes a quality profile so you can target hard, applied and scenario-based items.</p></div><div className="bank-stats-grid"><div className="mini-stat bank-stat"><span>Total</span><strong>{bank.length}</strong></div><div className="mini-stat bank-stat"><span>Matches</span><strong>{filteredBank.length}</strong></div><div className="mini-stat bank-stat"><span>Wrong saved</span><strong>{getWrong().size}</strong></div></div></div><div className="bank-layout"><aside className="bank-sidebar"><div className="bank-filter-card"><div className="bank-filter-header"><div><span className="eyebrow muted">Filter panel</span><h3>Refine the bank</h3><p>Use the controls below to narrow the full question library quickly.</p></div><button className="secondary-btn bank-compact-reset" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all</button></div><label className="bank-field bank-search-field"><span>Search</span><input placeholder="Search callable bond, PIDM, CDD…" value={query} onChange={e=>setQuery(e.target.value)}/></label><div className="bank-filter-section"><div className="bank-section-title">Main filters</div><div className="filter-grid bank-filter-grid"><label className="bank-field"><span>Set</span><select value={bankSet} onChange={e=>setBankSet(e.target.value)}><option value="all">All sets</option>{setNumbers.map(n=><option key={n} value={n}>{setLabel(n)}</option>)}</select></label><label className="bank-field"><span>CLO</span><select value={bankClo} onChange={e=>setBankClo(e.target.value)}><option value="all">All CLOs</option>{[1,2,3].map(n=><option key={n} value={n}>CLO {n}</option>)}</select></label><label className="bank-field bank-field-full"><span>Topic</span><select value={bankTopic} onChange={e=>setBankTopic(e.target.value)}><option value="all">All topics</option>{allTopics.map(t=><option key={t}>{t}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="bank-section-title">Question profile</div><div className="filter-grid bank-profile-grid"><label className="bank-field"><span>Difficulty</span><select value={bankDiff} onChange={e=>setBankDiff(e.target.value)}><option value="all">All difficulty</option>{['Easy','Medium','Hard'].map(d=><option key={d}>{d}</option>)}</select></label><label className="bank-field"><span>Style</span><select value={bankStyle} onChange={e=>setBankStyle(e.target.value)}><option value="all">All styles</option>{['Scenario-based','Statement-combination','Calculation','Recall'].map(d=><option key={d}>{d}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="section-label-row"><h3>CLO quick filter</h3><button className="text-btn" onClick={()=>setBankClo('all')}>Clear</button></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={bankClo===String(n)?'chip chip-on':'chip'} onClick={()=>setBankClo(bankClo===String(n)?'all':String(n))}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="bank-filter-section bank-filter-section-soft"><div className="bank-mini-note"><strong>Tip:</strong> Use Search + Topic first, then refine by difficulty or Style = Scenario-based for applied exam practice.</div></div><div className="button-row bank-reset-row"><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all filters</button></div></div></aside><div className="bank-results-column"><div className="bank-results-header"><div><div className="bank-summary"><strong>{filteredBank.length}</strong> matches found</div><div className="bank-subsummary">Page {bankPage} of {pageCount}</div></div><div className="bank-results-actions"><Pill>{visibleBank.length} shown</Pill><Pill>{pageSize} per page</Pill></div></div>{!filteredBank.length&&<div className="empty-card bank-empty-state"><h3>No questions found.</h3><p>Try clearing the topic filter or searching a broader term.</p><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset filters</button></div>}<div className="bank-list upgraded-list">{visibleBank.map(q=><details key={q.id} className="bank-item upgraded-bank-item"><summary><div className="bank-card-head"><div className="summary-meta"><Pill>{q.id}</Pill><Pill>{setLabel(q.set)}</Pill><Pill>CLO {q.clo}</Pill><Pill>{q.topic}</Pill><Pill>{difficulty(q)}</Pill><Pill>{qStyle(q)}</Pill><Pill>{qualityLabel(q)}</Pill></div><span className="answer-badge">Answer {String.fromCharCode(65+q.answer)}</span></div><QuestionText text={q.text} className="summary-text"/><div className="bank-card-hint">Quality: {qualityLabel(q)} · {qStyle(q)} · Reference: {REF_MAP[q.topic]||`CLO ${q.clo}`}</div></summary><div className="bank-card-body"><div className="bank-card-actions"><button className="secondary-btn" onClick={()=>navigator.clipboard?.writeText(`${q.text}\n\nA. ${q.options[0]}\nB. ${q.options[1]}\nC. ${q.options[2]}\nD. ${q.options[3]}`)}>Copy question</button><button className="secondary-btn" onClick={()=>{setBankTopic(q.topic);setBankPage(1)}}>Practice this topic</button></div><ol className="bank-options">{q.options.map((o,i)=><li key={i} className={i===q.answer?'answer-hit':''}><span className="bank-option-label">{String.fromCharCode(65+i)}</span><span>{o}</span></li>)}</ol>{q.calc&&<pre className="bank-calc">{q.calc}</pre>}<div className="bank-explanation-wrap"><span className="answer-badge subtle-badge">Explanation</span><p className="bank-explanation">{q.explanation}</p></div></div></details>)}</div><div className="bank-pagination"><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.max(1,p-1))} disabled={bankPage===1}>← Prev</button><div className="pagination-pills">{Array.from({length:Math.min(5,pageCount)},(_,i)=>{const start=Math.min(Math.max(1,bankPage-2),Math.max(1,pageCount-4));const n=start+i;if(n>pageCount)return null;return <button key={n} className={n===bankPage?'chip chip-on':'chip'} onClick={()=>setBankPage(n)}>{n}</button>})}</div><form className="page-jump" onSubmit={e=>{e.preventDefault();const value=Number(e.currentTarget.elements.bankPageJump.value);if(value) setBankPage(Math.min(pageCount,Math.max(1,Math.floor(value))))}}><label>Go to page</label><input name="bankPageJump" type="number" min="1" max={pageCount} placeholder={String(bankPage)}/><button className="secondary-btn" type="submit">Go</button></form><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.min(pageCount,p+1))} disabled={bankPage===pageCount}>Next →</button></div></div></div></section></main>}
+    {screen==='bank'&&<main className="page page-bank"><section className="surface bank-panel bank-panel-upgraded"><div className="bank-hero"><div><span className="eyebrow">Question library</span><h2>Search the full IPPC bank with cleaner navigation.</h2><p>Filter by set, topic, CLO, difficulty, and question style. Each card now includes a quality profile so you can target hard, applied and scenario-based items.</p></div><div className="bank-stats-grid"><div className="mini-stat bank-stat"><span>Total</span><strong>{bank.length}</strong></div><div className="mini-stat bank-stat"><span>Matches</span><strong>{filteredBank.length}</strong></div><div className="mini-stat bank-stat"><span>Wrong saved</span><strong>{getWrong().size}</strong></div></div></div><div className="bank-layout"><aside className="bank-sidebar"><div className="bank-filter-card"><div className="bank-filter-header"><div><span className="eyebrow muted">Filter panel</span><h3>Refine the bank</h3><p>Use the controls below to narrow the full question library quickly.</p></div><button className="secondary-btn bank-compact-reset" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all</button></div><label className="bank-field bank-search-field"><span>Search</span><input placeholder="Search callable bond, PIDM, CDD…" value={query} onChange={e=>setQuery(e.target.value)}/></label><div className="bank-filter-section"><div className="bank-section-title">Main filters</div><div className="filter-grid bank-filter-grid"><label className="bank-field"><span>Set</span><select value={bankSet} onChange={e=>setBankSet(e.target.value)}><option value="all">All sets</option>{setNumbers.map(n=><option key={n} value={n}>{setLabel(n)}</option>)}</select></label><label className="bank-field"><span>CLO</span><select value={bankClo} onChange={e=>setBankClo(e.target.value)}><option value="all">All CLOs</option>{[1,2,3].map(n=><option key={n} value={n}>CLO {n}</option>)}</select></label><label className="bank-field bank-field-full"><span>Topic</span><select value={bankTopic} onChange={e=>setBankTopic(e.target.value)}><option value="all">All topics</option>{allTopics.map(t=><option key={t}>{t}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="bank-section-title">Question profile</div><div className="filter-grid bank-profile-grid"><label className="bank-field"><span>Difficulty</span><select value={bankDiff} onChange={e=>setBankDiff(e.target.value)}><option value="all">All difficulty</option>{['Easy','Medium','Hard'].map(d=><option key={d}>{d}</option>)}</select></label><label className="bank-field"><span>Style</span><select value={bankStyle} onChange={e=>setBankStyle(e.target.value)}><option value="all">All styles</option>{['Scenario-based','Statement-combination','Calculation','Recall'].map(d=><option key={d}>{d}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="section-label-row"><h3>CLO quick filter</h3><button className="text-btn" onClick={()=>setBankClo('all')}>Clear</button></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={bankClo===String(n)?'chip chip-on':'chip'} onClick={()=>setBankClo(bankClo===String(n)?'all':String(n))}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="bank-filter-section bank-filter-section-soft"><div className="bank-mini-note"><strong>Tip:</strong> Use Search + Topic first, then refine by difficulty or Style = Scenario-based for applied exam practice.</div></div><div className="button-row bank-reset-row"><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all filters</button></div></div></aside><div className="bank-results-column"><div className="bank-results-header"><div><div className="bank-summary"><strong>{filteredBank.length}</strong> matches found</div><div className="bank-subsummary">Page {bankPage} of {pageCount}</div></div><div className="bank-results-actions"><Pill>{visibleBank.length} shown</Pill><Pill>{pageSize} per page</Pill></div></div>{!filteredBank.length&&<div className="empty-card bank-empty-state"><h3>No questions found.</h3><p>Try clearing the topic filter or searching a broader term.</p><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset filters</button></div>}<div className="bank-list upgraded-list">{visibleBank.map(q=><details key={q.id} className="bank-item upgraded-bank-item"><summary><div className="bank-card-head"><div className="summary-meta"><Pill>{q.id}</Pill><Pill>{setLabel(q.set)}</Pill><Pill>CLO {q.clo}</Pill><Pill>{q.topic}</Pill><Pill>{difficulty(q)}</Pill><Pill>{qStyle(q)}</Pill><Pill>{qualityLabel(q)}</Pill></div><span className="answer-badge">Answer {String.fromCharCode(65+q.answer)}</span></div><QuestionText text={q.text} className="summary-text"/><div className="bank-card-hint">Quality: {qualityLabel(q)} · {qStyle(q)} · Reference: {REF_MAP[q.topic]||`CLO ${q.clo}`}</div></summary><div className="bank-card-body"><div className="bank-card-actions"><button className="secondary-btn" onClick={()=>navigator.clipboard?.writeText(`${q.text}\n\nA. ${q.options[0]}\nB. ${q.options[1]}\nC. ${q.options[2]}\nD. ${q.options[3]}`)}>Copy question</button><button className="secondary-btn" onClick={()=>{setBankTopic(q.topic);setBankPage(1)}}>Practice this topic</button></div><ol className="bank-options">{q.options.map((o,i)=><li key={i} className={i===q.answer?'answer-hit':''}><span className="bank-option-label">{String.fromCharCode(65+i)}</span><span>{o}</span></li>)}</ol>{q.calc&&<pre className="bank-calc">{q.calc}</pre>}<div className="bank-explanation-wrap"><span className="answer-badge subtle-badge">Explanation</span><ExplanationPanel q={q} selected={null} correct={true} compact/></div></div></details>)}</div><div className="bank-pagination"><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.max(1,p-1))} disabled={bankPage===1}>← Prev</button><div className="pagination-pills">{Array.from({length:Math.min(5,pageCount)},(_,i)=>{const start=Math.min(Math.max(1,bankPage-2),Math.max(1,pageCount-4));const n=start+i;if(n>pageCount)return null;return <button key={n} className={n===bankPage?'chip chip-on':'chip'} onClick={()=>setBankPage(n)}>{n}</button>})}</div><form className="page-jump" onSubmit={e=>{e.preventDefault();const value=Number(e.currentTarget.elements.bankPageJump.value);if(value) setBankPage(Math.min(pageCount,Math.max(1,Math.floor(value))))}}><label>Go to page</label><input name="bankPageJump" type="number" min="1" max={pageCount} placeholder={String(bankPage)}/><button className="secondary-btn" type="submit">Go</button></form><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.min(pageCount,p+1))} disabled={bankPage===pageCount}>Next →</button></div></div></div></section></main>}
   </div>
 }
 
