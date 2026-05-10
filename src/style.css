@@ -1981,6 +1981,55 @@ input,select{padding:13px 15px;background:rgba(9,17,34,.72)}
   align-items:center;
   justify-content:center;
 }
+
+/* Integrated About section on Study Suite landing */
+.portal-about-section{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) auto;
+  gap:22px;
+  align-items:center;
+  padding:clamp(22px,3.5vw,36px);
+  position:relative;
+  overflow:hidden;
+}
+.portal-about-section::before{
+  content:"";
+  position:absolute;
+  inset:auto -12% -80% auto;
+  width:360px;
+  height:360px;
+  background:radial-gradient(circle, rgba(224,177,79,.18), transparent 65%);
+  pointer-events:none;
+}
+.portal-about-copy,.portal-about-actions{position:relative;z-index:1}
+.portal-about-copy h2{
+  margin:8px 0 10px;
+  font-size:clamp(1.65rem,3vw,2.4rem);
+  line-height:1.05;
+  letter-spacing:-.04em;
+}
+.portal-about-copy p{
+  max-width:72ch;
+  color:var(--muted);
+  line-height:1.7;
+}
+.portal-about-actions{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:flex-end;
+}
+.portal-about-card{
+  background:linear-gradient(180deg, rgba(83,143,255,.14), rgba(12,22,44,.94));
+}
+.theme-light .portal-about-card{
+  background:linear-gradient(180deg, rgba(224,237,255,.96), rgba(255,247,235,.98));
+}
+@media (max-width:900px){
+  .portal-about-section{grid-template-columns:1fr;}
+  .portal-about-actions{align-items:flex-start;}
+}
+
 .settings-row-link{
   color:var(--text);
   text-decoration:none;

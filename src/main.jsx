@@ -79,7 +79,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v125-explanation-tab-formatted';
+const DATA_VERSION='v127-about-audit-integrated';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -498,6 +498,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 
 
 const REPORT_PDF_PATH='/IPPC_Question_Bank_Analytical_Report_V117.pdf#toolbar=0&navpanes=0&scrollbar=1';
+const AUDIT_SITE_PATH='/about/index.html';
 const PRINTABLE_NOTES_PDF_PATH='/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
 const PRINTABLE_NOTES_VIEW_PATH=PRINTABLE_NOTES_PDF_PATH+'#toolbar=0&navpanes=0&scrollbar=1';
 const PRINTABLE_NOTES_PAGE_COUNT=38;
@@ -524,17 +525,30 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
       <div className="portal-copy">
         <span className="eyebrow">IPPC Study Suite</span>
         <h1>Choose your study mode.</h1>
-        <p>One Github/Vercel-ready app combining the exam-ready study notes and the full mock test question bank. Built for quick revision, focused practice, and mobile-friendly exam prep.</p>
+        <p>One Github/Vercel-ready app combining exam-ready study notes, the full mock test question bank, flashcards, printable notes, analytics, and a project-about timeline.</p>
         <div className="portal-actions">
           <button className="primary-btn" onClick={()=>onEnter('notes')}>Open Notes</button>
           <button className="secondary-btn" onClick={()=>onEnter('mock')}>Open Mock Test</button>
+          <a className="secondary-btn portal-download-link" href={AUDIT_SITE_PATH}>About the Project</a>
         </div>
       </div>
       <div className="portal-scorecard">
         <div><strong>Notes</strong><span>Key concepts, formulas, dates, fines, Acts and penalties.</span></div>
-        <div><strong>1,600</strong><span>Mock questions across 20 sets with review tools.</span></div>
+        <div><strong>2,000</strong><span>Mock questions across 25 sets, including Hard Set 1–5.</span></div>
         <div><strong>{FLASHCARD_DATA.length}</strong><span>Flashcards for Acts, rules, penalties and direct section recall.</span></div>
         <div><strong>80 MCQs</strong><span>Exam-style timed sessions aligned to the current IPPC format.</span></div>
+      </div>
+    </section>
+
+    <section className="portal-about-section portal-surface">
+      <div className="portal-about-copy">
+        <span className="eyebrow muted">About this project</span>
+        <h2>See how the IPPC Study Suite evolved from V1 to V126.</h2>
+        <p>The integrated audit website shows the project timeline, major version milestones, audit-cleanup work, report revisions, deployment lessons, and the final quality baseline behind the current mock test app.</p>
+      </div>
+      <div className="portal-about-actions">
+        <a className="primary-btn portal-download-link" href={AUDIT_SITE_PATH}>Open About Website</a>
+        <span className="soft-pill">Interactive V1 → V126 timeline</span>
       </div>
     </section>
 
@@ -584,6 +598,15 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
         </div>
         <span className="portal-arrow">View →</span>
       </button>
+      <a className="portal-card portal-surface portal-resource-card portal-about-card" href={AUDIT_SITE_PATH}>
+        <div className="portal-card-icon">🧭</div>
+        <div>
+          <span className="eyebrow muted">About / Timeline</span>
+          <h2>Project Evolution</h2>
+          <p>Open the integrated V1 → V126 audit website with the animated version timeline and project-quality story.</p>
+        </div>
+        <span className="portal-arrow">Explore →</span>
+      </a>
     </section>
   </main>
   </div>
