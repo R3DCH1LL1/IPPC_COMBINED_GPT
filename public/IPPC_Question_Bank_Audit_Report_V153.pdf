@@ -1,0 +1,347 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R] /Count 10 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 3470 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Executive Update) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (This V153 report replaces the prior V134-labelled report asset and records the changes completed through the latest packaging pass. The) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (content-quality baseline remains the V117 zero-flag audit; V153 is the presentation, report, timeline, landing-seal and deployment-alignment) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 441.0 Td (update.) Tj ET
+0.980 0.940 0.870 rg 46.0 338.0 165.0 92.0 re f
+0.840 0.720 0.510 RG 1 w 46.0 338.0 165.0 92.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 62.0 406.0 Td (QUESTION BANK) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 62.0 372.0 Td (2,000) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 62.0 352.0 Td (25 sets x 80 questions,) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 62.0 339.0 Td (including Hard Sets 1-5.) Tj ET
+0.980 0.940 0.870 rg 231.0 338.0 165.0 92.0 re f
+0.840 0.720 0.510 RG 1 w 231.0 338.0 165.0 92.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 247.0 406.0 Td (AUDIT FLAGS) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 247.0 372.0 Td (0) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 247.0 352.0 Td (Critical, high, medium and low) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 247.0 339.0 Td (issue categories closed.) Tj ET
+0.980 0.940 0.870 rg 416.0 338.0 165.0 92.0 re f
+0.840 0.720 0.510 RG 1 w 416.0 338.0 165.0 92.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 432.0 406.0 Td (TRUST SCORE) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 432.0 372.0 Td (9.4/10) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 432.0 352.0 Td (Content baseline retained from) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 432.0 339.0 Td (Round 18.) Tj ET
+0.980 0.940 0.870 rg 601.0 338.0 165.0 92.0 re f
+0.840 0.720 0.510 RG 1 w 601.0 338.0 165.0 92.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 617.0 406.0 Td (PACKAGE) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 617.0 372.0 Td (V153) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 617.0 352.0 Td (Minimum GitHub/Vercel package) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 617.0 339.0 Td (rebuilt.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 306.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 306.0 Td (Report page now points to IPPC_Question_Bank_Audit_Report_V153.pdf and uses V153 titles.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 289.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 289.0 Td (Audit website labels and timeline copy are updated from V134/V151 to V153.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 272.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 272.0 Td (Timeline desktop UI was repaired: no clipped active card, no right-edge rail mask, no visible rail scrollbar.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 255.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 255.0 Td (Dusk/dawn curtain transition is retained through the book curtain overlay and curtain theme buttons.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 238.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 238.0 Td (Main landing Interface Edition seal has been realigned and updated to Volume 153.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (01) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 2019 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Version Scope) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The V153 scope is deliberately split between content assurance and interface/deployment polish. The question-bank audit result does not claim) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (a new legal-proofreading round beyond the closed V117 baseline; it records that the application wrapper, audit website, report asset and) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 441.0 Td (packaging have been brought forward to V153.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (V117: full content-quality audit baseline, all automated severity buckets closed.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (V134: prior report and formatted app baseline.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (V151-V152: audit website packaging and timeline alignment work.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 368.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 368.0 Td (V153: report regenerated, audit website text updated, timeline format issue corrected, landing seal repaired, Vercel/GitHub minimum zip rebuilt.) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 345.0 Td (Interpretation: V153 is the current deployable presentation baseline. The underlying 2,000-question bank remains the same audited bank unless) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 328.0 Td (a future content-editing round is requested.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (02) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 2461 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Question Bank Baseline) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+0.980 0.940 0.870 rg 46.0 374.0 170.0 82.0 re f
+0.840 0.720 0.510 RG 1 w 46.0 374.0 170.0 82.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 62.0 432.0 Td (SETS) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 62.0 398.0 Td (25) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 62.0 378.0 Td (Each set contains 80 questions.) Tj ET
+0.980 0.940 0.870 rg 236.0 374.0 170.0 82.0 re f
+0.840 0.720 0.510 RG 1 w 236.0 374.0 170.0 82.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 252.0 432.0 Td (TOTAL QUESTIONS) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 252.0 398.0 Td (2,000) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 252.0 378.0 Td (Full mock-bank scope.) Tj ET
+0.980 0.940 0.870 rg 426.0 374.0 170.0 82.0 re f
+0.840 0.720 0.510 RG 1 w 426.0 374.0 170.0 82.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 442.0 432.0 Td (ANSWER BALANCE) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 442.0 398.0 Td (500x4) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 442.0 378.0 Td (A/B/C/D balanced across bank.) Tj ET
+0.980 0.940 0.870 rg 616.0 374.0 170.0 82.0 re f
+0.840 0.720 0.510 RG 1 w 616.0 374.0 170.0 82.0 re S
+BT /F2 8 Tf 0.530 0.390 0.160 rg 632.0 432.0 Td (CLO SPLIT) Tj ET
+BT /F2 25 Tf 0.160 0.120 0.080 rg 632.0 398.0 Td (15/45/40) Tj ET
+BT /F1 9 Tf 0.340 0.310 0.270 rg 632.0 378.0 Td (Generated-paper target mix.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 330.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 330.0 Td (The mock system remains aligned around 80-question generated papers.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 313.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 313.0 Td (Hard Sets 1-5 remain part of the bank and navigation.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 296.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 296.0 Td (Flashcards remain available for legal anchors, dates, penalties and product rules.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 279.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 279.0 Td (Detailed progress history remains local to the user's device and preserves attempt breakdowns.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (03) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 1478 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Audit Website Update) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The Colophon/Audit Website is now labelled as a V1 to V153 retrospective. Runtime text replacement remains in place to prevent older V134/V151) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (labels from reappearing after the static bundle hydrates.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (Document title and meta description now say V1 to V153.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (Hero, overview, timeline and footer text are normalized to V153 where they referred to the prior latest baseline.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (The latest timeline range is shown as V124-V153.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (The Back to Main Menu affordance remains intact.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (04) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 1798 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Timeline UI Finding and Fix) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The attached screenshot showed the active timeline card beginning too close to its left edge, with date/title text appearing clipped. The left) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (progress rail also showed a visible scrollbar and a dark right-edge mask.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (Main desktop timeline grid now has stable columns, wider column gap and safe horizontal padding.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (The active article card receives explicit inner padding, box sizing and a constrained max width.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (The old right-edge rail mask is disabled.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (Rail overflow is forcibly hidden and scrollbars are removed from the rail/scroller nodes.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 368.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 368.0 Td (Focus styling was adjusted so selected timeline buttons no longer produce a full rectangular outline during mouse selection.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (05) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+15 0 obj
+<< /Length 1720 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Landing Interface Edition Seal) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The landing seal had an overlap between the circular ring text and the central 'Interface Edition' label. V153 adjusts the seal as a compact) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (typographic mark instead of allowing the mono label to sprawl into the ring.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (Ring text now says Volume One Hundred & Fifty-Three.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (The central V153 is centered with a tighter line height.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (The Interface Edition label is constrained, centered and set with lower letter spacing.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (The outer ring typography is slightly reduced so it reads as ornament instead of colliding with the center.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 368.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 368.0 Td (Mobile keeps the ring hidden and uses a smaller central label.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (06) Tj ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 15 0 R >>
+endobj
+17 0 obj
+<< /Length 1528 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Dusk and Dawn Curtain) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The theme-switching curtain remains part of the V153 application. The book landing uses a book-curtain-overlay during the dusk/dawn switch;) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (portal pages use the shared CurtainThemeButton component.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (BookThemeToggle drives falling and rising phases around the theme change.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (CSS for book-curtain-overlay.falling and book-curtain-overlay.rising is present.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (Report, printable notes and settings drawers use CurtainThemeButton for consistent transition behavior.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (The transition remains transform-based for smooth rendering.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (07) Tj ET
+endstream
+endobj
+18 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 17 0 R >>
+endobj
+19 0 obj
+<< /Length 1643 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Report Asset Update) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The V153 report is now a regenerated PDF asset rather than only a renamed V134 file. The app iframe references the V153 PDF path and this) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 458.0 Td (document's PDF metadata title is set to IPPC Question Bank Audit Report - V153.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (Public asset: public/IPPC_Question_Bank_Audit_Report_V153.pdf.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (Application constant: REPORT_PDF_PATH points to the V153 asset.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (Iframe title: IPPC V153 Audit Report.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (Report portal header: V153 Audit Report.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 368.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 368.0 Td (The previous V134 PDF remains in public as a historical asset unless removed in a later cleanup.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (08) Tj ET
+endstream
+endobj
+20 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 19 0 R >>
+endobj
+21 0 obj
+<< /Length 1519 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Deployment Package Rules) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The package remains suitable for both GitHub and Vercel as a source package. Vercel should install dependencies and rebuild dist itself.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 453.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 453.0 Td (Include: index.html, package.json, package-lock.json, vercel.json, src/ and public/.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (Exclude: node_modules/ and dist/.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (Keep public/about/assets with the audit website bundle.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (Keep public/questions.packed.json and public/questions.packed.json.gz for the question bank.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (Keep the V153 PDF report asset in public/.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (09) Tj ET
+endstream
+endobj
+22 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 21 0 R >>
+endobj
+23 0 obj
+<< /Length 1857 >>
+stream
+BT /F2 8 Tf 0.530 0.390 0.160 rg 46.0 549.0 Td (IPPC QUESTION BANK AUDIT REPORT - V153) Tj ET
+BT /F2 27 Tf 0.160 0.120 0.080 rg 46.0 521.0 Td (Verification Summary) Tj ET
+0.790 0.580 0.230 RG 1.2 w 46.0 503.0 m 796.0 503.0 l S
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 475.0 Td (The following verification activities were completed during the V153 update cycle.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 453.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 453.0 Td (Production build passed with Vite.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 436.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 436.0 Td (Audit timeline V53 card was checked locally at desktop viewport size and no longer clips at the left edge.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 419.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 419.0 Td (Timeline rail no longer shows the earlier scrollbar/dark-mask artifact.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 402.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 402.0 Td (V153 report metadata and app references were checked.) Tj ET
+BT /F2 10 Tf 0.790 0.580 0.230 rg 46.0 385.0 Td (+) Tj ET
+BT /F1 10 Tf 0.160 0.120 0.080 rg 62.0 385.0 Td (Minimum zip contents were checked for required source files and absence of node_modules/dist.) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 362.0 Td (Residual caveat: this report records UI, packaging and presentation changes through V153. A separate legal proofreading pass would be required) Tj ET
+BT /F1 11 Tf 0.160 0.120 0.080 rg 46.0 345.0 Td (before claiming a new substantive legal-content audit beyond the V117 zero-flag baseline.) Tj ET
+0.780 0.720 0.630 RG 0.6 w 46.0 32.0 m 796.0 32.0 l S
+BT /F1 8 Tf 0.450 0.410 0.360 rg 46.0 18.0 Td (Generated for IPPC Study Suite V153 - 2026-05-10) Tj ET
+BT /F2 8 Tf 0.450 0.410 0.360 rg 754.0 18.0 Td (10) Tj ET
+endstream
+endobj
+24 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 23 0 R >>
+endobj
+25 0 obj
+<< /Title (IPPC Question Bank Audit Report - V153) /Author (IPPC Study Suite) /Subject (V153 audit, UI and deployment update) >>
+endobj
+xref
+0 26
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000184 00000 n 
+0000000254 00000 n 
+0000000329 00000 n 
+0000003851 00000 n 
+0000003987 00000 n 
+0000006058 00000 n 
+0000006194 00000 n 
+0000008707 00000 n 
+0000008844 00000 n 
+0000010375 00000 n 
+0000010513 00000 n 
+0000012364 00000 n 
+0000012502 00000 n 
+0000014275 00000 n 
+0000014413 00000 n 
+0000015994 00000 n 
+0000016132 00000 n 
+0000017828 00000 n 
+0000017966 00000 n 
+0000019538 00000 n 
+0000019676 00000 n 
+0000021586 00000 n 
+0000021724 00000 n 
+trailer << /Size 26 /Root 1 0 R /Info 25 0 R >>
+startxref
+21869
+%%EOF

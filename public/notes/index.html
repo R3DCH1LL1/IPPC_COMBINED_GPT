@@ -2608,6 +2608,27 @@ body.settings-open.notes-tools-fixed .top-nav{display:none!important;}
 }
 </style>
 
+
+<style id="v140-reader-redesign">
+/* V140 reader redesign: make the embedded notes visibly match the app */
+:root{--v140-bg:#f3eadb;--v140-surface:#fffaf2;--v140-ink:#24190f;--v140-muted:#776855;--v140-line:#e1cfb6;--v140-accent:#b47a26;--v140-accent-soft:#f4dfb7;}
+html[data-theme="dark"]{--v140-bg:#0c111d;--v140-surface:#141c2b;--v140-ink:#f4ead6;--v140-muted:#a99f91;--v140-line:#263247;--v140-accent:#f0c76c;--v140-accent-soft:rgba(240,199,108,.14);}
+html,body{background:var(--v140-bg)!important;color:var(--v140-ink)!important;}
+body{font-family:Inter,"DM Sans",system-ui,sans-serif!important;line-height:1.68!important;}
+main,.container,.page,.content,.notes-container,.app,.shell{max-width:980px!important;margin-inline:auto!important;}
+section,article,.card,.panel,.note-card,.content-card,.chapter-card{background:var(--v140-surface)!important;border:1px solid var(--v140-line)!important;border-radius:18px!important;box-shadow:0 12px 34px rgba(84,64,38,.08)!important;}
+h1,h2,h3{color:var(--v140-ink)!important;letter-spacing:-.035em!important;}
+h1{font-size:clamp(2.1rem,4vw,4.4rem)!important;line-height:1.02!important;}
+h2{font-size:clamp(1.45rem,2.2vw,2.2rem)!important;line-height:1.12!important;border-bottom:1px solid var(--v140-line)!important;padding-bottom:.45em!important;}
+p,li,td,th{color:var(--v140-ink)!important;}
+small,.muted,.subtitle,.description,.caption{color:var(--v140-muted)!important;}
+a{color:var(--v140-accent)!important;}
+button,.btn,.chip,.tab{border-radius:999px!important;border:1px solid var(--v140-line)!important;background:var(--v140-surface)!important;color:var(--v140-ink)!important;}
+button.primary,.btn-primary,.active,.selected{background:linear-gradient(180deg,#f0c76c,#d6a84d)!important;color:#18110a!important;border-color:#f0c76c!important;}
+.table-wrap,table{border-color:var(--v140-line)!important;}
+blockquote,.exam-trap,.key-point,.formula,.warning,.tip{background:var(--v140-accent-soft)!important;border:1px solid rgba(180,122,38,.25)!important;border-left:4px solid var(--v140-accent)!important;border-radius:14px!important;color:var(--v140-ink)!important;}
+@media(max-width:720px){body{font-size:16px!important;padding:0!important;}main,.container,.page,.content,.notes-container{padding:12px!important;}section,article,.card,.panel{border-radius:14px!important;}}
+</style>
 </head>
 <body class="simple-mode">
 <script>try{if(window.parent&&window.parent!==window)document.body.classList.add('embedded-notes');}catch(e){}

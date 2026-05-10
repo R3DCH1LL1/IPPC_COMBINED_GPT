@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IPPC Study Suite — V1 to V125 Audit Retrospective</title>
-    <meta name="description" content="A polished retrospective of the IPPC Study Suite from V1 to V125 — 2,000 questions, audit-clean content baseline, and production-ready deployment." />
+    <title>IPPC Study Suite — V1 to V153 Audit Retrospective</title>
+    <meta name="description" content="A polished retrospective of the IPPC Study Suite from V1 to V153 — 2,000 questions, zero-flag audit baseline, progress-history upgrade, formatted audit report, and production-ready deployment." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,8 +13,276 @@
     />
     <script type="module" crossorigin src="./assets/index-DrpKev_t.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BDdZXnFj.css">
-  </head>
+  
+    <style>
+      :root {
+        color-scheme: light;
+        --ippc-paper: #f3eadb;
+        --ippc-surface: #fffaf2;
+        --ippc-ink: #2b2117;
+        --ippc-accent: #d6a84d;
+      }
+      body {
+        background: radial-gradient(circle at 12% -8%, rgba(214,168,77,.16), transparent 30%), var(--ippc-paper);
+      }
+      a, button {
+        font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+      }
+      .about-back-main-menu{
+        position:fixed;top:18px;left:18px;z-index:9999;display:inline-flex;align-items:center;gap:8px;
+        padding:10px 14px;border-radius:999px;background:rgba(255,250,242,.94);color:var(--ippc-ink);
+        border:1px solid rgba(116,82,42,.18);box-shadow:0 16px 40px rgba(84,64,38,.16);
+        font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+        font-size:13px;font-weight:800;letter-spacing:-.01em;text-decoration:none;backdrop-filter:blur(10px);
+        transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+      }
+      .about-back-main-menu:hover{transform:translateY(-1px);box-shadow:0 20px 50px rgba(84,64,38,.20);background:#fffaf2;}
+      @media(max-width:640px){.about-back-main-menu{top:12px;left:12px;padding:9px 12px;font-size:12px;}}
+    </style>
+
+    <style id="v153-about-timeline-fix">
+      /* V153: timeline rail and active-card alignment repair. */
+      #timeline{
+        background:#2b2117!important;
+        color:#f3eadb!important;
+        position:relative!important;
+        overflow-x:clip!important;
+        overflow-y:visible!important;
+        scroll-margin-top:4.75rem!important;
+      }
+      #timeline:before{
+        content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;
+        background:
+          linear-gradient(90deg,rgba(243,234,219,.10) 1px,transparent 1px),
+          linear-gradient(rgba(243,234,219,.07) 1px,transparent 1px),
+          radial-gradient(900px 520px at 84% 18%,rgba(214,168,77,.18),transparent 62%);
+        background-size:72px 72px,72px 72px,auto;
+        mask-image:linear-gradient(180deg,transparent,black 14%,black 86%,transparent);
+      }
+      #timeline>div:first-child,
+      #timeline-pin{position:relative;z-index:1;}
+      #timeline>div:first-child{padding-top:clamp(2rem,4.5vw,3.5rem)!important;}
+      #timeline>div:first-child h2{
+        font-size:clamp(3.2rem,8vw,7rem)!important;
+        line-height:.9!important;
+      }
+      #timeline-pin{padding-top:2.25rem!important;}
+      #timeline-pin .sticky{top:0!important;}
+      #timeline-pin .sticky>.grid{
+        align-items:center!important;
+        grid-template-columns:minmax(250px,.68fr) minmax(0,1.32fr)!important;
+        column-gap:clamp(2.75rem,4vw,4.75rem)!important;
+        padding-inline:clamp(1.2rem,2.2vw,2.1rem)!important;
+      }
+
+      /* Left progress rail: book-bound, not blue/glassy. */
+      #timeline-pin aside{height:min(690px,calc(100vh - 6.25rem))!important;align-self:center!important;}
+      #timeline-pin aside>div{
+        position:relative!important;
+        border-radius:0!important;
+        border:1px solid rgba(243,234,219,.20)!important;
+        border-left:0!important;border-right:0!important;
+        background:rgba(243,234,219,.035)!important;
+        box-shadow:none!important;
+        padding:1.2rem 0!important;
+        backdrop-filter:none!important;
+      }
+      #timeline-pin aside>div:after{
+        content:""!important;
+        display:none!important;
+      }
+      #timeline-pin aside p:first-child{color:#d6a84d!important;letter-spacing:.28em!important;}
+      #timeline-pin aside .mt-3{margin-top:.6rem!important;}
+      #timeline-pin aside .mt-3 span:first-child{font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(2.65rem,4vw,3.35rem)!important;font-weight:600!important;color:#f3eadb!important;}
+      #timeline-pin aside .mt-4{background:rgba(243,234,219,.13)!important;height:3px!important;border-radius:999px!important;overflow:hidden!important;margin-top:.75rem!important;}
+      #timeline-pin aside .mt-4>div{background:#d6a84d!important;box-shadow:0 0 18px rgba(214,168,77,.35)!important;}
+      #timeline-pin aside hr{border-top-color:rgba(243,234,219,.14)!important;margin-top:.8rem!important;margin-bottom:.55rem!important;}
+      #timeline-pin aside .flex-1,
+      #timeline-pin aside .overflow-y-auto,
+      #timeline-pin aside .pr-1{
+        overflow:hidden!important;
+        max-height:none!important;
+        padding-right:0!important;
+        scrollbar-width:none!important;
+        -ms-overflow-style:none!important;
+      }
+      #timeline-pin aside .flex-1::-webkit-scrollbar,
+      #timeline-pin aside .overflow-y-auto::-webkit-scrollbar,
+      #timeline-pin aside .pr-1::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;}
+      #timeline-pin aside *,
+      #timeline-pin aside{
+        scrollbar-width:none!important;
+        -ms-overflow-style:none!important;
+      }
+      #timeline-pin aside *::-webkit-scrollbar,
+      #timeline-pin aside::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;}
+      #timeline-pin aside button{
+        border-bottom:1px solid rgba(243,234,219,.10)!important;
+        border-radius:0!important;
+        background:transparent!important;
+        height:34px!important;
+        min-height:34px!important;
+        max-height:34px!important;
+        padding:0 .35rem!important;
+        font-size:.78rem!important;
+        line-height:1!important;
+        overflow:hidden!important;
+        transform:none!important;
+        transition:background .18s ease,padding-left .18s ease,color .18s ease!important;
+      }
+      #timeline-pin aside button span{line-height:1!important;}
+      #timeline-pin aside button:hover{
+        color:#f3eadb!important;
+        background:rgba(243,234,219,.06)!important;
+        padding-left:.75rem!important;
+      }
+      #timeline-pin aside button:focus{outline:none!important;}
+      #timeline-pin aside button:focus-visible{
+        box-shadow:inset 3px 0 0 #d6a84d!important;
+        background:rgba(214,168,77,.09)!important;
+      }
+      #timeline-pin aside button>span:last-child{display:none!important;}
+      #timeline-pin aside button .text-\[10px\]{display:none!important;}
+      #timeline-pin aside button span:first-child span:first-child{
+        width:.5rem!important;height:.5rem!important;
+        border-radius:999px!important;
+        box-shadow:0 0 0 3px rgba(214,168,77,.13)!important;
+      }
+
+      /* Card stage: one clean active card. Hide old stacked-card ghosts that made the pinned wheel look cluttered. */
+      #timeline-pin .relative.flex{align-items:center!important;height:min(690px,calc(100vh - 6.25rem))!important;}
+      #timeline-pin .relative.mx-auto{
+        max-width:760px!important;
+        width:100%!important;
+        aspect-ratio:5 / 3.25!important;
+        filter:none!important;
+        margin-left:auto!important;
+        margin-right:auto!important;
+      }
+      #timeline-pin .relative.mx-auto>div:not(article){display:none!important;}
+      #timeline-pin article{
+        inset:auto!important;
+        transform:none!important;
+        border-radius:0!important;
+        background:#f3eadb!important;
+        color:#2b2117!important;
+        border:1px solid rgba(43,33,23,.18)!important;
+        box-shadow:0 38px 74px rgba(0,0,0,.28)!important;
+        overflow:hidden!important;
+      }
+      #timeline-pin article:after{
+        content:"";position:absolute;inset:1rem;border:1px solid rgba(43,33,23,.14);pointer-events:none;
+      }
+      #timeline-pin article .h-full{padding:0!important;box-sizing:border-box!important;}
+      #timeline-pin article .h-full>div{
+        box-sizing:border-box!important;
+        padding:clamp(1.45rem,2.4vw,2.25rem)!important;
+      }
+      #timeline-pin article h3{
+        margin-top:clamp(.65rem,1.1vw,1rem)!important;
+        font-size:clamp(1.95rem,2.7vw,2.55rem)!important;
+        line-height:1.05!important;
+        letter-spacing:0!important;
+        word-spacing:.08em!important;
+      }
+      #timeline-pin article p{font-size:clamp(.95rem,1.25vw,1.08rem)!important;line-height:1.5!important;}
+      #timeline-pin article .grid{gap:clamp(1rem,2vw,1.75rem)!important;align-items:start!important;}
+      #timeline-pin article .grid p{font-size:.92rem!important;line-height:1.45!important;}
+      #timeline-pin article hr{border-top-color:rgba(43,33,23,.18)!important;}
+      #timeline-pin article [style*="background-color"],
+      #timeline-pin article [style*="backgroundColor"]{background-color:#d6a84d!important;}
+      #timeline-pin article p,
+      #timeline-pin article li{overflow-wrap:anywhere!important;}
+
+      /* Mobile timeline keeps the old content but with cleaner cards. */
+      #timeline .lg\:hidden article{
+        border-radius:0!important;
+        background:#f3eadb!important;
+        color:#2b2117!important;
+        border:1px solid rgba(43,33,23,.16)!important;
+        box-shadow:0 18px 42px rgba(43,33,23,.16)!important;
+      }
+      #timeline .lg\:hidden article h3{
+        letter-spacing:0!important;
+        line-height:1.12!important;
+        word-spacing:.06em!important;
+      }
+      #timeline .lg\:hidden article + article{margin-top:1rem!important;}
+      @media(max-width:1023px){
+        #timeline:before{background-size:48px 48px,48px 48px,auto;}
+      }
+      @media(prefers-reduced-motion:reduce){
+        #timeline-pin *,#timeline *{transition:none!important;animation:none!important;}
+      }
+    </style>
+</head>
   <body>
+    <a class="about-back-main-menu" href="../" aria-label="Back to Main Menu">← Back to Main Menu</a>
     <div id="root"></div>
-  </body>
+    <script>
+      (() => {
+        const versionReplacements = [
+          [/V1 to V134/g, 'V1 to V153'],
+          [/V1 → V134/g, 'V1 → V153'],
+          [/V134 Latest/g, 'V153 Latest'],
+          [/V134 latest/g, 'V153 latest'],
+          [/V124–V134/g, 'V124–V153'],
+          [/V124-V134/g, 'V124-V153'],
+          [/V118–V134/g, 'V118–V153'],
+          [/V118-V134/g, 'V118-V153'],
+          [/V134/g, 'V153'],
+          [/V150/g, 'V153'],
+          [/V151/g, 'V153']
+        ];
+        const applyVersionLabels = () => {
+          document.title = 'IPPC Study Suite — V1 to V153 Audit Retrospective';
+          const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          const nodes = [];
+          while (walker.nextNode()) nodes.push(walker.currentNode);
+          nodes.forEach((node) => {
+            let text = node.nodeValue;
+            versionReplacements.forEach(([pattern, replacement]) => {
+              text = text.replace(pattern, replacement);
+            });
+            if (text !== node.nodeValue) node.nodeValue = text;
+          });
+        };
+        const polishTimeline = () => {
+          applyVersionLabels();
+          const rail = document.querySelector('#timeline-pin aside');
+          if (!rail) return;
+          rail.querySelectorAll('.overflow-y-auto,.flex-1,.pr-1,[class*="overflow-y-auto"]').forEach((el) => {
+            el.classList.remove('overflow-y-auto');
+            el.style.setProperty('overflow', 'hidden', 'important');
+            el.style.setProperty('overflow-y', 'hidden', 'important');
+            el.style.setProperty('max-height', 'none', 'important');
+            el.style.setProperty('scrollbar-width', 'none', 'important');
+            el.style.setProperty('padding-right', '0', 'important');
+          });
+          rail.querySelectorAll('button').forEach((button) => {
+            button.style.setProperty('height', '34px', 'important');
+            button.style.setProperty('min-height', '34px', 'important');
+            button.style.setProperty('max-height', '34px', 'important');
+            button.style.setProperty('padding-top', '0', 'important');
+            button.style.setProperty('padding-bottom', '0', 'important');
+            button.style.setProperty('overflow', 'hidden', 'important');
+            const parts = Array.from(button.children);
+            const last = parts[parts.length - 1];
+            if (last && last.tagName === 'SPAN') last.style.setProperty('display', 'none', 'important');
+            button.querySelectorAll('[class*="text-["]').forEach((el) => {
+              el.style.setProperty('display', 'none', 'important');
+            });
+          });
+          document.querySelectorAll('#timeline-pin article .h-full > div').forEach((panel) => {
+            panel.style.setProperty('box-sizing', 'border-box', 'important');
+            panel.style.setProperty('padding', 'clamp(1.45rem, 2.4vw, 2.25rem)', 'important');
+          });
+        };
+        applyVersionLabels();
+        window.addEventListener('load', polishTimeline, { once: true });
+        window.addEventListener('resize', polishTimeline);
+        new MutationObserver(polishTimeline).observe(document.getElementById('root'), { childList: true, subtree: true });
+      })();
+    </script>
+</body>
 </html>
