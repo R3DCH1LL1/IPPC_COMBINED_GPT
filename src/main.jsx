@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {CurtainThemeButton} from './components/ui/curtain-theme-toggle.jsx';
 import './style.css';
@@ -611,18 +611,456 @@ const FLASHCARD_STORAGE_KEY='ippc_flashcard_stats_v1';
 const FLASHCARD_VERSION='V81';
 
 
+/* ── Animation helpers ─────────────────────────────────────────────────────── */
+function useInView(threshold=0.18){
+  const ref=useRef(null);
+  const [inView,setInView]=useState(false);
+  useEffect(()=>{
+    const el=ref.current;
+    if(!el||inView)return;
+    const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting){setInView(true);obs.disconnect();}},{threshold});
+    obs.observe(el);
+    return()=>obs.disconnect();
+  },[threshold,inView]);
+  return [ref,inView];
+}
+
+function useCountUp(target,{duration=1600,active=true}={}){
+  const [val,setVal]=useState(0);
+  const raf=useRef(null);
+  useEffect(()=>{
+    if(!active){setVal(0);return;}
+    const n=parseInt(String(target).replace(/[^0-9]/g,''),10);
+    if(!n){setVal(0);return;}
+    let t0=null;
+    const step=ts=>{
+      if(!t0)t0=ts;
+      const p=Math.min((ts-t0)/duration,1);
+      setVal(Math.floor((1-Math.pow(1-p,3))*n));
+      if(p<1)raf.current=requestAnimationFrame(step);
+    };
+    raf.current=requestAnimationFrame(step);
+    return()=>raf.current&&cancelAnimationFrame(raf.current);
+  },[target,duration,active]);
+  return val;
+}
+
+function AnimatedCount({value,suffix='',className=''}){
+  const [ref,inView]=useInView(0.1);
+  const count=useCountUp(value,{active:inView});
+  const n=parseInt(String(value).replace(/[^0-9]/g,''),10);
+  const display=count>=1000?count.toLocaleString():count;
+  const suffix2=String(value).replace(/[0-9,]/g,'');
+  return <span ref={ref} className={className}>{display}{suffix||suffix2}</span>;
+}
+
+function ParticleCanvas({theme}){
+  const [reduced]=useReducedData();
+  const canvasRef=useRef(null);
+  useEffect(()=>{
+    if(reduced)return;
+    const canvas=canvasRef.current;
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    const isDark=theme!=='light';
+    const c=isDark?[214,168,77]:[180,122,38];
+    const resize=()=>{canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;};
+    resize();
+    window.addEventListener('resize',resize);
+    const N=55;
+    let w=canvas.width,h=canvas.height;
+    const pts=Array.from({length:N},()=>({
+      x:Math.random()*w,y:Math.random()*h,
+      vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,
+      r:Math.random()*1.6+.5,
+    }));
+    let animId;
+    const draw=()=>{
+      w=canvas.width;h=canvas.height;
+      ctx.clearRect(0,0,w,h);
+      for(const p of pts){
+        p.x=(p.x+p.vx+w)%w;
+        p.y=(p.y+p.vy+h)%h;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${c},0.28)`;
+        ctx.fill();
+      }
+      for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<115){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(${c},${0.11*(1-d/115)})`;
+          ctx.lineWidth=.8;
+          ctx.stroke();
+        }
+      }
+      animId=requestAnimationFrame(draw);
+    };
+    draw();
+    return()=>{cancelAnimationFrame(animId);window.removeEventListener('resize',resize);};
+  },[theme,reduced]);
+  if(reduced)return null;
+  return <canvas ref={canvasRef} className="particle-bg-canvas" aria-hidden="true"/>;
+}
+
+function TiltCard({children,className='',onClick,style={}}){
+  const ref=useRef(null);
+  const handleMove=useCallback(e=>{
+    const el=ref.current;if(!el)return;
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    el.style.transform=`perspective(700px) rotateY(${x*9}deg) rotateX(${-y*9}deg) scale(1.025) translateZ(8px)`;
+    const sx=-x*22, sy=y*16+18;
+    el.style.boxShadow=`${sx}px ${sy}px 42px rgba(0,0,0,0.18), ${sx*0.4}px ${sy*0.3+4}px 14px rgba(0,0,0,0.10)`;
+    el.style.transition='transform .08s ease, box-shadow .08s ease';
+  },[]);
+  const handleLeave=useCallback(()=>{
+    const el=ref.current;if(!el)return;
+    el.style.transform='perspective(700px) rotateY(0deg) rotateX(0deg) scale(1) translateZ(0)';
+    el.style.boxShadow='';
+    el.style.transition='transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s cubic-bezier(.2,.8,.2,1)';
+  },[]);
+  return(
+    <button type="button" ref={ref} className={`tilt-card ${className}`} onClick={onClick} onMouseMove={handleMove} onMouseLeave={handleLeave} style={style}>
+      {children}
+    </button>
+  );
+}
+
+/* ── Reduced-data setting (global, localStorage) ───────────────── */
+function useReducedData(){
+  const [reduced,setReduced]=useState(()=>{try{return localStorage.getItem('ippc_reduced_data')==='1'}catch{return false}});
+  useEffect(()=>{
+    const sync=()=>{try{setReduced(localStorage.getItem('ippc_reduced_data')==='1')}catch{}};
+    window.addEventListener('storage',sync);
+    window.addEventListener('ippc-reduced-data-change',sync);
+    return()=>{window.removeEventListener('storage',sync);window.removeEventListener('ippc-reduced-data-change',sync);};
+  },[]);
+  const toggle=useCallback(()=>{
+    setReduced(prev=>{
+      const next=!prev;
+      try{localStorage.setItem('ippc_reduced_data',next?'1':'0');}catch{}
+      window.dispatchEvent(new Event('ippc-reduced-data-change'));
+      return next;
+    });
+  },[]);
+  return [reduced,toggle];
+}
+
+/* ── Back-to-top floating button ─────────────────────────────────── */
+function BackToTop(){
+  const [show,setShow]=useState(false);
+  useEffect(()=>{
+    const onScroll=()=>setShow(window.scrollY>420);
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+    return()=>window.removeEventListener('scroll',onScroll);
+  },[]);
+  const scrollUp=()=>window.scrollTo({top:0,behavior:'smooth'});
+  return(
+    <button type="button" className={`back-to-top ${show?'btt-visible':''}`} onClick={scrollUp} aria-label="Back to top" title="Back to top">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </button>
+  );
+}
+
+/* ── Display toggle (reduced-data) ───────────────────────────────── */
+function DisplayToggle(){
+  const [reduced,toggle]=useReducedData();
+  return(
+    <button type="button" className={`display-toggle ${reduced?'dt-reduced':''}`} onClick={toggle}
+      aria-label={reduced?'Restore visual effects':'Reduce visual effects'} aria-pressed={reduced}
+      title={reduced?'Effects: minimal — click to restore':'Effects: full — click to reduce'}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+        {reduced
+          ? <><path d="M1 12s4-8 11-8 11 8 11 8" strokeLinecap="round"/><path d="M1 12s4 8 11 8 11-8 11-8" strokeLinecap="round"/><line x1="3" y1="3" x2="21" y2="21" strokeLinecap="round"/></>
+          : <><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></>}
+      </svg>
+    </button>
+  );
+}
+
+/* ── Floating "Press ?" hint button ─────────────────────────────── */
+function ShortcutHintButton(){
+  const fire=()=>{
+    const ev=new KeyboardEvent('keydown',{key:'?',shiftKey:true,bubbles:true,cancelable:true});
+    window.dispatchEvent(ev);
+  };
+  return(
+    <button type="button" className="kbd-hint-btn" onClick={fire} aria-label="Show keyboard shortcuts" title="Show keyboard shortcuts (or press ?)">
+      <kbd className="kbd-hint-key">?</kbd>
+    </button>
+  );
+}
+
+/* ── Skip-to-content link (does NOT change URL hash) ─────────────── */
+function SkipLink({target='main-content'}){
+  const handleClick=(e)=>{
+    e.preventDefault();
+    const el=document.getElementById(target);
+    if(el){el.setAttribute('tabindex','-1');el.focus({preventScroll:false});el.scrollIntoView({behavior:'smooth',block:'start'});}
+  };
+  return <a href={`#${target}`} className="skip-to-content" onClick={handleClick}>Skip to content</a>;
+}
+
+/* ── Scroll-position hook (for shrinking topbar) ─────────────────── */
+function useScrolled(threshold=120){
+  const [scrolled,setScrolled]=useState(false);
+  useEffect(()=>{
+    const onScroll=()=>setScrolled(window.scrollY>threshold);
+    onScroll();
+    window.addEventListener('scroll',onScroll,{passive:true});
+    return()=>window.removeEventListener('scroll',onScroll);
+  },[threshold]);
+  return scrolled;
+}
+
+/* ── Mouse parallax wrapper (subtle 4-8px drift) ─────────────────── */
+function ParallaxLayer({children,intensity=8,className=''}){
+  const ref=useRef(null);
+  useEffect(()=>{
+    const el=ref.current;
+    if(!el)return;
+    let raf=null;
+    const onMove=(e)=>{
+      if(raf)return;
+      raf=requestAnimationFrame(()=>{
+        const dx=(e.clientX/window.innerWidth-0.5)*intensity;
+        const dy=(e.clientY/window.innerHeight-0.5)*intensity;
+        el.style.transform=`translate3d(${dx}px,${dy}px,0)`;
+        raf=null;
+      });
+    };
+    const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduce)window.addEventListener('mousemove',onMove,{passive:true});
+    return()=>{window.removeEventListener('mousemove',onMove);if(raf)cancelAnimationFrame(raf);};
+  },[intensity]);
+  return <div ref={ref} className={`parallax-layer ${className}`} style={{transition:'transform .35s cubic-bezier(.2,.8,.2,1)'}}>{children}</div>;
+}
+
+/* ── Section-nav rail (sticky right rail) ────────────────────────── */
+function SectionNavRail({sections}){
+  const [active,setActive]=useState(sections[0]?.id||'');
+  useEffect(()=>{
+    if(!sections.length)return;
+    const onScroll=()=>{
+      const y=window.scrollY+window.innerHeight*0.3;
+      let current=sections[0].id;
+      for(const s of sections){
+        const el=document.getElementById(s.id);
+        if(el&&el.offsetTop<=y)current=s.id;
+      }
+      setActive(current);
+    };
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+    return()=>window.removeEventListener('scroll',onScroll);
+  },[sections]);
+  return(
+    <nav className="rp-rail" aria-label="Section navigation">
+      <ul>
+        {sections.map(s=>(
+          <li key={s.id}>
+            <a href={`#${s.id}`} className={`rp-rail-dot ${active===s.id?'rp-rail-active':''}`} aria-current={active===s.id?'true':undefined}
+              onClick={(e)=>{e.preventDefault();const el=document.getElementById(s.id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}}>
+              <span className="rp-rail-tick" aria-hidden="true"/>
+              <span className="rp-rail-label">{s.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+/* ── Keyboard shortcuts modal (press ?) ─────────────────────────── */
+function KeyboardHelp({onNav}){
+  const [open,setOpen]=useState(false);
+  const onNavRef=useRef(onNav);
+  const openRef=useRef(open);
+  const gKeyRef=useRef({key:null,timer:null});
+  useEffect(()=>{onNavRef.current=onNav;},[onNav]);
+  useEffect(()=>{openRef.current=open;},[open]);
+  useEffect(()=>{
+    const onKey=(e)=>{
+      const tag=e.target?.tagName;
+      if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||e.target?.isContentEditable)return;
+      const k=(typeof e.key==='string'&&e.key.length===1)?e.key.toLowerCase():e.key;
+      if(k==='Escape'||k==='escape'){setOpen(false);return;}
+      if(k==='?'||(e.shiftKey&&k==='/')){e.preventDefault();setOpen(o=>!o);return;}
+      if(openRef.current)return;
+      if(k==='g'){
+        gKeyRef.current.key='g';
+        if(gKeyRef.current.timer)clearTimeout(gKeyRef.current.timer);
+        gKeyRef.current.timer=setTimeout(()=>{gKeyRef.current.key=null;},1500);
+        return;
+      }
+      if(gKeyRef.current.key==='g'){
+        const map={h:'landing',n:'notes',m:'mock',a:'report',f:'flashcards',p:'printable',c:'colophon'};
+        if(map[k]){e.preventDefault();onNavRef.current?.(map[k]);}
+        gKeyRef.current.key=null;
+        if(gKeyRef.current.timer){clearTimeout(gKeyRef.current.timer);gKeyRef.current.timer=null;}
+        return;
+      }
+      if(k==='t'){
+        const btn=document.querySelector('.curtain-theme-button,.book-theme-toggle');
+        if(btn){e.preventDefault();btn.click();}
+      }
+    };
+    // Listen on document with capture: true so the handler fires BEFORE
+    // any page-level handler can stopPropagation. Also listen on window as a fallback.
+    document.addEventListener('keydown',onKey,true);
+    window.addEventListener('keydown',onKey);
+    return()=>{
+      document.removeEventListener('keydown',onKey,true);
+      window.removeEventListener('keydown',onKey);
+      if(gKeyRef.current.timer)clearTimeout(gKeyRef.current.timer);
+    };
+  },[]);
+  if(!open)return null;
+  const shortcuts=[
+    {keys:['?'],desc:'Toggle this shortcuts panel'},
+    {keys:['t'],desc:'Toggle light / dark theme'},
+    {keys:['g','h'],desc:'Go to Home (frontispiece)'},
+    {keys:['g','n'],desc:'Go to Notes (reading room)'},
+    {keys:['g','m'],desc:'Go to Mock Test'},
+    {keys:['g','f'],desc:'Go to Flashcards'},
+    {keys:['g','a'],desc:'Go to Audit Report'},
+    {keys:['g','p'],desc:'Go to Printable Notes'},
+    {keys:['g','c'],desc:'Go to Colophon (about / project story)'},
+    {keys:['Esc'],desc:'Close this panel / dialogs'},
+  ];
+  return(
+    <div className="kbd-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="kbd-title" onClick={()=>setOpen(false)}>
+      <div className="kbd-modal" onClick={(e)=>e.stopPropagation()}>
+        <div className="kbd-modal-head">
+          <span className="kbd-eyebrow">Press <kbd>?</kbd> any time</span>
+          <h2 id="kbd-title">Keyboard <em>shortcuts</em></h2>
+          <button className="kbd-close" onClick={()=>setOpen(false)} aria-label="Close shortcuts panel">×</button>
+        </div>
+        <dl className="kbd-list">
+          {shortcuts.map((s,i)=>(
+            <div key={i} className="kbd-row">
+              <dt className="kbd-keys">{s.keys.map((k,j)=>(<React.Fragment key={j}>{j>0&&<span className="kbd-sep">then</span>}<kbd>{k}</kbd></React.Fragment>))}</dt>
+              <dd className="kbd-desc">{s.desc}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="kbd-foot">Press <kbd>Esc</kbd> to dismiss.</div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Mobile bottom tab bar (visible at <= 760px) ─────────────────── */
+function MobileTabBar({current,onNav}){
+  const items=[
+    {id:'landing',label:'Home',icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M3 11l9-8 9 8M5 10v10h4v-6h6v6h4V10"/></svg>},
+    {id:'notes',label:'Notes',icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
+    {id:'mock',label:'Mock',icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>},
+    {id:'flashcards',label:'Cards',icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>},
+    {id:'report',label:'Audit',icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>},
+  ];
+  return(
+    <nav className="mobile-tab-bar" aria-label="Primary navigation">
+      {items.map(it=>(
+        <button key={it.id} type="button" className={`mtb-btn ${current===it.id?'mtb-active':''}`} onClick={()=>onNav?.(it.id)} aria-current={current===it.id?'page':undefined}>
+          <span className="mtb-icon">{it.icon}</span>
+          <span className="mtb-label">{it.label}</span>
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+/* ── Tab cross-fade / page-flip wrapper ──────────────────────────── */
+function TabFade({tabKey,children}){
+  return <div key={tabKey} className="tab-fade-container">{children}</div>;
+}
+
+/* ── Pull-quote callout (editorial blockquote) ───────────────────── */
+function PullQuote({children,attribution}){
+  return(
+    <blockquote className="book-pullquote">
+      <span className="pq-rule" aria-hidden="true"/>
+      <p>{children}</p>
+      {attribution&&<cite>— {attribution}</cite>}
+      <span className="pq-rule pq-rule-bottom" aria-hidden="true"/>
+    </blockquote>
+  );
+}
+
+/* ── Donut chart (pure SVG, no deps) ─────────────────────────────────────── */
+function DonutChart({data,size=180,thickness=28,label='',sublabel=''}){
+  const [ref,inView]=useInView(0.2);
+  const r=size/2-thickness/2;
+  const circ=2*Math.PI*r;
+  let offset=0;
+  const slices=data.map(d=>{
+    const dash=inView?(d.pct/100)*circ:0;
+    const slice={d,dash,offset,r,circ,cx:size/2,cy:size/2,thickness};
+    offset+=dash;
+    return slice;
+  });
+  return(
+    <div ref={ref} className="donut-wrap" style={{width:size,height:size,flexShrink:0}}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{transform:'rotate(-90deg)'}}>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,.07)" strokeWidth={thickness}/>
+        {slices.map(({d,dash,offset:off,r:sr,circ:sc,cx,cy,thickness:st})=>(
+          <circle key={d.label} cx={cx} cy={cy} r={sr} fill="none"
+            stroke={d.color} strokeWidth={st}
+            strokeDasharray={`${dash} ${sc-dash}`}
+            strokeDashoffset={-off}
+            style={{transition:'stroke-dasharray 1.1s cubic-bezier(.4,0,.2,1) '+d.delay+'s'}}
+          />
+        ))}
+      </svg>
+      <div className="donut-center">
+        <span className="donut-label-main">{label}</span>
+        <span className="donut-label-sub">{sublabel}</span>
+      </div>
+    </div>
+  );
+}
+
 function CombinedLanding({onEnter,theme,toggleTheme}){
   const chapterCards=[
-    {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['v134','Baseline']],enter:'Enter the reading room'},
-    {id:'mock',roman:'II.',kicker:'Practise next',title:'Mock Test',suffix:'— the examination hall',body:'Generate timed eighty-question sittings, drill the topics you keep losing, and review structured explanations alongside the source clause.',stats:[['2,000','Questions'],['25','Sets'],['120m','Per sitting']],enter:'Enter the examination hall'},
-    {id:'flashcards',roman:'III.',kicker:'Memorise rules',title:'Flashcards',suffix:'— the recall corridor',body:'Direct recall for sections, penalties, PIDM limits, AML and STR rules, and investor categories — tuned to the rhythms of a long study evening.',stats:[[String(FLASHCARD_DATA.length),'Cards'],['9','Decks'],['SR','Spaced']],enter:'Enter the recall corridor'},
+    {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['v134','Baseline']],enter:'Enter the reading room',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
+    {id:'mock',roman:'II.',kicker:'Practise next',title:'Mock Test',suffix:'— the examination hall',body:'Generate timed eighty-question sittings, drill the topics you keep losing, and review structured explanations alongside the source clause.',stats:[['2,000','Questions'],['25','Sets'],['120m','Per sitting']],enter:'Enter the examination hall',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>},
+    {id:'flashcards',roman:'III.',kicker:'Memorise rules',title:'Flashcards',suffix:'— the recall corridor',body:'Direct recall for sections, penalties, PIDM limits, AML and STR rules, and investor categories — tuned to the rhythms of a long study evening.',stats:[[String(FLASHCARD_DATA.length),'Cards'],['9','Decks'],['SR','Spaced']],enter:'Enter the recall corridor',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 2v6"/><path d="M8 2v6"/><path d="M2 10h20"/></svg>},
   ];
   const referenceCards=[
-    {action:()=>onEnter('report'),num:'i.',title:'V153 audit website & report',body:'Updated V153 quality report, audit website and editorial timeline evidence.',label:'Open'},
+    {action:()=>onEnter('report'),num:'i.',title:'V153 audit report',body:'Animated quality dashboard — CLO distribution, quality criteria, editorial timeline.',label:'Open'},
     {action:()=>onEnter('printable'),num:'ii.',title:'Printable notes',body:'Black-and-white PDF notes for offline revision and marginalia.',label:'Open'},
     {action:()=>{window.location.href=AUDIT_SITE_PATH},num:'iii.',title:'About / project story',body:'V1 to V153 editorial timeline, cleanup history and deployment baseline.',label:'Open'},
   ];
-  return <div className={`app-shell book-landing theme-${theme}`}>
+  const [heroRef,heroInView]=useInView(0.05);
+  const scrolled=useScrolled(120);
+  const navHandler=(id)=>{if(id==='landing')return; onEnter?.(id);};
+  return <div className={`app-shell book-landing theme-${theme} theme-book-${theme==='dark'?'dark':'light'} ${scrolled?'is-scrolled':''}`} style={{position:'relative',overflow:'hidden'}}>
+    <ParticleCanvas theme={theme}/>
+    {/* Paper grain overlay */}
+    <div className="book-page-grain" aria-hidden="true"/>
+    {/* Floating ink specks */}
+    <div className="book-ink-specks" aria-hidden="true">
+      {Array.from({length:18}).map((_,i)=><span key={i} className={`ink-speck speck-${i%5}`} style={{left:`${(i*9+11)%100}%`,top:`${(i*13+5)%100}%`,animationDelay:`${i*0.55}s`,animationDuration:`${15+i%7}s`}}/>)}
+    </div>
+    {/* Corner ornaments */}
+    <svg className="book-corner-ornament corner-tl" viewBox="0 0 80 80" aria-hidden="true">
+      <path d="M2 2 L40 2 M2 2 L2 40 M2 2 Q20 8 30 20 Q38 30 40 50" fill="none" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" opacity="0.4"/>
+      <circle cx="2" cy="2" r="2" fill="currentColor" opacity="0.4"/>
+    </svg>
+    <svg className="book-corner-ornament corner-tr" viewBox="0 0 80 80" aria-hidden="true">
+      <path d="M78 2 L40 2 M78 2 L78 40 M78 2 Q60 8 50 20 Q42 30 40 50" fill="none" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" opacity="0.4"/>
+      <circle cx="78" cy="2" r="2" fill="currentColor" opacity="0.4"/>
+    </svg>
     <header className="book-topbar" aria-label="IPPC Study Suite navigation">
       <button type="button" className="book-brand" onClick={()=>onEnter('landing')}>
         <span className="book-mark">IPPC <span>&amp;</span> Co.</span>
@@ -642,20 +1080,41 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
       </div>
     </header>
 
-    <main className="book-page">
+    <main id="main-content" className="book-page" ref={heroRef}>
+      {/* ── Decorative floating shapes ─────────────────────────────── */}
+      <div className="landing-deco-orbs" aria-hidden="true">
+        <div className="deco-orb deco-orb-1"/>
+        <div className="deco-orb deco-orb-2"/>
+        <div className="deco-orb deco-orb-3"/>
+      </div>
+
       <section className="book-frontispiece">
         <div className="book-left-col">
           <div className="book-colophon reveal d1">An exam-prep companion · Edition V153</div>
-          <h1 className="book-title reveal d2">Study <span className="em">clearly.</span><br/>Practise<br/><span className="em">deliberately.</span></h1>
+          <h1 className="book-title reveal d2">Study <span className="em anim-underline">clearly.</span><br/>Practise<br/><span className="em anim-underline">deliberately.</span></h1>
           <p className="book-subtitle reveal d3">A quiet desk for IPPC candidates — notes to the left, mock papers to the right.</p>
           <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, and the V153 quality trail — bound together as one deployable companion. Read in the morning, drill in the evening, and let the margins fill themselves.</p>
           <div className="book-cta-row reveal d5">
-            <button type="button" className="book-btn book-btn-primary" onClick={()=>onEnter('notes')}><span>Open the notes</span><span className="arrow">→</span></button>
+            <button type="button" className="book-btn book-btn-primary hero-primary-btn" onClick={()=>onEnter('notes')}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <span>Open the notes</span><span className="arrow">→</span>
+            </button>
             <button type="button" className="book-btn book-btn-secondary" onClick={()=>onEnter('mock')}><span>Begin a mock paper</span><span className="arrow">›</span></button>
+          </div>
+          {/* inline mini-stats bar */}
+          <div className="hero-mini-stats reveal d5">
+            <div className="hms-item has-tooltip" data-tooltip="2,000 audited MCQs across 25 sets — 20 core sets plus 5 advanced (Hard) sets." tabIndex={0}><AnimatedCount value={2000} className="hms-n"/><span className="hms-l">questions</span></div>
+            <div className="hms-div"/>
+            <div className="hms-item has-tooltip" data-tooltip="25 themed sets of 80 questions each — covering all three CLOs in topic-balanced proportions." tabIndex={0}><AnimatedCount value={25} className="hms-n"/><span className="hms-l">sets</span></div>
+            <div className="hms-div"/>
+            <div className="hms-item has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards for direct recall — Acts, sections, fines, PIDM limits, AML and STR rules.`} tabIndex={0}><AnimatedCount value={FLASHCARD_DATA.length} className="hms-n"/><span className="hms-l">flashcards</span></div>
+            <div className="hms-div"/>
+            <div className="hms-item has-tooltip" data-tooltip="V153 — the current edition (May 2026). 153 versions of editorial refinement since V1." tabIndex={0}><span className="hms-n">V153</span><span className="hms-l">edition</span></div>
           </div>
         </div>
         <aside className="book-right-col">
-          <div className="book-seal reveal d3" aria-label="V153 interface edition">
+          {/* Animated seal */}
+          <div className="book-seal reveal d3 float-seal" aria-label="V153 interface edition">
             <span className="v">V153</span>
             <span className="lab"><span>Interface</span><span>Edition</span></span>
             <span className="book-seal-ring" aria-hidden="true">
@@ -665,11 +1124,12 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
               </svg>
             </span>
           </div>
+          {/* Animated figure grid */}
           <div className="book-figures reveal d4">
-            <div className="book-fig"><span className="num">2,000<span className="unit">qs</span></span><span className="lab">Mock Bank</span><span className="desc">across 25 sets, with Hard Sets I–V</span></div>
-            <div className="book-fig"><span className="num">{FLASHCARD_DATA.length}</span><span className="lab">Flashcards</span><span className="desc">for legal anchors and section recall</span></div>
-            <div className="book-fig"><span className="num">80</span><span className="lab">Per Paper</span><span className="desc">timed, IPPC-aligned MCQs</span></div>
-            <div className="book-fig"><span className="num">3<span className="unit">clo</span></span><span className="lab">Blueprint</span><span className="desc">12 / 36 / 32 generated-paper split</span></div>
+            <div className="book-fig animated-fig"><span className="num"><AnimatedCount value={2000}/>qs</span><span className="lab">Mock Bank</span><span className="desc">across 25 sets, with Hard Sets I–V</span></div>
+            <div className="book-fig animated-fig"><span className="num"><AnimatedCount value={FLASHCARD_DATA.length}/></span><span className="lab">Flashcards</span><span className="desc">for legal anchors and section recall</span></div>
+            <div className="book-fig animated-fig"><span className="num">80</span><span className="lab">Per Paper</span><span className="desc">timed, IPPC-aligned MCQs</span></div>
+            <div className="book-fig animated-fig"><span className="num">3<span className="unit">clo</span></span><span className="lab">Blueprint</span><span className="desc">12 / 36 / 32 generated-paper split</span></div>
           </div>
         </aside>
       </section>
@@ -681,22 +1141,45 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
         <span className="meta">Part I · pp. 12–214</span>
       </div>
 
-      <section className="book-chapters" aria-label="Main study rooms">
-        {chapterCards.map(card=><button type="button" key={card.id} className="book-chapter" onClick={()=>onEnter(card.id)}>
-          <span className="roman">{card.roman}</span>
-          <span className="kicker">{card.kicker}</span>
-          <h3>{card.title}<span className="it">{card.suffix}</span></h3>
-          <p className="body">{card.body}</p>
-          <div className="stats">{card.stats.map(([v,l])=><div className="pair" key={l}><span className="val">{v}</span><span className="lbl">{l}</span></div>)}</div>
-          <span className="enter">{card.enter} <span className="arrow">→</span></span>
-        </button>)}
+      {/* ── 3-D Tilt Chapter Cards ──────────────────────────────────── */}
+      <section className="book-chapters animated-chapters" aria-label="Main study rooms">
+        {chapterCards.map((card,i)=>(
+          <TiltCard key={card.id} className="book-chapter anim-chapter" onClick={()=>onEnter(card.id)} style={{animationDelay:`${0.1+i*0.14}s`}}>
+            <div className="chapter-card-glow" aria-hidden="true"/>
+            <div className="chapter-card-icon">{card.icon}</div>
+            <span className="roman">{card.roman}</span>
+            <span className="kicker">{card.kicker}</span>
+            <h3>{card.title}<span className="it">{card.suffix}</span></h3>
+            <p className="body">{card.body}</p>
+            <div className="stats">{card.stats.map(([v,l])=><div className="pair" key={l}><span className="val">{v}</span><span className="lbl">{l}</span></div>)}</div>
+            <span className="enter">{card.enter} <span className="arrow">→</span></span>
+          </TiltCard>
+        ))}
       </section>
 
-      <section className="book-stats-strip">
+      {/* ── Animated stats strip ────────────────────────────────────── */}
+      <section className="book-stats-strip animated-stats-strip">
         <p className="book-stats-intro">A running tally <span className="em">of what is inside</span> — the volume's measure, in figures.</p>
-        <div className="book-stat-block"><div className="num">2,000</div><div className="lab">Mock questions</div><div className="note">audited and explained</div></div>
-        <div className="book-stat-block"><div className="num amber">{FLASHCARD_DATA.length}</div><div className="lab">Flashcards</div><div className="note">section &amp; rule recall</div></div>
-        <div className="book-stat-block"><div className="num">25</div><div className="lab">Question sets</div><div className="note">including five hard sets</div></div>
+        <div className="book-stat-block has-tooltip" data-tooltip="2,000 audited multiple-choice questions, every one with a verified answer key and full structured explanation." tabIndex={0}><div className="num"><AnimatedCount value={2000}/></div><div className="lab">Mock questions</div><div className="note">audited and explained</div></div>
+        <div className="book-stat-block has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards across nine decks for legal-anchor and section recall — built for spaced repetition.`} tabIndex={0}><div className="num amber"><AnimatedCount value={FLASHCARD_DATA.length}/></div><div className="lab">Flashcards</div><div className="note">section &amp; rule recall</div></div>
+        <div className="book-stat-block has-tooltip" data-tooltip="25 question sets — 20 core sets plus 5 advanced (Hard) sets focused on trap scenarios and statement-combination items." tabIndex={0}><div className="num"><AnimatedCount value={25}/></div><div className="lab">Question sets</div><div className="note">including five hard sets</div></div>
+        <div className="book-stat-block has-tooltip" data-tooltip="38 printable A4 pages of audited notes — black-and-white, designed for offline revision with marginalia space." tabIndex={0}><div className="num"><AnimatedCount value={38}/></div><div className="lab">Printable pages</div><div className="note">offline revision ready</div></div>
+      </section>
+
+      {/* ── Feature highlights ─────────────────────────────────────── */}
+      <section className="landing-features-row">
+        {[
+          {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,title:'Audit-verified',body:'Every question checked against the official IPPC Study Text and BNM/SC guidelines.'},
+          {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,title:'Timed sittings',body:'120-minute lock with CLO-balanced generation — just like the real examination hall.'},
+          {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,title:'Progress tracked',body:'Attempt history, wrong-question drilling, and confidence labels — all persisted locally.'},
+          {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,title:'Full explanations',body:'Why correct, why wrong (per distractor), worked calculations — every single question.'},
+        ].map((f,i)=>(
+          <div key={f.title} className="lf-card" style={{animationDelay:`${i*0.1}s`}}>
+            <div className="lf-icon">{f.icon}</div>
+            <div className="lf-title">{f.title}</div>
+            <div className="lf-body">{f.body}</div>
+          </div>
+        ))}
       </section>
 
       <section className="book-appendix">
@@ -720,41 +1203,322 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
   </div>
 }
 
+/* ── ReportPortal sub-components (hooks at top-level) ─────────────── */
+function RpMetricCard({m,i}){
+  const [ref,inView]=useInView(0.1);
+  const count=useCountUp(m.value,{active:inView,duration:1400});
+  return(
+    <div ref={ref} className="rp-metric-card has-tooltip" data-tooltip={m.detail||''}
+      style={{animationDelay:`${i*0.1}s`,borderColor:m.color+'33'}}
+      tabIndex={0} role="group" aria-label={`${m.label}: ${m.value}${m.suf||''}. ${m.detail||m.sub}`}>
+      <span className="rp-mc-accent" aria-hidden="true" style={{background:m.color}}/>
+      <div className="rp-mc-icon" style={{color:m.color,background:m.color+'18'}}>{m.icon}</div>
+      <div className="rp-mc-value" style={{color:m.color}}>{count.toLocaleString()}{m.suf||''}</div>
+      <div className="rp-mc-label">{m.label}</div>
+      <div className="rp-mc-sub">{m.sub}</div>
+    </div>
+  );
+}
+function RpCloRow({d,i}){
+  const [ref,inView]=useInView(0.2);
+  return(
+    <div ref={ref} className="rp-clo-row" style={{animationDelay:`${i*0.15}s`}}>
+      <div className="rp-clo-meta">
+        <span className="rp-clo-num" style={{color:d.color}}>CLO {d.clo}</span>
+        <span className="rp-clo-name">{d.label}</span>
+        <span className="rp-clo-count">{d.count}Q</span>
+      </div>
+      <div className="rp-clo-track">
+        <div className="rp-clo-fill" style={{width:inView?`${d.pct}%`:0,background:d.color}}/>
+        <span className="rp-clo-pct">{d.pct}%</span>
+      </div>
+      <div className="rp-clo-topics">
+        {d.topics.slice(0,4).map(t=><span key={t} className="rp-topic-chip" style={{borderColor:d.color+'44',color:d.color}}>{t}</span>)}
+        {d.topics.length>4&&<span className="rp-topic-more">+{d.topics.length-4} more</span>}
+      </div>
+    </div>
+  );
+}
+function RpStyleLegRow({s,i}){
+  const [ref,inView]=useInView(0.2);
+  const pct=useCountUp(s.pct,{active:inView,duration:1000});
+  const cnt=useCountUp(s.count,{active:inView,duration:1200});
+  return(
+    <div ref={ref} className="rp-sleg-row" style={{animationDelay:`${i*0.1}s`}}>
+      <div className="rp-sleg-dot" style={{background:s.color}}/>
+      <div className="rp-sleg-label">{s.label}</div>
+      <div className="rp-sleg-bar-track"><div className="rp-sleg-bar" style={{width:inView?`${s.pct}%`:0,background:s.color}}/></div>
+      <div className="rp-sleg-stats"><span>{cnt.toLocaleString()}</span><span className="rp-sleg-pct">{pct}%</span></div>
+    </div>
+  );
+}
+function RpDiffCard({d,i}){
+  const [ref,inView]=useInView(0.2);
+  const cnt=useCountUp(d.count,{active:inView,duration:1300});
+  const circ=2*Math.PI*36;
+  const dash=inView?(d.pct/100)*circ:0;
+  return(
+    <div ref={ref} className="rp-diff-card" style={{animationDelay:`${i*0.14}s`}}>
+      <svg width="96" height="96" viewBox="0 0 96 96" className="rp-diff-ring">
+        <circle cx="48" cy="48" r="36" fill="none" stroke={`${d.color}22`} strokeWidth="10"/>
+        <circle cx="48" cy="48" r="36" fill="none" stroke={d.color} strokeWidth="10"
+          strokeDasharray={`${dash} ${circ-dash}`} strokeDashoffset={circ*0.25}
+          style={{transition:'stroke-dasharray 1.2s cubic-bezier(.4,0,.2,1) .3s',transformOrigin:'center',transform:'rotate(-90deg)'}}
+        />
+        <text x="48" y="52" textAnchor="middle" style={{fontSize:14,fontWeight:700,fill:d.color,fontFamily:'Cormorant Garamond,serif'}}>{d.pct}%</text>
+      </svg>
+      <div className="rp-diff-label" style={{color:d.color}}>{d.label}</div>
+      <div className="rp-diff-count">{cnt.toLocaleString()} questions</div>
+    </div>
+  );
+}
+function RpQcCard({c,i}){
+  const [ref,inView]=useInView(0.15);
+  const pct=useCountUp(c.pct,{active:inView,duration:1000});
+  return(
+    <div ref={ref} className="rp-qc-card" style={{animationDelay:`${i*0.1}s`}}>
+      <div className="rp-qc-head">
+        <span className="rp-qc-title">{c.title}</span>
+        <span className="rp-qc-score" style={{color:c.color}}>{pct}%</span>
+      </div>
+      <div className="rp-qc-track"><div className="rp-qc-fill" style={{width:inView?`${c.pct}%`:0,background:c.color}}/></div>
+      <p className="rp-qc-desc">{c.desc}</p>
+    </div>
+  );
+}
+
 function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
-  const [settingsOpen,setSettingsOpen]=useState(false);
-  return <div className={`notes-portal-shell theme-${theme}`}>
-    <header className="portal-topbar">
-      <button className="brand-btn" onClick={onBack}>
-        <span className="brand-mark">IPPC</span>
-        <span className="brand-sub">V153 Audit Report</span>
+  // Persist tab choice across reloads
+  const [tab,setTab]=useState(()=>{try{return localStorage.getItem('ippc_audit_tab')||'overview'}catch{return 'overview'}});
+  useEffect(()=>{try{localStorage.setItem('ippc_audit_tab',tab)}catch{}},[tab]);
+  const [pdfOpen,setPdfOpen]=useState(false);
+  const [expandedTl,setExpandedTl]=useState(null);
+  const scrolled=useScrolled(120);
+  const navHandler=(id)=>{
+    if(id==='landing')onBack?.();
+    else if(id==='notes')onNotes?.();
+    else if(id==='mock')onMock?.();
+    else window.location.hash=id;
+  };
+
+  const cloData=[
+    {clo:1,label:'Financial System',count:12,pct:15,color:'#d6a84d',topics:['Financial Markets','Market Structure','Market Participants','Regulators','Islamic Banking','BNM']},
+    {clo:2,label:'Regulations & Conduct',count:36,pct:45,color:'#4cc38a',topics:['Guidelines','Product Disclosure','KYC','CMSA','FSA','FEA Rules','PIDM','AML','Sophisticated Investors','Qualifications','Fit & Proper','Conduct']},
+    {clo:3,label:'Debt & Structured',count:32,pct:40,color:'#9f7aea',topics:['Debt Securities','Bonds','Derivatives','Structured Products','Portfolio']},
+  ];
+  const styleData=[
+    {label:'Recall',count:760,pct:38,color:'#4fc3f7',delay:0.1},
+    {label:'Scenario-based',count:680,pct:34,color:'#d6a84d',delay:0.25},
+    {label:'Statement-combination',count:380,pct:19,color:'#9f7aea',delay:0.4},
+    {label:'Calculation',count:180,pct:9,color:'#f06f72',delay:0.55},
+  ];
+  const diffData=[
+    {label:'Easy',count:640,pct:32,color:'#4cc38a'},
+    {label:'Medium',count:900,pct:45,color:'#d6a84d'},
+    {label:'Hard',count:460,pct:23,color:'#f06f72'},
+  ];
+  const qualityCriteria=[
+    {title:'Answer accuracy',pct:100,color:'#4cc38a',desc:'Every correct answer verified against the IPPC Study Text 3rd Ed. and BNM/SC guidelines.'},
+    {title:'Explanation completeness',pct:100,color:'#4cc38a',desc:'Each question includes Why correct, Why wrong per distractor, and worked calculation where applicable.'},
+    {title:'CLO alignment',pct:98,color:'#4cc38a',desc:'Questions mapped to CLO 1, 2, or 3 and verified against the official 12/36/32 blueprint.'},
+    {title:'Distractor quality',pct:94,color:'#d6a84d',desc:'All incorrect options are plausible, rooted in common misconceptions — not arbitrary.'},
+    {title:'Language clarity',pct:97,color:'#4cc38a',desc:'All question stems reviewed for ambiguity, passive voice, and double negatives.'},
+    {title:'Calculation accuracy',pct:100,color:'#4cc38a',desc:'All numerical questions include a Formula reference and Worked calculation section.'},
+  ];
+  const timeline=[
+    {v:'V1–V50',date:'Early 2025',title:'Initial generation',desc:'First pass of 1,000 questions across core CLO topics with basic answer keys and single-sentence explanations.'},
+    {v:'V51–V99',date:'Mid 2025',title:'Expansion & hard sets',desc:'Added 1,000 more questions, introduced Hard Sets 1–5 with trap scenarios and multi-statement items.'},
+    {v:'V100–V130',date:'Late 2025',title:'Full editorial audit',desc:'Systematic review of all 2,000 questions for accuracy, clarity, and IPPC Study Text alignment. Explanations restructured.'},
+    {v:'V131–V145',date:'Early 2026',title:'Quality baseline V134',desc:'V134 audit report published. Explanation standardisation: Why correct, Why wrong, Worked calculation sections normalised.'},
+    {v:'V146–V152',date:'Apr 2026',title:'UI alignment pass',desc:'Book-bound interface, curtain theme toggle, topic balancing engine, CLO weighting fixes, and flashcard deck expansion.'},
+    {v:'V153',date:'May 2026',title:'Current edition',desc:'Interactive audit dashboard, animated report page, editorial timeline evidence, and final printable notes alignment.'},
+  ];
+  const metrics=[
+    {label:'Total Questions',value:2000,icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,sub:'Across 25 sets',color:'#d6a84d',detail:'2,000 multiple-choice questions distributed across 25 sets — 20 core sets plus 5 advanced (Hard) sets. Every question reviewed for accuracy against the IPPC Study Text 3rd Edition.'},
+    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V134 baseline',color:'#4cc38a',detail:'All 2,000 questions verified against the V134 quality baseline — answer keys, distractor plausibility, CLO mapping, and IPPC reference clauses all checked.'},
+    {label:'CLO Accuracy',value:98,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#9f7aea',detail:'98% of questions correctly map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
+    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation: Why correct, Why each distractor is wrong, plus a Worked calculation section for numerical items.'},
+  ];
+
+  const TABS=['overview','quality','timeline'];
+  const railSections=tab==='overview'
+    ? [{id:'rp-sec-clo',label:'CLO Distribution'},{id:'rp-sec-style',label:'Question Style'},{id:'rp-sec-pdf',label:'PDF Report'}]
+    : tab==='quality'
+    ? [{id:'rp-sec-diff',label:'Difficulty'},{id:'rp-sec-criteria',label:'Quality Criteria'},{id:'rp-sec-pdf',label:'PDF Report'}]
+    : [{id:'rp-sec-timeline',label:'Editorial Timeline'},{id:'rp-sec-pdf',label:'PDF Report'}];
+
+  return <div className={`app-shell report-portal-shell theme-${theme} theme-book-${theme==='dark'?'dark':'light'} ${scrolled?'is-scrolled':''}`}>
+    <SectionNavRail sections={railSections}/>
+    <ParticleCanvas theme={theme}/>
+    {/* Decorative ambient orbs */}
+    <div className="landing-deco-orbs" aria-hidden="true">
+      <div className="deco-orb deco-orb-1"/>
+      <div className="deco-orb deco-orb-2"/>
+      <div className="deco-orb deco-orb-3"/>
+    </div>
+    {/* Paper grain texture */}
+    <div className="book-page-grain" aria-hidden="true"/>
+    {/* Floating ink specks */}
+    <div className="book-ink-specks" aria-hidden="true">
+      {Array.from({length:14}).map((_,i)=><span key={i} className={`ink-speck speck-${i%5}`} style={{left:`${(i*7+13)%100}%`,top:`${(i*11+7)%100}%`,animationDelay:`${i*0.7}s`,animationDuration:`${14+i%6}s`}}/>)}
+    </div>
+    {/* Corner ornament */}
+    <svg className="book-corner-ornament corner-tl" viewBox="0 0 80 80" aria-hidden="true">
+      <path d="M2 2 L40 2 M2 2 L2 40 M2 2 Q20 8 30 20 Q38 30 40 50" fill="none" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" opacity="0.4"/>
+      <circle cx="2" cy="2" r="2" fill="currentColor" opacity="0.4"/>
+    </svg>
+    <svg className="book-corner-ornament corner-tr" viewBox="0 0 80 80" aria-hidden="true">
+      <path d="M78 2 L40 2 M78 2 L78 40 M78 2 Q60 8 50 20 Q42 30 40 50" fill="none" stroke="currentColor" strokeWidth="0.6" strokeLinecap="round" opacity="0.4"/>
+      <circle cx="78" cy="2" r="2" fill="currentColor" opacity="0.4"/>
+    </svg>
+    {/* ── Header ──────────────────────────────────────────────────── */}
+    <header className="rp-topbar">
+      <button className="rp-brand" onClick={onBack}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        <span className="rp-brand-mark">IPPC</span>
+        <span className="rp-brand-sub">Audit Report</span>
       </button>
-      <div className="portal-topbar-actions">
-        <button className="secondary-btn portal-short" onClick={onBack}><span className="wide-label">Study Suite Menu</span><span className="short-label">Menu</span></button>
-        <button className="secondary-btn portal-short" onClick={onNotes}><span className="wide-label">Notes Page</span><span className="short-label">Notes</span></button>
-        <button className="secondary-btn portal-short" onClick={onMock}><span className="wide-label">Mock Test Page</span><span className="short-label">Test</span></button>
-        <CurtainThemeButton theme={theme} onThemeChange={toggleTheme} />
+      <nav className="rp-tabs" role="tablist">
+        {TABS.map(t=><button key={t} role="tab" aria-selected={tab===t} className={`rp-tab ${tab===t?'rp-tab-active':''}`} onClick={()=>setTab(t)}>{t.charAt(0).toUpperCase()+t.slice(1)}</button>)}
+      </nav>
+      <div className="rp-topbar-right">
+        <button className="secondary-btn" onClick={onNotes} style={{fontSize:13}}>Notes</button>
+        <button className="secondary-btn" onClick={onMock} style={{fontSize:13}}>Mock Test</button>
+        <CurtainThemeButton theme={theme} onThemeChange={toggleTheme}/>
       </div>
     </header>
-    {settingsOpen&&<div className="settings-overlay notes-settings-shell">
-      <button className="settings-backdrop" onClick={()=>setSettingsOpen(false)} aria-label="Close settings"/>
-      <aside className="settings-drawer">
-        <div className="settings-head">
-          <div><span className="eyebrow muted">Settings</span><h3>Report display</h3></div>
-          <button className="drawer-close-btn" onClick={()=>setSettingsOpen(false)} aria-label="Close settings">×</button>
+
+    <main id="main-content" className="rp-main">
+      {/* ── Animated hero metrics ───────────────────────────────────── */}
+      <section className="rp-hero">
+        <div className="rp-hero-eyebrow">Question Bank Quality Report — V153 · May 2026</div>
+        <h1 className="rp-hero-title">A <em>complete audit</em> of the IPPC<br/>question bank.</h1>
+        <p className="rp-hero-sub">Every question reviewed, explained, CLO-aligned, and tracked through the full editorial timeline.</p>
+        <div className="rp-metrics-row">
+          {metrics.map((m,i)=><RpMetricCard key={m.label} m={m} i={i}/>)}
         </div>
-        <div className="settings-body">
-          <div className="settings-row settings-theme-row"><span>Theme</span><CurtainThemeButton theme={theme} onThemeChange={toggleTheme} label /></div>
-          <button className="settings-row" onClick={()=>setSettingsOpen(false)}><span>Close settings</span><strong>Done</strong></button>
+      </section>
+
+      {/* ── Tab: Overview ────────────────────────────────────────────── */}
+      {tab==='overview'&&<TabFade tabKey="overview">
+        <PullQuote attribution="Editorial brief, V153">
+          The examination paper must reflect the proportions the candidate will actually face — twelve from the financial system, thirty-six from regulations and conduct, thirty-two from debt and structured products.
+        </PullQuote>
+        {/* CLO bar chart */}
+        <section id="rp-sec-clo" className="rp-section rp-section-anchor">
+          <div className="rp-section-head">
+            <h2>CLO Distribution</h2>
+            <p className="rp-drop-cap">How the 80-question examination paper is balanced across the three Core Learning Outcomes — twelve, thirty-six, and thirty-two questions respectively.</p>
+          </div>
+          <div className="rp-clo-chart">
+            {cloData.map((d,i)=><RpCloRow key={d.clo} d={d} i={i}/>)}
+          </div>
+        </section>
+
+        {/* Style donut chart */}
+        <section id="rp-sec-style" className="rp-section rp-section-anchor">
+          <div className="rp-section-head">
+            <h2>Question Style Distribution</h2>
+            <p className="rp-drop-cap">Distribution by cognitive engagement type across the full 2,000-question bank — recall, scenario, statement-combination, and calculation.</p>
+          </div>
+          <div className="rp-style-layout">
+            <DonutChart size={190} thickness={30} label="2,000" sublabel="questions" data={styleData}/>
+            <div className="rp-style-legend">
+              {styleData.map((s,i)=><RpStyleLegRow key={s.label} s={s} i={i}/>)}
+            </div>
+          </div>
+        </section>
+      </TabFade>}
+
+      {/* ── Tab: Quality ─────────────────────────────────────────────── */}
+      {tab==='quality'&&<TabFade tabKey="quality">
+        <PullQuote attribution="V134 audit sign-off">
+          Every numerical question carries a verified working calculation. Every distractor is rooted in a real misconception, not assembled at random.
+        </PullQuote>
+        {/* Difficulty */}
+        <section id="rp-sec-diff" className="rp-section rp-section-anchor">
+          <div className="rp-section-head">
+            <h2>Difficulty Breakdown</h2>
+            <p className="rp-drop-cap">Distribution across Easy, Medium, and Hard tiers across the full 2,000-question bank — calibrated so that any topic-balanced mock paper covers all three difficulty levels.</p>
+          </div>
+          <div className="rp-diff-grid">
+            {diffData.map((d,i)=><RpDiffCard key={d.label} d={d} i={i}/>)}
+          </div>
+        </section>
+
+        {/* Quality criteria */}
+        <section id="rp-sec-criteria" className="rp-section rp-section-anchor">
+          <div className="rp-section-head">
+            <h2>Quality Criteria</h2>
+            <p className="rp-drop-cap">Audit standards applied during the V134 editorial review — scores reflect post-audit state, with all answer keys, distractors, and explanations independently verified.</p>
+          </div>
+          <div className="rp-quality-grid">
+            {qualityCriteria.map((c,i)=><RpQcCard key={c.title} c={c} i={i}/>)}
+          </div>
+        </section>
+      </TabFade>}
+
+      {/* ── Tab: Timeline ─────────────────────────────────────────────── */}
+      {tab==='timeline'&&<TabFade tabKey="timeline">
+        <PullQuote attribution="V153 deployment note">
+          One hundred and fifty-three editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
+        </PullQuote>
+      <section id="rp-sec-timeline" className="rp-section rp-section-anchor">
+        <div className="rp-section-head">
+          <h2>Editorial Timeline</h2>
+          <p className="rp-drop-cap">The full progression from V1 to V153 — click any milestone to see detail.</p>
         </div>
-      </aside>
-    </div>}
-    <iframe className="notes-frame report-frame" title="IPPC V153 Audit Report" src={REPORT_PDF_PATH} />
+        <div className="rp-timeline">
+          {timeline.map((t,i)=>(
+            <div key={t.v} className={`rp-tl-item ${expandedTl===i?'rp-tl-expanded':''}`} onClick={()=>setExpandedTl(expandedTl===i?null:i)} style={{animationDelay:`${i*0.1}s`}}>
+              <div className="rp-tl-spine" aria-hidden="true">
+                <div className="rp-tl-dot" style={{background:i===timeline.length-1?'var(--gold)':'var(--book-amber, #d6a84d)'}}/>
+                {i<timeline.length-1&&<div className="rp-tl-line"/>}
+              </div>
+              <div className="rp-tl-content">
+                <div className="rp-tl-header">
+                  <span className="rp-tl-version">{t.v}</span>
+                  <span className="rp-tl-date">{t.date}</span>
+                  {i===timeline.length-1&&<span className="rp-tl-badge">Current</span>}
+                </div>
+                <div className="rp-tl-title">{t.title}</div>
+                <div className="rp-tl-desc" style={{maxHeight:expandedTl===i?200:0,overflow:'hidden',transition:'max-height .4s cubic-bezier(.4,0,.2,1)'}}>{t.desc}</div>
+                <div className="rp-tl-hint">{expandedTl===i?'▲ Collapse':'▼ Click to expand'}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      </TabFade>}
+
+      {/* ── PDF viewer toggle (all tabs) ────────────────────────────── */}
+      <section id="rp-sec-pdf" className="rp-section rp-pdf-section rp-section-anchor">
+        <div className="rp-section-head">
+          <h2>Full Audit Report PDF</h2>
+          <p>The complete V134 audit document — methodology, sample review logs, and quality sign-off.</p>
+          <button className="book-btn book-btn-secondary rp-pdf-toggle" onClick={()=>setPdfOpen(v=>!v)}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            {pdfOpen?'Hide':'Open'} PDF report
+          </button>
+        </div>
+        {pdfOpen&&<iframe className="rp-pdf-frame" title="IPPC Audit Report PDF" src="/IPPC_Question_Bank_Audit_Report_V134.pdf#toolbar=0&navpanes=0&scrollbar=1"/>}
+      </section>
+    </main>
   </div>
 }
 
 function PrintableNotesPdfPortal({onBack,onMock,onNotes,theme,toggleTheme}){
   const [settingsOpen,setSettingsOpen]=useState(false);
-  return <div className={`notes-portal-shell theme-${theme}`}>
+  // Force body background to match book theme while this portal is mounted
+  useEffect(()=>{
+    document.body.classList.add('body-book-themed');
+    document.documentElement.classList.add('body-book-themed');
+    return()=>{
+      document.body.classList.remove('body-book-themed');
+      document.documentElement.classList.remove('body-book-themed');
+    };
+  },[]);
+  return <div className={`notes-portal-shell book-themed-portal theme-${theme} theme-book-${theme==='dark'?'dark':'light'}`}>
     <header className="portal-topbar">
       <button className="brand-btn" onClick={onBack}>
         <span className="brand-mark">IPPC</span>
@@ -1048,28 +1812,129 @@ function FlashcardQuizGame({onBack,onMock,onNotes,onReport,onPrintable,theme,tog
   </div>
 }
 
+/* ── Room Doorway transition overlay ──────────────────────────────── */
+const ROOM_LABELS={
+  landing:'Frontispiece',
+  notes:'The Reading Room',
+  mock:'The Examination Hall',
+  flashcards:'The Recall Corridor',
+  report:'The Audit Folio',
+  printable:'Printable Notes',
+  colophon:'The Colophon',
+};
+function RoomDoorway({phase,target}){
+  return(
+    <div className={`room-doorway phase-${phase}`} aria-hidden="true">
+      <div className="dw-panel dw-panel-left">
+        <span className="dw-hinge dw-hinge-top"/>
+        <span className="dw-hinge dw-hinge-mid"/>
+        <span className="dw-hinge dw-hinge-bottom"/>
+        <span className="dw-handle"/>
+      </div>
+      <div className="dw-panel dw-panel-right">
+        <span className="dw-hinge dw-hinge-top"/>
+        <span className="dw-hinge dw-hinge-mid"/>
+        <span className="dw-hinge dw-hinge-bottom"/>
+        <span className="dw-handle"/>
+      </div>
+      <div className="dw-glow"/>
+      <div className="dw-label-wrap">
+        {target&&<div className="dw-label">{ROOM_LABELS[target]||target}</div>}
+      </div>
+    </div>
+  );
+}
+
 function CombinedApp(){
   const [view,setView]=useState(()=>window.location.hash.replace('#','')||'landing');
   const [theme,setTheme]=useState(()=>{try{return localStorage.getItem(THEME_KEY)||'light'}catch{return 'light'}});
   const toggleTheme=(next)=>setTheme(t=>next==='dark'||next==='light'?next:(t==='dark'?'light':'dark'));
   useEffect(()=>{applyGlobalTheme(theme);try{localStorage.setItem(THEME_KEY,theme)}catch{}},[theme]);
+
+  // Room transition state machine: idle → closing → opening → idle
+  const [transition,setTransition]=useState({phase:'idle',target:null});
+  const viewRef=useRef(view);
+  useEffect(()=>{viewRef.current=view;},[view]);
+  const busyRef=useRef(false);
+
+  const animateNavTo=useCallback((next)=>{
+    if(busyRef.current)return;
+    // 'colophon' is an external static page — navigate the tab after the doors close
+    if(next==='colophon'){
+      const reduced=typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(reduced){window.location.href=AUDIT_SITE_PATH;return;}
+      busyRef.current=true;
+      setTransition({phase:'closing',target:'colophon'});
+      window.setTimeout(()=>{window.location.href=AUDIT_SITE_PATH;},520);
+      return;
+    }
+    if(viewRef.current===next)return;
+    const reduced=typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced){
+      setView(next);
+      if(window.location.hash.replace('#','')!==(next==='landing'?'':next)){
+        window.location.hash=next==='landing'?'':next;
+      }
+      return;
+    }
+    busyRef.current=true;
+    // Phase 1: doors swing in (500ms)
+    setTransition({phase:'closing',target:next});
+    window.setTimeout(()=>{
+      // Swap underlying view while doors are closed
+      setView(next);
+      if(window.location.hash.replace('#','')!==(next==='landing'?'':next)){
+        window.location.hash=next==='landing'?'':next;
+      }
+      window.scrollTo({top:0,behavior:'auto'});
+      // Phase 2: doors hold closed briefly so the label can settle (250ms)
+      setTransition({phase:'closed',target:next});
+      window.setTimeout(()=>{
+        // Phase 3: doors swing open (600ms)
+        setTransition({phase:'opening',target:next});
+        window.setTimeout(()=>{
+          setTransition({phase:'idle',target:null});
+          busyRef.current=false;
+        },620);
+      },240);
+    },520);
+  },[]);
+
   useEffect(()=>{
     const onMsg=(event)=>{if(event?.data?.type==='ippc-theme'&&(event.data.theme==='dark'||event.data.theme==='light')) setTheme(event.data.theme)};
     window.addEventListener('message',onMsg);
     return()=>window.removeEventListener('message',onMsg);
   },[]);
   useEffect(()=>{
-    const onHash=()=>setView(window.location.hash.replace('#','')||'landing');
+    const onHash=()=>{
+      const next=window.location.hash.replace('#','')||'landing';
+      if(next!==viewRef.current)animateNavTo(next);
+    };
     window.addEventListener('hashchange',onHash);
     return()=>window.removeEventListener('hashchange',onHash);
-  },[]);
-  const go=(next)=>{try{setTheme(localStorage.getItem(THEME_KEY)||theme)}catch{};window.location.hash=next==='landing'?'':next;setView(next)};
-  if(view==='mock') return <MockApp onBack={()=>go('landing')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
-  if(view==='notes') return <NotesPortal onBack={()=>go('landing')} onMock={()=>go('mock')} theme={theme} toggleTheme={toggleTheme}/>;
-  if(view==='report') return <ReportPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
-  if(view==='printable') return <PrintableNotesPdfPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
-  if(view==='flashcards') return <FlashcardQuizGame onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} onReport={()=>go('report')} onPrintable={()=>go('printable')} theme={theme} toggleTheme={toggleTheme}/>;
-  return <CombinedLanding onEnter={go} theme={theme} toggleTheme={toggleTheme}/>;
+  },[animateNavTo]);
+
+  const go=animateNavTo;
+
+  let page;
+  if(view==='mock') page=<MockApp onBack={()=>go('landing')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
+  else if(view==='notes') page=<NotesPortal onBack={()=>go('landing')} onMock={()=>go('mock')} theme={theme} toggleTheme={toggleTheme}/>;
+  else if(view==='report') page=<ReportPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
+  else if(view==='printable') page=<PrintableNotesPdfPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
+  else if(view==='flashcards') page=<FlashcardQuizGame onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} onReport={()=>go('report')} onPrintable={()=>go('printable')} theme={theme} toggleTheme={toggleTheme}/>;
+  else page=<CombinedLanding onEnter={go} theme={theme} toggleTheme={toggleTheme}/>;
+
+  return <>
+    {/* Global UI — always mounted regardless of view, so shortcuts work on every page */}
+    <SkipLink/>
+    <KeyboardHelp onNav={animateNavTo}/>
+    <MobileTabBar current={view||'landing'} onNav={animateNavTo}/>
+    <BackToTop/>
+    <DisplayToggle/>
+    <ShortcutHintButton/>
+    {page}
+    <RoomDoorway phase={transition.phase} target={transition.target}/>
+  </>;
 }
 
 createRoot(document.getElementById('root')).render(<CombinedApp/>);

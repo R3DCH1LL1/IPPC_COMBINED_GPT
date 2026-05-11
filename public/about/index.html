@@ -13,7 +13,31 @@
     />
     <script type="module" crossorigin src="./assets/index-DrpKev_t.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-BDdZXnFj.css">
-  
+    <script>
+      // Keyboard shortcuts for the colophon page — mirrors the React app's KeyboardHelp
+      (function(){
+        var gKey=null, gTimer=null;
+        var routes={h:'/',n:'/#notes',m:'/#mock',a:'/#report',f:'/#flashcards',p:'/#printable'};
+        function reset(){gKey=null;if(gTimer){clearTimeout(gTimer);gTimer=null;}}
+        document.addEventListener('keydown',function(e){
+          var tag=e.target&&e.target.tagName;
+          if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||(e.target&&e.target.isContentEditable))return;
+          var k=(typeof e.key==='string'&&e.key.length===1)?e.key.toLowerCase():e.key;
+          if(k==='escape'){reset();return;}
+          if(k==='g'){gKey='g';if(gTimer)clearTimeout(gTimer);gTimer=setTimeout(reset,1500);return;}
+          if(gKey==='g'){
+            if(routes[k]){e.preventDefault();window.location.href=routes[k];}
+            else if(k==='c'){e.preventDefault();/* already on colophon — no-op */}
+            reset();return;
+          }
+          if(k==='t'){
+            var btn=document.querySelector('[aria-label*="theme" i],[title*="theme" i],.theme-toggle,.curtain-theme-button');
+            if(btn){e.preventDefault();btn.click();}
+          }
+        },true);
+      })();
+    </script>
+
     <style>
       :root {
         color-scheme: light;
@@ -218,6 +242,615 @@
 </head>
   <body>
     <a class="about-back-main-menu" href="../" aria-label="Back to Main Menu">← Back to Main Menu</a>
+
+    <!-- ============================================================
+         V156 — Immersive scroll-driven retrospective timeline
+         A sticky-pinned stage cross-fades through milestone illustrations
+         as the user scrolls past five narrative chapters.
+         ============================================================ -->
+    <style id="retro-timeline-styles">
+      /* Hide the older bundled-JS timeline so this one replaces it cleanly */
+      #timeline, #timeline-pin{display:none !important;}
+
+      .retro-shell{
+        --rt-paper:#f3eadb;
+        --rt-paper-2:#ece0c5;
+        --rt-ink:#1f1a13;
+        --rt-ink-2:#3a3024;
+        --rt-ink-3:#6b5b41;
+        --rt-ink-4:#9a8763;
+        --rt-rule:#d8c8a3;
+        --rt-amber:#b07a1a;
+        --rt-amber-deep:#8a5a0c;
+        --rt-amber-soft:#e7c789;
+        position:relative;
+        max-width:1280px;
+        margin:0 auto;
+        padding:96px 24px 0;
+        color:var(--rt-ink);
+        font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;
+      }
+      .retro-eyebrow{
+        font-family:'JetBrains Mono','SF Mono',Menlo,monospace;
+        font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+        color:var(--rt-amber-deep);
+        display:flex;align-items:center;gap:12px;margin-bottom:18px;
+      }
+      .retro-eyebrow::before{
+        content:'';width:32px;height:1px;background:var(--rt-amber);flex-shrink:0;
+      }
+      .retro-title{
+        font-family:'Cormorant Garamond','EB Garamond',Georgia,serif;
+        font-weight:500;
+        font-size:clamp(38px,5.5vw,68px);
+        line-height:.98;letter-spacing:-.02em;
+        margin:0 0 18px;color:var(--rt-ink);
+      }
+      .retro-title em{font-style:italic;color:var(--rt-amber);font-weight:400;}
+      .retro-lede{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-size:clamp(18px,2vw,22px);line-height:1.5;
+        color:var(--rt-ink-2);max-width:58ch;margin:0 0 56px;
+      }
+
+      /* ── Two-column scrollytelling layout ─────────────────────────── */
+      .retro-stage-grid{
+        display:grid;
+        grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+        gap:48px;
+        position:relative;
+      }
+
+      /* Sticky illustration column */
+      .retro-stage-col{
+        position:relative;
+      }
+      .retro-stage-sticky{
+        position:sticky;
+        top:96px;
+        height:calc(100vh - 132px);
+        max-height:720px;
+        min-height:480px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .retro-stage-frame{
+        width:100%;
+        height:100%;
+        position:relative;
+        background:
+          radial-gradient(ellipse at 30% 20%, rgba(214,168,77,.10), transparent 55%),
+          linear-gradient(180deg, rgba(255,250,242,.78), rgba(243,234,219,.55));
+        border:1px solid var(--rt-rule);
+        border-radius:3px;
+        box-shadow:
+          0 24px 60px rgba(120,82,28,.10),
+          inset 0 0 80px rgba(214,168,77,.04);
+        overflow:hidden;
+        padding:42px 38px;
+        display:flex;flex-direction:column;
+      }
+      .retro-stage-frame::before{
+        /* Top hairline ornament */
+        content:'·  ❦  ·';
+        position:absolute;top:14px;left:50%;transform:translateX(-50%);
+        font-family:'Cormorant Garamond',serif;
+        font-size:14px;letter-spacing:.4em;color:var(--rt-amber);opacity:.5;
+      }
+      .retro-stage-frame::after{
+        content:'';position:absolute;left:14%;right:14%;top:38px;height:1px;
+        background:linear-gradient(90deg,transparent,var(--rt-rule),transparent);
+      }
+
+      /* Stage cards — cross-fade between milestones */
+      .retro-stage-stack{position:relative;flex:1;display:flex;flex-direction:column;}
+      .retro-stage-card{
+        position:absolute;inset:0;
+        opacity:0;visibility:hidden;
+        transform:translateY(14px) scale(.985);
+        transition:
+          opacity .7s cubic-bezier(.4,0,.2,1),
+          visibility .7s,
+          transform .9s cubic-bezier(.2,.8,.2,1),
+          filter .7s ease;
+        filter:blur(2px);
+        display:flex;flex-direction:column;
+        gap:18px;
+        padding-top:18px;
+      }
+      .retro-stage-card.active{
+        opacity:1;visibility:visible;
+        transform:translateY(0) scale(1);
+        filter:blur(0);
+      }
+
+      .retro-version-roman{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-weight:500;
+        font-size:clamp(90px,11vw,140px);
+        line-height:.85;letter-spacing:-.04em;
+        color:var(--rt-amber);
+        text-shadow:0 4px 28px rgba(176,122,26,.18);
+        margin:0;
+      }
+      .retro-version-roman .v-prefix{
+        font-size:.42em;letter-spacing:.06em;
+        color:var(--rt-amber-deep);opacity:.7;
+        font-style:normal;
+        display:inline-block;margin-right:.18em;vertical-align:.4em;
+      }
+      .retro-period{
+        font-family:'JetBrains Mono',monospace;
+        font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+        color:var(--rt-ink-3);
+        margin:0;
+      }
+      .retro-stage-title{
+        font-family:'Cormorant Garamond',serif;
+        font-weight:500;font-style:italic;
+        font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-.01em;
+        color:var(--rt-ink);margin:0;
+      }
+
+      .retro-illu{
+        margin-top:auto;
+        align-self:center;
+        width:min(220px,40%);
+        aspect-ratio:1;
+        color:var(--rt-amber-deep);
+      }
+      .retro-illu svg{width:100%;height:100%;display:block;}
+
+      .retro-stage-stats{
+        display:grid;grid-template-columns:repeat(3,1fr);
+        gap:10px;
+        margin-top:14px;
+        padding-top:18px;
+        border-top:1px solid var(--rt-rule);
+      }
+      .retro-stat-cell{display:flex;flex-direction:column;gap:4px;}
+      .retro-stat-cell .v{
+        font-family:'Cormorant Garamond',serif;
+        font-size:22px;font-weight:600;line-height:1;
+        color:var(--rt-ink);
+      }
+      .retro-stat-cell .l{
+        font-family:'JetBrains Mono',monospace;
+        font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--rt-ink-3);
+      }
+
+      /* Narrative column */
+      .retro-narrative-col{display:flex;flex-direction:column;}
+      .retro-step{
+        min-height:88vh;
+        display:flex;flex-direction:column;justify-content:center;
+        padding:8vh 0;
+      }
+      .retro-step-marker{
+        font-family:'JetBrains Mono',monospace;
+        font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+        color:var(--rt-amber-deep);
+        display:flex;align-items:center;gap:10px;
+        margin-bottom:14px;
+      }
+      .retro-step-marker .roman{
+        display:inline-flex;align-items:center;justify-content:center;
+        width:30px;height:30px;border-radius:50%;
+        border:1px solid var(--rt-amber);
+        color:var(--rt-amber);
+        font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;
+      }
+      .retro-step h3{
+        font-family:'Cormorant Garamond',serif;
+        font-weight:500;
+        font-size:clamp(28px,3.8vw,42px);line-height:1.1;letter-spacing:-.015em;
+        color:var(--rt-ink);margin:0 0 18px;
+      }
+      .retro-step h3 em{font-style:italic;color:var(--rt-amber);font-weight:400;}
+      .retro-step p{
+        font-family:'Cormorant Garamond','EB Garamond',Georgia,serif;
+        font-size:clamp(17px,1.6vw,20px);line-height:1.6;
+        color:var(--rt-ink-2);
+        margin:0 0 14px;max-width:48ch;
+      }
+      .retro-step ul{
+        list-style:none;padding:0;margin:18px 0 0;
+        display:flex;flex-direction:column;gap:8px;
+      }
+      .retro-step ul li{
+        font-family:'Plus Jakarta Sans',sans-serif;
+        font-size:14px;line-height:1.55;
+        color:var(--rt-ink-2);
+        padding-left:22px;position:relative;
+      }
+      .retro-step ul li::before{
+        content:'§';
+        position:absolute;left:0;top:0;
+        color:var(--rt-amber);
+        font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;line-height:1.4;
+      }
+
+      /* ── Center progress track ───────────────────────────────────── */
+      .retro-track{
+        position:absolute;
+        top:0;bottom:0;left:50%;
+        width:2px;
+        background:linear-gradient(180deg,
+          transparent 0%,
+          var(--rt-rule) 6%,
+          var(--rt-rule) 94%,
+          transparent 100%);
+        transform:translateX(-1px);
+        pointer-events:none;
+        z-index:1;
+      }
+      .retro-track-fill{
+        position:absolute;left:0;right:0;top:0;
+        height:0%;
+        background:linear-gradient(180deg,
+          var(--rt-amber-soft) 0%,
+          var(--rt-amber) 40%,
+          var(--rt-amber-deep) 100%);
+        transition:height .6s cubic-bezier(.4,0,.2,1);
+        box-shadow:0 0 18px rgba(176,122,26,.4);
+      }
+      .retro-track-dots{
+        position:absolute;left:50%;top:0;bottom:0;
+        transform:translateX(-50%);
+        display:flex;flex-direction:column;justify-content:space-between;
+        padding:6%  0;
+        pointer-events:auto;
+        z-index:2;
+      }
+      .retro-track-dot{
+        width:14px;height:14px;border-radius:50%;
+        background:var(--rt-paper);
+        border:2px solid var(--rt-rule);
+        cursor:pointer;
+        position:relative;
+        transition:all .35s cubic-bezier(.4,0,.2,1);
+        display:flex;align-items:center;justify-content:center;
+      }
+      .retro-track-dot::after{
+        content:attr(data-label);
+        position:absolute;
+        left:calc(100% + 14px);top:50%;transform:translateY(-50%);
+        font-family:'JetBrains Mono',monospace;
+        font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--rt-ink-3);
+        white-space:nowrap;
+        opacity:0;transition:opacity .25s ease, transform .25s ease;
+        pointer-events:none;
+      }
+      .retro-track-dot:hover::after{opacity:1;transform:translateY(-50%) translateX(2px);}
+      .retro-track-dot.passed{
+        background:var(--rt-amber);
+        border-color:var(--rt-amber);
+      }
+      .retro-track-dot.active{
+        background:var(--rt-amber);
+        border-color:var(--rt-amber-deep);
+        transform:scale(1.4);
+        box-shadow:0 0 0 5px rgba(176,122,26,.18), 0 0 18px rgba(176,122,26,.45);
+      }
+      .retro-track-dot.active::after{opacity:1;color:var(--rt-amber-deep);font-weight:700;}
+
+      /* ── Progress badge (floats top-right of stage) ──────────────── */
+      .retro-progress-badge{
+        position:absolute;top:24px;right:24px;
+        display:flex;align-items:baseline;gap:6px;
+        font-family:'JetBrains Mono',monospace;
+        font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--rt-ink-3);
+        z-index:2;
+      }
+      .retro-progress-badge .now{
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        font-size:22px;color:var(--rt-amber-deep);font-weight:500;
+        line-height:1;
+      }
+      .retro-progress-badge .sep{opacity:.5;}
+      .retro-progress-badge .total{opacity:.6;}
+
+      /* ── Footer ornament ─────────────────────────────────────────── */
+      .retro-foot{
+        text-align:center;padding:80px 24px 60px;
+        font-family:'Cormorant Garamond',serif;font-style:italic;
+        color:var(--rt-ink-3);font-size:18px;
+      }
+      .retro-foot .glyph{color:var(--rt-amber);font-size:22px;letter-spacing:.4em;display:block;margin-bottom:8px;}
+
+      /* ── Responsive ──────────────────────────────────────────────── */
+      @media (max-width:960px){
+        .retro-shell{padding:60px 18px 0;}
+        .retro-stage-grid{grid-template-columns:1fr;gap:28px;}
+        .retro-track,.retro-track-dots{display:none;}
+        .retro-stage-sticky{
+          position:relative;top:auto;height:auto;
+          max-height:none;min-height:0;
+        }
+        .retro-stage-frame{padding:28px 22px;height:auto;min-height:420px;}
+        .retro-step{min-height:auto;padding:36px 0;}
+      }
+      @media (prefers-reduced-motion: reduce){
+        .retro-stage-card{transition:none;filter:none;transform:none;}
+        .retro-stage-card{opacity:1 !important;visibility:visible !important;position:relative !important;}
+        .retro-stage-stack{height:auto;}
+        .retro-track-fill{transition:none;}
+      }
+    </style>
+
+    <section class="retro-shell" aria-labelledby="retro-title">
+      <p class="retro-eyebrow">A retrospective · V1 to V153</p>
+      <h1 id="retro-title" class="retro-title">One hundred and fifty-three<br/><em>editions</em> of patient revision.</h1>
+      <p class="retro-lede">Scroll through the editorial timeline of the IPPC Study Suite — from the first thousand-question draft to the audit-signed V134 baseline and the V153 interactive dashboard you arrived through.</p>
+
+      <div class="retro-stage-grid">
+        <!-- ── Sticky illustration stage ─────────────────────────────── -->
+        <div class="retro-stage-col">
+          <div class="retro-stage-sticky">
+            <div class="retro-stage-frame">
+              <div class="retro-progress-badge"><span class="now">I</span><span class="sep">/</span><span class="total">V</span></div>
+
+              <div class="retro-stage-stack">
+                <!-- V1 -->
+                <div class="retro-stage-card active" data-stage="0">
+                  <p class="retro-period">January 2025 · Stage I</p>
+                  <h2 class="retro-version-roman"><span class="v-prefix">Vol.</span>I</h2>
+                  <h3 class="retro-stage-title">The first draft — <em>one thousand questions</em>.</h3>
+                  <div class="retro-illu" aria-hidden="true">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 22 C 28 18, 42 18, 50 22 L 50 80 C 42 76, 28 76, 14 80 Z"/>
+                      <path d="M86 22 C 72 18, 58 18, 50 22 L 50 80 C 58 76, 72 76, 86 80 Z"/>
+                      <path d="M22 32 H42 M22 40 H40 M22 48 H42 M22 56 H38"/>
+                      <path d="M58 32 H78 M58 40 H76 M58 48 H78 M58 56 H74"/>
+                      <circle cx="50" cy="16" r="2" fill="currentColor"/>
+                      <path d="M44 8 L 44 14 M50 6 L 50 14 M56 8 L 56 14" opacity=".55"/>
+                    </svg>
+                  </div>
+                  <div class="retro-stage-stats">
+                    <div class="retro-stat-cell"><span class="v">1,000</span><span class="l">Questions</span></div>
+                    <div class="retro-stat-cell"><span class="v">20</span><span class="l">Sets</span></div>
+                    <div class="retro-stat-cell"><span class="v">3</span><span class="l">CLO Areas</span></div>
+                  </div>
+                </div>
+
+                <!-- V50 -->
+                <div class="retro-stage-card" data-stage="1">
+                  <p class="retro-period">May 2025 · Stage II</p>
+                  <h2 class="retro-version-roman"><span class="v-prefix">Vol.</span>L</h2>
+                  <h3 class="retro-stage-title">Expansion and the first <em>hard sets</em>.</h3>
+                  <div class="retro-illu" aria-hidden="true">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="14" y="62" width="72" height="14" rx="1"/>
+                      <rect x="18" y="46" width="64" height="14" rx="1"/>
+                      <rect x="22" y="30" width="56" height="14" rx="1"/>
+                      <rect x="28" y="14" width="44" height="14" rx="1"/>
+                      <path d="M50 18 L 50 24" stroke-width="1"/>
+                      <path d="M50 34 L 50 40" stroke-width="1"/>
+                      <path d="M50 50 L 50 56" stroke-width="1"/>
+                      <path d="M50 66 L 50 72" stroke-width="1"/>
+                      <path d="M68 14 L 64 26" stroke-width="1.2" opacity=".55"/>
+                    </svg>
+                  </div>
+                  <div class="retro-stage-stats">
+                    <div class="retro-stat-cell"><span class="v">2,000</span><span class="l">Questions</span></div>
+                    <div class="retro-stat-cell"><span class="v">25</span><span class="l">Sets</span></div>
+                    <div class="retro-stat-cell"><span class="v">5</span><span class="l">Hard Sets</span></div>
+                  </div>
+                </div>
+
+                <!-- V100 -->
+                <div class="retro-stage-card" data-stage="2">
+                  <p class="retro-period">September 2025 · Stage III</p>
+                  <h2 class="retro-version-roman"><span class="v-prefix">Vol.</span>C</h2>
+                  <h3 class="retro-stage-title">A full <em>editorial audit</em>.</h3>
+                  <div class="retro-illu" aria-hidden="true">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="18" y="14" width="48" height="62" rx="1"/>
+                      <path d="M26 26 H58 M26 32 H56 M26 38 H58 M26 44 H52 M26 50 H58 M26 56 H56" opacity=".55"/>
+                      <circle cx="68" cy="60" r="14"/>
+                      <path d="M78 70 L 88 80" stroke-width="2"/>
+                      <path d="M62 60 L 66 64 L 74 56" stroke="currentColor" stroke-width="1.6"/>
+                    </svg>
+                  </div>
+                  <div class="retro-stage-stats">
+                    <div class="retro-stat-cell"><span class="v">100%</span><span class="l">Reviewed</span></div>
+                    <div class="retro-stat-cell"><span class="v">8,000</span><span class="l">Distractors</span></div>
+                    <div class="retro-stat-cell"><span class="v">2,000</span><span class="l">Explanations</span></div>
+                  </div>
+                </div>
+
+                <!-- V134 -->
+                <div class="retro-stage-card" data-stage="3">
+                  <p class="retro-period">February 2026 · Stage IV</p>
+                  <h2 class="retro-version-roman"><span class="v-prefix">Vol.</span>CXXXIV</h2>
+                  <h3 class="retro-stage-title">The quality <em>baseline</em>, signed off.</h3>
+                  <div class="retro-illu" aria-hidden="true">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="50" cy="40" r="20"/>
+                      <circle cx="50" cy="40" r="14" opacity=".5"/>
+                      <path d="M44 40 L 48 44 L 56 36" stroke-width="1.8"/>
+                      <text x="50" y="44" text-anchor="middle" font-size="9" font-family="Cormorant Garamond,serif" font-style="italic" fill="currentColor" stroke="none" opacity=".0">V134</text>
+                      <path d="M38 56 L 30 86 L 38 80 L 42 86 L 50 72" />
+                      <path d="M62 56 L 70 86 L 62 80 L 58 86 L 50 72" />
+                    </svg>
+                  </div>
+                  <div class="retro-stage-stats">
+                    <div class="retro-stat-cell"><span class="v">V134</span><span class="l">Baseline</span></div>
+                    <div class="retro-stat-cell"><span class="v">98%</span><span class="l">CLO Accuracy</span></div>
+                    <div class="retro-stat-cell"><span class="v">100%</span><span class="l">Explained</span></div>
+                  </div>
+                </div>
+
+                <!-- V153 -->
+                <div class="retro-stage-card" data-stage="4">
+                  <p class="retro-period">May 2026 · Stage V · Current edition</p>
+                  <h2 class="retro-version-roman"><span class="v-prefix">Vol.</span>CLIII</h2>
+                  <h3 class="retro-stage-title">The interactive <em>study suite</em>.</h3>
+                  <div class="retro-illu" aria-hidden="true">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="12" y="20" width="76" height="50" rx="3"/>
+                      <path d="M12 30 H88" opacity=".55"/>
+                      <circle cx="18" cy="25" r="1.3" fill="currentColor"/>
+                      <circle cx="22" cy="25" r="1.3" fill="currentColor"/>
+                      <circle cx="26" cy="25" r="1.3" fill="currentColor"/>
+                      <rect x="18" y="36" width="32" height="4" rx="1" opacity=".4"/>
+                      <rect x="18" y="44" width="44" height="4" rx="1" opacity=".4"/>
+                      <rect x="18" y="52" width="38" height="4" rx="1" opacity=".4"/>
+                      <circle cx="74" cy="50" r="10" opacity=".7"/>
+                      <path d="M74 44 V52 M68 50 H80" opacity=".4"/>
+                      <path d="M30 78 H70 M40 84 H60" opacity=".4"/>
+                    </svg>
+                  </div>
+                  <div class="retro-stage-stats">
+                    <div class="retro-stat-cell"><span class="v">153</span><span class="l">Editions</span></div>
+                    <div class="retro-stat-cell"><span class="v">~8h</span><span class="l">Reading Time</span></div>
+                    <div class="retro-stat-cell"><span class="v">Live</span><span class="l">Production</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Scrolling narrative column ─────────────────────────────── -->
+        <div class="retro-narrative-col">
+          <article class="retro-step" data-step="0">
+            <p class="retro-step-marker"><span class="roman">I</span>January 2025</p>
+            <h3>The <em>first draft</em>.</h3>
+            <p>One thousand multiple-choice questions, written across the three Core Learning Outcomes that govern the IPPC syllabus — the Malaysian financial system, regulations and conduct, debt and structured products.</p>
+            <p>Each question came with a single-sentence answer key and an indicative reference to the IPPC Study Text. Nothing fancy. A starting point.</p>
+            <ul>
+              <li>1,000 questions across 20 sets of 50</li>
+              <li>CLO mapping drafted but not yet verified</li>
+              <li>Single-sentence answer keys</li>
+            </ul>
+          </article>
+
+          <article class="retro-step" data-step="1">
+            <p class="retro-step-marker"><span class="roman">II</span>May 2025</p>
+            <h3>Expansion, and the <em>first hard sets</em>.</h3>
+            <p>The bank doubled to two thousand questions. Five advanced "Hard Sets" were carved out specifically to drill the trap scenarios — statement-combination items, multi-clause distractors, calculations with intermediate steps.</p>
+            <p>Set structure was normalised to eighty questions per set, matching the actual examination format.</p>
+            <ul>
+              <li>2,000 questions across 25 sets of 80</li>
+              <li>Hard Sets I–V — 400 advanced traps</li>
+              <li>First Roman-numeral statement-combination items</li>
+            </ul>
+          </article>
+
+          <article class="retro-step" data-step="2">
+            <p class="retro-step-marker"><span class="roman">III</span>September 2025</p>
+            <h3>A full <em>editorial audit</em>.</h3>
+            <p>Every question reviewed for accuracy against the IPPC Study Text 3rd Edition. Distractor plausibility verified — no arbitrary wrong answers; every option had to map to a real candidate misconception.</p>
+            <p>Explanations were restructured into the four-part frame the suite still uses today: Why correct, Why each wrong option is wrong, Worked calculation, and Reference clause.</p>
+            <ul>
+              <li>Every answer key verified against source text</li>
+              <li>8,000 distractors reviewed for plausibility</li>
+              <li>Standardised explanation structure introduced</li>
+            </ul>
+          </article>
+
+          <article class="retro-step" data-step="3">
+            <p class="retro-step-marker"><span class="roman">IV</span>February 2026</p>
+            <h3>The quality <em>baseline</em>.</h3>
+            <p>The V134 audit report was published. Explanation language was standardised across all twenty-five sets. CLO mapping reached 98% adherence to the official 12/36/32 blueprint, with the remaining 2% deliberately set aside as boundary cases.</p>
+            <p>Formal sign-off was recorded for every question. From here onward, the bank had a verifiable provenance.</p>
+            <ul>
+              <li>V134 audit report published</li>
+              <li>98% CLO blueprint adherence</li>
+              <li>100% explanation coverage with formal sign-off</li>
+            </ul>
+          </article>
+
+          <article class="retro-step" data-step="4">
+            <p class="retro-step-marker"><span class="roman">V</span>May 2026 — Current edition</p>
+            <h3>The interactive <em>study suite</em>.</h3>
+            <p>The V134 audit dashboard, the animated book-bound interface, the editorial timeline you're reading now — all built on top of the verified question bank. The suite goes live in production with full audit trail, keyboard navigation, theme cross-fade, and accessibility passes for every page.</p>
+            <p>One hundred and fifty-three editions later, the volume is open.</p>
+            <ul>
+              <li>Interactive audit dashboard + scroll-driven retrospective</li>
+              <li>Book-bound editorial interface across every room</li>
+              <li>Full keyboard shortcuts and accessibility passes</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- ── Center progress track ─────────────────────────────────── -->
+        <div class="retro-track" aria-hidden="true"><div class="retro-track-fill"></div></div>
+        <ol class="retro-track-dots" aria-label="Timeline milestones">
+          <li><button type="button" class="retro-track-dot" data-jump="0" data-label="V1 · Draft" aria-label="Go to V1"></button></li>
+          <li><button type="button" class="retro-track-dot" data-jump="1" data-label="V50 · Hard sets" aria-label="Go to V50"></button></li>
+          <li><button type="button" class="retro-track-dot" data-jump="2" data-label="V100 · Audit" aria-label="Go to V100"></button></li>
+          <li><button type="button" class="retro-track-dot" data-jump="3" data-label="V134 · Baseline" aria-label="Go to V134"></button></li>
+          <li><button type="button" class="retro-track-dot" data-jump="4" data-label="V153 · Current" aria-label="Go to V153"></button></li>
+        </ol>
+      </div>
+
+      <div class="retro-foot">
+        <span class="glyph">·  ❦  ·</span>
+        Set in Cormorant Garamond &amp; Plus Jakarta Sans. Bound for V153.
+      </div>
+    </section>
+
+    <script id="retro-timeline-script">
+      (function(){
+        var ROMAN=['I','II','III','IV','V'];
+        var steps=document.querySelectorAll('.retro-step');
+        var cards=document.querySelectorAll('.retro-stage-card');
+        var dots=document.querySelectorAll('.retro-track-dot');
+        var fill=document.querySelector('.retro-track-fill');
+        var badgeNow=document.querySelector('.retro-progress-badge .now');
+        var current=0;
+
+        function setStage(i){
+          if(i===current && cards[i] && cards[i].classList.contains('active')) return;
+          current=i;
+          cards.forEach(function(c,n){c.classList.toggle('active',n===i);});
+          dots.forEach(function(d,n){
+            d.classList.toggle('active',n===i);
+            d.classList.toggle('passed',n<i);
+          });
+          var pct=steps.length>1 ? (i/(steps.length-1))*100 : 0;
+          if(fill) fill.style.height=pct+'%';
+          if(badgeNow) badgeNow.textContent=ROMAN[i]||'I';
+        }
+
+        if('IntersectionObserver' in window){
+          var obs=new IntersectionObserver(function(entries){
+            // Pick the entry closest to the activation line (40% from top)
+            var visible=entries.filter(function(e){return e.isIntersecting;});
+            if(!visible.length) return;
+            visible.sort(function(a,b){
+              return Math.abs(a.boundingClientRect.top - window.innerHeight*0.4)
+                   - Math.abs(b.boundingClientRect.top - window.innerHeight*0.4);
+            });
+            var idx=parseInt(visible[0].target.getAttribute('data-step'),10);
+            if(!isNaN(idx)) setStage(idx);
+          },{
+            // Activation band centred ~40% from the top
+            rootMargin:'-40% 0px -50% 0px',
+            threshold:0
+          });
+          steps.forEach(function(s){obs.observe(s);});
+        }
+
+        dots.forEach(function(d){
+          d.addEventListener('click',function(){
+            var i=parseInt(d.getAttribute('data-jump'),10);
+            var target=steps[i];
+            if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
+          });
+        });
+
+        // Initialise dot labels and the first stage
+        setStage(0);
+      })();
+    </script>
+
     <div id="root"></div>
     <script>
       (() => {

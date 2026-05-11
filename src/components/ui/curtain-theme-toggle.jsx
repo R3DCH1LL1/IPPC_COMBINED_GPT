@@ -133,7 +133,7 @@ export function CurtainThemeButton({
         type="button"
       >
         {isDark ? <SunIcon /> : <MoonIcon />}
-        {label && <span>{isDark ? "Dusk" : "Dawn"} theme</span>}
+        {label && <span>{isDark ? "Light" : "Dark"} theme</span>}
       </button>
     </>
   );
