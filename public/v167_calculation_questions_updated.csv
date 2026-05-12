@@ -1,0 +1,238 @@
+set,question,topic,answer,formula,worked_lines
+1,77,Structured Products,A,Participation rate = (1 − zero-coupon PV factor − issuer fee) ÷ option cost.,3
+3,6,Bonds,D,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+3,15,PIDM,D,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+3,21,Structured Products,A,Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.,3
+3,40,Bonds,D,Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.,4
+3,46,Portfolio,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+3,57,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+3,58,Derivatives,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+3,60,Structured Products,D,Participation rate = (1 − zero-coupon PV factor − issuer fee) ÷ option cost.,3
+3,61,Guidelines,C,Score percentage = Correct answers ÷ Total questions × 100.,3
+3,63,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+3,68,Derivatives,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+3,69,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,3
+3,76,Bonds,D,Approximate real rate = Nominal rate − Inflation rate.,3
+4,11,Derivatives,D,Option premium = Intrinsic value + Time value.,3
+4,18,Guidelines,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+4,22,Structured Products,A,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+4,23,Derivatives,D,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+4,48,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+4,66,PIDM,D,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+4,68,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,3
+4,79,Derivatives,B,Option premium = Intrinsic value + Time value.,3
+4,80,Bonds,B,Approximate real rate = Nominal rate − Inflation rate.,3
+5,9,Bonds,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,12,Structured Products,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,14,Structured Products,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,18,Financial Markets,C,Ringgit amount = USD amount × RM/USD exchange rate.,3
+5,19,Bonds,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,24,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,26,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,4
+5,28,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,31,Portfolio,A,Allocation amount = Portfolio value × Target allocation percentage.,3
+5,43,Structured Products,D,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+5,56,Structured Products,B,Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.,3
+5,65,Bonds,A,Allocation amount = Portfolio value × Target allocation percentage.,3
+5,66,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+5,77,Debt Securities,B,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+6,2,Structured Products,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+6,7,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+6,17,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+6,43,Bonds,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+6,45,Structured Products,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+6,50,Guidelines,A,Score percentage = Correct answers ÷ Total questions × 100.,3
+6,58,Bonds,C,Approximate real rate = Nominal rate − Inflation rate.,3
+6,68,Derivatives,D,Option premium = Intrinsic value + Time value.,3
+6,77,Bonds,B,Approximate percentage price change = −Modified duration × Change in yield.,3
+7,1,Bonds,A,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+7,7,Derivatives,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+7,13,Structured Products,B,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+7,19,Bonds,C,Current yield = Annual coupon ÷ Current market price × 100.,3
+7,22,Portfolio,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+7,26,Bonds,C,Allocation amount = Portfolio value × Target allocation percentage.,3
+7,37,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+7,40,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+7,42,Bonds,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+7,48,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+7,54,Derivatives,A,Option premium = Intrinsic value + Time value.,3
+7,56,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+7,60,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+8,4,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+8,5,Structured Products,C,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+8,11,Bonds,D,Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.,3
+8,15,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+8,16,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+8,28,PIDM,A,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+8,33,Structured Products,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+8,46,Bonds,A,Allocation amount = Portfolio value × Target allocation percentage.,3
+8,47,Guidelines,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+8,48,Derivatives,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+8,53,Bonds,B,Approximate percentage price change = −Modified duration × Change in yield.,3
+8,55,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+8,67,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,4
+8,76,Structured Products,C,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+8,78,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+8,79,CMSA,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+9,60,Bonds,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+9,72,Derivatives,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+10,69,Derivatives,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+10,73,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+11,5,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,3
+11,10,Derivatives,A,Option premium = Intrinsic value + Time value.,3
+11,18,Structured Products,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+11,26,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+11,51,Guidelines,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+11,53,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+11,58,Bonds,A,Current yield = Annual coupon ÷ Current market price × 100.,3
+11,59,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+11,75,Structured Products,C,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+11,77,Bonds,B,Approximate real rate = Nominal rate − Inflation rate.,3
+12,1,Derivatives,B,Option premium = Intrinsic value + Time value.,3
+12,21,Bonds,A,Current yield = Annual coupon ÷ Current market price × 100.,3
+12,47,Bonds,B,Current yield = Annual coupon ÷ Current market price × 100.,3
+12,51,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+12,53,Portfolio,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+12,54,Derivatives,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+12,55,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+12,63,Structured Products,A,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+12,68,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+12,77,Structured Products,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+13,4,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+13,5,Bonds,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+13,55,Bonds,B,Approximate real rate = Nominal rate − Inflation rate.,3
+13,56,Structured Products,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+13,58,Derivatives,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+13,60,Bonds,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+13,67,Debt Securities,B,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+13,68,Guidelines,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+14,36,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+14,37,Derivatives,D,Option premium = Intrinsic value + Time value.,3
+14,40,Bonds,B,Allocation amount = Portfolio value × Target allocation percentage.,3
+14,43,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+14,46,Financial Markets,B,Ringgit amount = USD amount × RM/USD exchange rate.,3
+14,53,Bonds,A,Bond price = Present value of coupon payments + Present value of par value.,4
+14,55,Bonds,B,Current yield = Annual coupon ÷ Current market price × 100.,3
+14,75,Portfolio,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+14,79,Structured Products,D,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+15,8,Derivatives,D,"Put payoff = max(Strike price − Underlying price, 0). Profit = Payoff − Premium, if premium is given.",3
+15,14,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+15,16,Guidelines,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+15,22,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+15,29,Structured Products,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+15,40,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+15,42,Portfolio,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+15,50,Bonds,C,Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.,3
+15,57,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+15,60,Structured Products,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+15,78,Bonds,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+15,79,Bonds,B,Approximate percentage price change = −Modified duration × Change in yield.,4
+16,5,Bonds,D,Approximate real rate = Nominal rate − Inflation rate.,3
+16,7,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+16,9,Structured Products,B,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+16,16,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+16,18,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+16,22,Structured Products,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+16,50,Bonds,A,Bond price = Present value of coupon payments + Present value of par value.,4
+16,54,Guidelines,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+16,60,Derivatives,A,Option premium = Intrinsic value + Time value.,3
+17,8,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+17,24,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+17,32,Structured Products,B,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+17,39,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+17,45,Portfolio,D,Allocation amount = Portfolio value × Target allocation percentage.,3
+17,50,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,4
+17,71,Structured Products,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+17,73,Structured Products,B,Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.,3
+18,2,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+18,16,Bonds,C,Approximate percentage price change = −Modified duration × Change in yield.,3
+18,30,Guidelines,A,Score percentage = Correct answers ÷ Total questions × 100.,3
+18,32,Structured Products,B,Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.,3
+18,35,Derivatives,B,Option premium = Intrinsic value + Time value.,3
+18,41,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+18,58,Bonds,A,Current yield = Annual coupon ÷ Current market price × 100.,3
+18,60,Bonds,A,Approximate real rate = Nominal rate − Inflation rate.,3
+18,64,Bonds,A,Bond price = Present value of coupon payments + Present value of par value.,4
+19,15,Debt Securities,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+19,19,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+19,41,Derivatives,A,Option premium = Intrinsic value + Time value.,3
+19,45,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+19,49,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+19,52,Bonds,A,Allocation amount = Portfolio value × Target allocation percentage.,3
+19,56,Structured Products,C,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+19,70,Derivatives,A,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",3
+19,71,Portfolio,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+20,6,Financial Markets,D,Ringgit amount = USD amount × RM/USD exchange rate.,3
+20,13,Bonds,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+20,22,Bonds,D,Approximate percentage price change = −Modified duration × Change in yield.,3
+20,28,Debt Securities,C,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+20,60,PIDM,B,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+20,61,Bonds,A,Current yield = Annual coupon ÷ Current market price × 100.,3
+20,62,Structured Products,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+20,75,Guidelines,A,Score percentage = Correct answers ÷ Total questions × 100.,3
+20,77,Bonds,B,Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.,3
+21,15,Conduct,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,17,Conduct,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,18,PIDM,D,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+21,24,Guidelines,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,26,Guidelines,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,35,Bonds,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,37,Structured Products,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,39,Product Disclosure,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,53,Product Disclosure,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,61,Product Disclosure,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,63,KYC,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,69,Structured Products,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+21,77,Conduct,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,3,PIDM,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+22,4,AML,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,8,Bonds,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,11,AML,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,23,PIDM,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,24,FEA Rules,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,25,Structured Products,B,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",5
+22,27,PIDM,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,38,FEA Rules,A,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,65,BNM,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,71,PIDM,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,73,PIDM,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+22,76,AML,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",3
+23,1,Derivatives,B,Amount available for option exposure = Principal × (1 − zero-coupon component cost percentage).,3
+23,4,Bonds,C,Bond price = Present value of coupon payments + Present value of par value.,4
+23,9,Bonds,A,Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.,3
+23,11,Derivatives,B,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",4
+23,20,Bonds,B,Approximate percentage price change = −Modified duration × Change in yield.,3
+23,21,Bonds,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+23,35,PIDM,D,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+23,48,Bonds,A,Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.,4
+23,50,Bonds,C,Current yield = Annual coupon ÷ Current market price × 100.,3
+23,56,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+23,65,Bonds,A,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+23,74,Structured Products,C,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+23,75,Structured Products,B,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+24,1,Derivatives,C,Amount available for option exposure = Principal × (1 − zero-coupon component cost percentage).,3
+24,2,Bonds,B,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+24,8,Structured Products,D,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+24,19,Structured Products,A,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",5
+24,21,Bonds,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+24,33,Bonds,A,Bond price = Present value of coupon payments + Present value of par value.,4
+24,37,PIDM,C,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+24,43,Bonds,D,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+24,51,Bonds,A,Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.,4
+24,53,Derivatives,D,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",4
+24,55,Bonds,B,Current yield = Annual coupon ÷ Current market price × 100.,3
+24,75,Bonds,A,Approximate percentage price change = −Modified duration × Change in yield.,3
+24,79,Bonds,B,Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.,3
+25,9,Bonds,B,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+25,14,Structured Products,B,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",5
+25,36,Bonds,C,Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.,3
+25,37,Bonds,A,Approximate percentage price change = −Modified duration × Change in yield.,3
+25,39,Bonds,D,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+25,40,Bonds,C,Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.,4
+25,43,Bonds,B,Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.,4
+25,53,Structured Products,D,"Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",4
+25,62,PIDM,D,Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.,4
+25,67,Derivatives,C,"Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",4
+25,70,Derivatives,B,"Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",4
+25,75,Bonds,A,Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.,3
+25,79,Bonds,A,Bond price = Present value of coupon payments + Present value of par value.,4

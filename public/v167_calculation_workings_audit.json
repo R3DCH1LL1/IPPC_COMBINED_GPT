@@ -1,0 +1,1933 @@
+{
+  "version": "V167",
+  "source": "V166 answer-length patch",
+  "scope": "All sets 1-25; questions with existing calculation/formula helpers or classified as requiring numerical calculation/formula workings were changed.",
+  "calculation_questions_updated": 237,
+  "sets_updated": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+  ],
+  "formula_working_blocks_added": 237,
+  "wrong_option_sections_remaining_in_updated_calculation_questions": 0,
+  "issues": [],
+  "updated_questions": [
+    {
+      "set": 1,
+      "question": 77,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Participation rate = (1 − zero-coupon PV factor − issuer fee) ÷ option cost.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 6,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 15,
+      "topic": "PIDM",
+      "answer": "D",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 3,
+      "question": 21,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 40,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 3,
+      "question": 46,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 57,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 3,
+      "question": 58,
+      "topic": "Derivatives",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 3,
+      "question": 60,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Participation rate = (1 − zero-coupon PV factor − issuer fee) ÷ option cost.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 61,
+      "topic": "Guidelines",
+      "answer": "C",
+      "formula": "Score percentage = Correct answers ÷ Total questions × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 63,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 68,
+      "topic": "Derivatives",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 3,
+      "question": 69,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 3,
+      "question": 76,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 4,
+      "question": 11,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 4,
+      "question": 18,
+      "topic": "Guidelines",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 4,
+      "question": 22,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 4,
+      "question": 23,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 4,
+      "question": 48,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 4,
+      "question": 66,
+      "topic": "PIDM",
+      "answer": "D",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 4,
+      "question": 68,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 4,
+      "question": 79,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 4,
+      "question": 80,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 5,
+      "question": 9,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 12,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 14,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 18,
+      "topic": "Financial Markets",
+      "answer": "C",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 5,
+      "question": 19,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 24,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 26,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 28,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 31,
+      "topic": "Portfolio",
+      "answer": "A",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 5,
+      "question": 43,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 56,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 5,
+      "question": 65,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 5,
+      "question": 66,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 5,
+      "question": 77,
+      "topic": "Debt Securities",
+      "answer": "B",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 6,
+      "question": 2,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 6,
+      "question": 7,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 6,
+      "question": 17,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 6,
+      "question": 43,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 6,
+      "question": 45,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 6,
+      "question": 50,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Score percentage = Correct answers ÷ Total questions × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 6,
+      "question": 58,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 6,
+      "question": 68,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 6,
+      "question": 77,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 1,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 7,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 7,
+      "question": 13,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 7,
+      "question": 19,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 22,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 26,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 37,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 7,
+      "question": 40,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 7,
+      "question": 42,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 48,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 54,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 7,
+      "question": 56,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 7,
+      "question": 60,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 8,
+      "question": 4,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 8,
+      "question": 5,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 11,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 8,
+      "question": 15,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 16,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 28,
+      "topic": "PIDM",
+      "answer": "A",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 33,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 8,
+      "question": 46,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 8,
+      "question": 47,
+      "topic": "Guidelines",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 48,
+      "topic": "Derivatives",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 53,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 8,
+      "question": 55,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 67,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 76,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 78,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 8,
+      "question": 79,
+      "topic": "CMSA",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 9,
+      "question": 60,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 9,
+      "question": 72,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 10,
+      "question": 69,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 10,
+      "question": 73,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 11,
+      "question": 5,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 11,
+      "question": 10,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 11,
+      "question": 18,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 11,
+      "question": 26,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 11,
+      "question": 51,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 11,
+      "question": 53,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 11,
+      "question": 58,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 11,
+      "question": 59,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 11,
+      "question": 75,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 11,
+      "question": 77,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 12,
+      "question": 1,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 12,
+      "question": 21,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 12,
+      "question": 47,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 12,
+      "question": 51,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 12,
+      "question": 53,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 12,
+      "question": 54,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 12,
+      "question": 55,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 12,
+      "question": 63,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 12,
+      "question": 68,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 12,
+      "question": 77,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 13,
+      "question": 4,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 13,
+      "question": 5,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 13,
+      "question": 55,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 13,
+      "question": 56,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 13,
+      "question": 58,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 13,
+      "question": 60,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 13,
+      "question": 67,
+      "topic": "Debt Securities",
+      "answer": "B",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 13,
+      "question": 68,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 14,
+      "question": 36,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 14,
+      "question": 37,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 14,
+      "question": 40,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 14,
+      "question": 43,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 14,
+      "question": 46,
+      "topic": "Financial Markets",
+      "answer": "B",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 14,
+      "question": 53,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Bond price = Present value of coupon payments + Present value of par value.",
+      "worked_lines": 4
+    },
+    {
+      "set": 14,
+      "question": 55,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 14,
+      "question": 75,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 14,
+      "question": 79,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 15,
+      "question": 8,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Put payoff = max(Strike price − Underlying price, 0). Profit = Payoff − Premium, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 15,
+      "question": 14,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 15,
+      "question": 16,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 15,
+      "question": 22,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 15,
+      "question": 29,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 15,
+      "question": 40,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 15,
+      "question": 42,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 15,
+      "question": 50,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 15,
+      "question": 57,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 15,
+      "question": 60,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 15,
+      "question": 78,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 15,
+      "question": 79,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 5,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 16,
+      "question": 7,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 9,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 16,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 18,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 16,
+      "question": 22,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 50,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Bond price = Present value of coupon payments + Present value of par value.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 54,
+      "topic": "Guidelines",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 16,
+      "question": 60,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 17,
+      "question": 8,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 17,
+      "question": 24,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 17,
+      "question": 32,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 17,
+      "question": 39,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 17,
+      "question": 45,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 17,
+      "question": 50,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 4
+    },
+    {
+      "set": 17,
+      "question": 71,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 17,
+      "question": 73,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 2,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 18,
+      "question": 16,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 30,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Score percentage = Correct answers ÷ Total questions × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 32,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value of protection leg = Future protected amount ÷ (1 + annual yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 35,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 41,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 58,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 60,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Approximate real rate = Nominal rate − Inflation rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 18,
+      "question": 64,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Bond price = Present value of coupon payments + Present value of par value.",
+      "worked_lines": 4
+    },
+    {
+      "set": 19,
+      "question": 15,
+      "topic": "Debt Securities",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 19,
+      "question": 19,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 19,
+      "question": 41,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Option premium = Intrinsic value + Time value.",
+      "worked_lines": 3
+    },
+    {
+      "set": 19,
+      "question": 45,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 19,
+      "question": 49,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 19,
+      "question": 52,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Allocation amount = Portfolio value × Target allocation percentage.",
+      "worked_lines": 3
+    },
+    {
+      "set": 19,
+      "question": 56,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 19,
+      "question": 70,
+      "topic": "Derivatives",
+      "answer": "A",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 3
+    },
+    {
+      "set": 19,
+      "question": 71,
+      "topic": "Portfolio",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 20,
+      "question": 6,
+      "topic": "Financial Markets",
+      "answer": "D",
+      "formula": "Ringgit amount = USD amount × RM/USD exchange rate.",
+      "worked_lines": 3
+    },
+    {
+      "set": 20,
+      "question": 13,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 20,
+      "question": 22,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 20,
+      "question": 28,
+      "topic": "Debt Securities",
+      "answer": "C",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 20,
+      "question": 60,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 20,
+      "question": 61,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 20,
+      "question": 62,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 20,
+      "question": 75,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Score percentage = Correct answers ÷ Total questions × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 20,
+      "question": 77,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 15,
+      "topic": "Conduct",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 17,
+      "topic": "Conduct",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 18,
+      "topic": "PIDM",
+      "answer": "D",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 21,
+      "question": 24,
+      "topic": "Guidelines",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 26,
+      "topic": "Guidelines",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 35,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 37,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 39,
+      "topic": "Product Disclosure",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 53,
+      "topic": "Product Disclosure",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 61,
+      "topic": "Product Disclosure",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 63,
+      "topic": "KYC",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 69,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 21,
+      "question": 77,
+      "topic": "Conduct",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 3,
+      "topic": "PIDM",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 22,
+      "question": 4,
+      "topic": "AML",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 8,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 11,
+      "topic": "AML",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 23,
+      "topic": "PIDM",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 24,
+      "topic": "FEA Rules",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 25,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 5
+    },
+    {
+      "set": 22,
+      "question": 27,
+      "topic": "PIDM",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 38,
+      "topic": "FEA Rules",
+      "answer": "A",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 65,
+      "topic": "BNM",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 71,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 73,
+      "topic": "PIDM",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 22,
+      "question": 76,
+      "topic": "AML",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 3
+    },
+    {
+      "set": 23,
+      "question": 1,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Amount available for option exposure = Principal × (1 − zero-coupon component cost percentage).",
+      "worked_lines": 3
+    },
+    {
+      "set": 23,
+      "question": 4,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Bond price = Present value of coupon payments + Present value of par value.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 9,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 23,
+      "question": 11,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 20,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 23,
+      "question": 21,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 23,
+      "question": 35,
+      "topic": "PIDM",
+      "answer": "D",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 48,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 50,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 23,
+      "question": 56,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 65,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 74,
+      "topic": "Structured Products",
+      "answer": "C",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 23,
+      "question": 75,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 1,
+      "topic": "Derivatives",
+      "answer": "C",
+      "formula": "Amount available for option exposure = Principal × (1 − zero-coupon component cost percentage).",
+      "worked_lines": 3
+    },
+    {
+      "set": 24,
+      "question": 2,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 24,
+      "question": 8,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 19,
+      "topic": "Structured Products",
+      "answer": "A",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 5
+    },
+    {
+      "set": 24,
+      "question": 21,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 33,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Bond price = Present value of coupon payments + Present value of par value.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 37,
+      "topic": "PIDM",
+      "answer": "C",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 43,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 51,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 53,
+      "topic": "Derivatives",
+      "answer": "D",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 4
+    },
+    {
+      "set": 24,
+      "question": 55,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Current yield = Annual coupon ÷ Current market price × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 24,
+      "question": 75,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 24,
+      "question": 79,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 25,
+      "question": 9,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 14,
+      "topic": "Structured Products",
+      "answer": "B",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 5
+    },
+    {
+      "set": 25,
+      "question": 36,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Fisher relation: Real yield = [(1 + nominal yield) ÷ (1 + inflation rate) − 1] × 100.",
+      "worked_lines": 3
+    },
+    {
+      "set": 25,
+      "question": 37,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Approximate percentage price change = −Modified duration × Change in yield.",
+      "worked_lines": 3
+    },
+    {
+      "set": 25,
+      "question": 39,
+      "topic": "Bonds",
+      "answer": "D",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 40,
+      "topic": "Bonds",
+      "answer": "C",
+      "formula": "Approximate YTM = [Annual coupon + (Par − Price) ÷ Years] ÷ [(Par + Price) ÷ 2] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 43,
+      "topic": "Bonds",
+      "answer": "B",
+      "formula": "Annualised discount-security return = [(Redemption value − Purchase price) ÷ Purchase price] × [365 ÷ Days to maturity] × 100.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 53,
+      "topic": "Structured Products",
+      "answer": "D",
+      "formula": "Maturity proceeds = Protected principal × [1 + credited return]. Credited return = min(Underlying return × Participation rate, cap), where a cap applies.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 62,
+      "topic": "PIDM",
+      "answer": "D",
+      "formula": "Protected amount = lower of eligible balance and applicable PIDM/TIPS protection limit.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 67,
+      "topic": "Derivatives",
+      "answer": "C",
+      "formula": "Use the formula stated or implied by the question, substitute the given figures, and match the computed value to the nearest option.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 70,
+      "topic": "Derivatives",
+      "answer": "B",
+      "formula": "Call intrinsic value = max(Underlying price − Strike price, 0). Time value = Premium − Intrinsic value, if premium is given.",
+      "worked_lines": 4
+    },
+    {
+      "set": 25,
+      "question": 75,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Present value / zero-coupon price = Future value ÷ (1 + required yield)^years.",
+      "worked_lines": 3
+    },
+    {
+      "set": 25,
+      "question": 79,
+      "topic": "Bonds",
+      "answer": "A",
+      "formula": "Bond price = Present value of coupon payments + Present value of par value.",
+      "worked_lines": 4
+    }
+  ]
+}

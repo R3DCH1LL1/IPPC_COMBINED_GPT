@@ -1,0 +1,125 @@
+{
+  "version": "V167-light",
+  "source": "V166 answer-length patch",
+  "question_sets": 25,
+  "questions": 2000,
+  "calculation_questions_with_formula_workings": 237,
+  "calculation_questions_with_wrong_option_explanation_sections": 0,
+  "calculation_questions_missing_formula_or_workings_marker": 0,
+  "formula_blocks": 237,
+  "false_calculation_style_labels_reclassified": 92,
+  "false_calculation_reclassified_as": {
+    "Recall": 55,
+    "Scenario-based": 33,
+    "Statement-combination": 4
+  },
+  "style_counts_after_reclassification": {
+    "Statement-combination": 360,
+    "Recall": 757,
+    "Scenario-based": 671,
+    "Calculation": 212
+  },
+  "build_test": "passed before packaging",
+  "package_reduction": {
+    "previous_v166_zip": "28MB",
+    "new_v167_light_zip": "4.4MB expected",
+    "removed_from_zip": [
+      "node_modules/",
+      "dist/",
+      "old v155-v166 audit JSON/CSV files",
+      "questions.packed.json.gz duplicate copy"
+    ],
+    "reasoning": "Vercel runs npm ci and npm run build from package.json; node_modules and dist do not need to be committed/uploaded."
+  },
+  "kept_runtime_assets": [
+    "src/",
+    "public/questions.packed.json",
+    "public/notes/index.html",
+    "public/about/",
+    "public/printable-notes-pages/",
+    "printable notes PDF",
+    "audit report PDFs"
+  ],
+  "sample_updated_questions": [
+    {
+      "set": 1,
+      "question": 77
+    },
+    {
+      "set": 3,
+      "question": 6
+    },
+    {
+      "set": 3,
+      "question": 15
+    },
+    {
+      "set": 3,
+      "question": 21
+    },
+    {
+      "set": 3,
+      "question": 40
+    },
+    {
+      "set": 3,
+      "question": 46
+    },
+    {
+      "set": 3,
+      "question": 57
+    },
+    {
+      "set": 3,
+      "question": 58
+    },
+    {
+      "set": 3,
+      "question": 60
+    },
+    {
+      "set": 3,
+      "question": 61
+    },
+    {
+      "set": 3,
+      "question": 63
+    },
+    {
+      "set": 3,
+      "question": 68
+    },
+    {
+      "set": 3,
+      "question": 69
+    },
+    {
+      "set": 3,
+      "question": 76
+    },
+    {
+      "set": 4,
+      "question": 11
+    },
+    {
+      "set": 4,
+      "question": 18
+    },
+    {
+      "set": 4,
+      "question": 22
+    },
+    {
+      "set": 4,
+      "question": 23
+    },
+    {
+      "set": 4,
+      "question": 48
+    },
+    {
+      "set": 4,
+      "question": 66
+    }
+  ]
+}

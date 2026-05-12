@@ -100,7 +100,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v149-alignment-visibility-pass';
+const DATA_VERSION='v167-calculation-workings-light';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -146,7 +146,7 @@ async function loadPacked(){
 }
 const setLabel=n=>Number(n)>20?`Hard ${Number(n)-20}`:`Set ${n}`;
 function Pill({children}){return <span className="soft-pill">{children}</span>}
-function isCalculationQuestion(q){return Boolean(q?.calc)||qStyle(q)==='Calculation'||difficulty(q)==='Calculation'||/\bFormula\s*:/i.test(String(q?.explanation||''));}
+function isCalculationQuestion(q){return Boolean(q?.calc)||/\bFormula\s*:/i.test(String(q?.explanation||''))||/\b(calculate|computed?|current yield|bond value|present value|approximate YTM|yield to maturity|option payoff|intrinsic value|time value|modified duration|accrued interest|dirty price|clean price|participation rate|annualised yield|annualized yield|real yield|Fisher relation)\b/i.test(String(q?.text||''));}
 function extractExplanationFormula(explanation){
   const text=String(explanation||'');
   const match=text.match(/Formula:\s*([\s\S]*?)(?:\n\s*(?:Working|Check|Calculation cue|Exam cue|Why this is correct|Why the other options are wrong):|$)/i);
@@ -182,7 +182,7 @@ function formulaFallback(q){
 }
 function CalcHelper({q}){
   if(!q)return null;
-  const exact=extractExplanationFormula(q.explanation);
+  const exact=extractExplanationFormula(q.explanation)||extractExplanationFormula(q.calc);
   const fallback=formulaFallback(q);
   const formula=exact||fallback;
   if(!formula)return null;
@@ -195,6 +195,7 @@ function CalcHelper({q}){
 function answerLetter(index){return index==null?'—':String.fromCharCode(65+Number(index));}
 function normalizeExplanationText(raw){
   const markerWords=[
+    'Statement-by-statement explanation:',
     'Statement-by-statement analysis:',
     'Why this is correct:',
     'Why this answer is correct:',
@@ -215,13 +216,14 @@ function normalizeExplanationText(raw){
 function splitExplanationSections(raw){
   const normalized=normalizeExplanationText(raw);
   const labels=[
+    'Statement-by-statement explanation:',
     'Statement-by-statement analysis:',
     'Why this is correct:',
     'Why this answer is correct:',
     'Worked calculation:',
     'Why the other options are wrong:'
   ];
-  const answerMatch=normalized.match(/^Answer:\s*([A-D])\s*-\s*([\s\S]*?)(?=\n(?:Statement-by-statement analysis:|Why this is correct:|Why this answer is correct:|Worked calculation:|Why the other options are wrong:)|$)/i);
+  const answerMatch=normalized.match(/^Answer:\s*([A-D])\s*-\s*([\s\S]*?)(?=\n(?:Statement-by-statement explanation:|Statement-by-statement analysis:|Why this is correct:|Why this answer is correct:|Worked calculation:|Why the other options are wrong:)|$)/i);
   const answerLetterValue=answerMatch?.[1]||'';
   const answerText=(answerMatch?.[2]||'').trim();
   const pick=(label,nextLabels=labels)=>{
@@ -240,14 +242,14 @@ function splitExplanationSections(raw){
     answerLetterValue,
     answerText,
     correct,
-    statements:pick('Statement-by-statement analysis:'),
+    statements:pick('Statement-by-statement explanation:')||pick('Statement-by-statement analysis:'),
     calc:pick('Worked calculation:'),
     wrong:pick('Why the other options are wrong:')
   };
 }
 function textBlocks(text){
   return String(text||'')
-    .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Wrong)\s+-)/g,'\n')
+    .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Incorrect|Wrong)\s*[-—])/g,'\n')
     .split(/\n+|(?<=[.!?])\s+(?=(?:[A-Z0-9“']|RM|CLO|PIDM|BNM|SC|FSA|IFSA|CMSA|AMLA))/)
     .map(t=>t.trim())
     .filter(Boolean);
@@ -261,7 +263,7 @@ function wrongOptionBlocks(text){
 }
 function statementBlocks(text){
   return String(text||'')
-    .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Wrong)\s+-)/g,'\n')
+    .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Incorrect|Wrong)\s*[-—])/g,'\n')
     .split(/\n+/g)
     .map(t=>t.trim())
     .filter(Boolean);
@@ -277,8 +279,10 @@ function WrongOptionNote({line}){
   return <div className="wrong-option-note parsed-wrong-option"><span className="wrong-option-letter">{parsed.letter}</span><span>{parsed.body}</span></div>;
 }
 function StatementNote({line}){
-  const wrong=/\bWrong\b/i.test(line);
-  return <div className={wrong?'statement-pill statement-wrong':'statement-pill statement-correct'}>{line}</div>;
+  const parsed=String(line||'').match(/^(I|II|III|IV|V|VI)\.\s*(Correct|Incorrect|Wrong)\s*[-—]\s*([\s\S]*)$/i);
+  const wrong=parsed?/^(Incorrect|Wrong)$/i.test(parsed[2]):/\b(?:Incorrect|Wrong)\b/i.test(line);
+  if(!parsed) return <div className={wrong?'statement-pill statement-wrong':'statement-pill statement-correct'}>{line}</div>;
+  return <div className={wrong?'statement-pill statement-wrong parsed-statement':'statement-pill statement-correct parsed-statement'}><span className="statement-roman">{parsed[1]}</span><span className="statement-status">{wrong?'Incorrect':'Correct'}</span><span className="statement-body">{parsed[3].trim()}</span></div>;
 }
 function ExplanationPanel({q,selected,correct,compact=false}){
   const parsed=splitExplanationSections(q?.explanation||'');
@@ -294,7 +298,7 @@ function ExplanationPanel({q,selected,correct,compact=false}){
     sections.push(<section key="correct" className="explanation-section why-correct"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Why this is correct</h4></div>{textBlocks(parsed.correct).map((line,i)=><p key={i}>{line}</p>)}</section>);
   }
   if(parsed.statements){
-    sections.push(<section key="statements" className="explanation-section statement-review"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Statement-by-statement review</h4></div><div className="statement-grid">{statementBlocks(parsed.statements).map((line,i)=><StatementNote key={i} line={line}/>)}</div></section>);
+    sections.push(<section key="statements" className="explanation-section statement-review"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Why each statement is correct or incorrect</h4></div><div className="statement-grid">{statementBlocks(parsed.statements).map((line,i)=><StatementNote key={i} line={line}/>)}</div></section>);
   }
   if(q?.calc||parsed.calc){
     sections.push(<section key="calc" className="explanation-section worked-calc"><div className="explanation-section-title"><span>{sectionLabel()}</span><h4>Worked calculation</h4></div><pre>{q?.calc||parsed.calc}</pre></section>);
@@ -326,21 +330,22 @@ function ExplanationPanel({q,selected,correct,compact=false}){
 
 
 function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sharedToggleTheme=()=>{}}){
-  const [bank,setBank]=useState([]),[screen,setScreen]=useState('home'),[mode,setMode]=useState('generated'),[hardSet,setHardSet]=useState('1'),[qs,setQs]=useState([]),[idx,setIdx]=useState(0),[answers,setAnswers]=useState({}),[flags,setFlags]=useState({}),[conf,setConf]=useState({}),[showAns,setShowAns]=useState(false),[seconds,setSeconds]=useState(7200),[running,setRunning]=useState(false),[err,setErr]=useState(''),[count,setCount]=useState(80),[sets,setSets]=useState(new Set(Array.from({length:20},(_,i)=>i+1))),[topics,setTopics]=useState(new Set()),[clo,setClo]=useState(new Set()),[query,setQuery]=useState(''),[bankSet,setBankSet]=useState('all'),[bankTopic,setBankTopic]=useState('all'),[bankClo,setBankClo]=useState('all'),[bankDiff,setBankDiff]=useState('all'),[bankStyle,setBankStyle]=useState('all'),[bankPage,setBankPage]=useState(1),[history,setHistory]=useState([]),[review,setReview]=useState('wrong'),[navOpen,setNavOpen]=useState(false),[navFilter,setNavFilter]=useState('all'),[showStudy,setShowStudy]=useState(false),[compact,setCompact]=useState(()=>{try{return localStorage.getItem('ippc_compact_v1')==='1'}catch{return false}}),[settingsOpen,setSettingsOpen]=useState(false),[theme,setTheme]=useState(()=>sharedTheme||(()=>{try{return localStorage.getItem(THEME_KEY)||'light'}catch{return 'light'}})());
+  const [bank,setBank]=useState([]),[screen,setScreen]=useState('home'),[mode,setMode]=useState('generated'),[hardSet,setHardSet]=useState('1'),[qs,setQs]=useState([]),[idx,setIdx]=useState(0),[answers,setAnswers]=useState({}),[flags,setFlags]=useState({}),[conf,setConf]=useState({}),[showAns,setShowAns]=useState(false),[seconds,setSeconds]=useState(7200),[running,setRunning]=useState(false),[err,setErr]=useState(''),[count,setCount]=useState(80),[sets,setSets]=useState(new Set(Array.from({length:20},(_,i)=>i+1))),[topics,setTopics]=useState(new Set()),[clo,setClo]=useState(new Set()),[query,setQuery]=useState(''),[bankSet,setBankSet]=useState('all'),[bankTopic,setBankTopic]=useState('all'),[bankClo,setBankClo]=useState('all'),[bankDiff,setBankDiff]=useState('all'),[bankStyle,setBankStyle]=useState('all'),[bankPage,setBankPage]=useState(1),[history,setHistory]=useState([]),[review,setReview]=useState('wrong'),[navOpen,setNavOpen]=useState(false),[navFilter,setNavFilter]=useState('all'),[showStudy,setShowStudy]=useState(false),[compact,setCompact]=useState(()=>{try{return localStorage.getItem('ippc_compact_v1')==='1'}catch{return false}}),[settingsOpen,setSettingsOpen]=useState(false),[bankFilterOpen,setBankFilterOpen]=useState(false),[theme,setTheme]=useState(()=>sharedTheme||(()=>{try{return localStorage.getItem(THEME_KEY)||'light'}catch{return 'light'}})());
   useEffect(()=>{loadPacked().then(setBank).catch(e=>setErr(e.message));setHistory(getHistory())},[]);
   useEffect(()=>{if(sharedTheme&&sharedTheme!==theme)setTheme(sharedTheme)},[sharedTheme]);
   useEffect(()=>{applyGlobalTheme(theme);try{localStorage.setItem(THEME_KEY,theme)}catch{}},[theme]);
   useEffect(()=>{try{localStorage.setItem('ippc_compact_v1',compact?'1':'0')}catch{}},[compact]);
-  useEffect(()=>{if(!running)return;const t=setInterval(()=>setSeconds(s=>s<=1?(setRunning(false),submit(),0):s-1),1000);return()=>clearInterval(t)},[running]);
   useEffect(()=>setBankPage(1),[query,bankSet,bankTopic,bankClo,bankDiff,bankStyle]);
   const allTopics=useMemo(()=>{const base=[...new Set(bank.map(q=>q.topic))].sort();return bank.some(isLegalFilterQuestion)?[LEGAL_FILTER_TOPIC,...base]:base},[bank]);
   const setNumbers=useMemo(()=>[...new Set(bank.map(q=>q.set))].sort((a,b)=>a-b),[bank]);
   const available=useMemo(()=>bank.filter(q=>sets.has(q.set)&&matchesAnyTopic(q,topics)&&(!clo.size||clo.has(q.clo))),[bank,sets,topics,clo]);
-  const sessionAvailableCount=mode==='wrong'?getWrong().size:available.length;
+  const calcAvailableCount=useMemo(()=>available.filter(isCalculationQuestion).length,[available]);
+  const sessionAvailableCount=mode==='wrong'?getWrong().size:mode==='calc'?calcAvailableCount:available.length;
   const current=qs[idx], selected=answers[current?.id], correct=selected===current?.answer;
   const answeredCount=Object.keys(answers).length, flaggedCount=Object.values(flags).filter(Boolean).length, progressPct=qs.length?Math.round(answeredCount/qs.length*100):0;
   const score=qs.reduce((a,q)=>a+(answers[q.id]===q.answer?1:0),0), pct=qs.length?Math.round(score/qs.length*100):0;
   const wrongIds=useMemo(()=>qs.filter(q=>answers[q.id]!==q.answer).map(q=>q.id),[qs,answers]);
+  const submitRef=useRef(()=>{});
 
   function pickTopicBalanced(pool,target){
     const byTopic={};shuffle(pool).forEach(q=>{(byTopic[q.topic] ||= []).push(q)});
@@ -356,9 +361,11 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
     return chosen;
   }
   function pickOfficial(pool){const by={1:[],2:[],3:[]};pool.forEach(q=>by[q.clo].push(q));let chosen=[];[1,2,3].forEach(c=>chosen.push(...pickTopicBalanced(by[c],TARGET[c])));if(chosen.length<80)chosen.push(...shuffle(pool.filter(q=>!chosen.includes(q))).slice(0,80-chosen.length));return shuffle(chosen).slice(0,80)}
-  function pickQuestions(kind=mode){let pool=available.length?available:bank;if(kind==='hard'){let hardPool=bank.filter(q=>q.set>=21&&q.set<=25);if(hardSet!=='mixed')hardPool=hardPool.filter(q=>q.set===20+Number(hardSet));return hardSet==='mixed'?shuffle(hardPool).slice(0,80):hardPool.slice(0,80)}if(kind==='wrong'){const wrong=getWrong();pool=bank.filter(q=>wrong.has(q.id));return shuffle(pool).slice(0,Math.min(count,pool.length||bank.length))}if(kind==='calc'){pool=pool.filter(q=>q.calc||qStyle(q)==='Calculation'||difficulty(q)==='Calculation');return shuffle(pool).slice(0,Math.min(count,pool.length))}if(kind==='official')return pickOfficial(bank);if(kind==='generated')return pickOfficial(pool);return shuffle(pool).slice(0,Math.min(count,pool.length));}
+  function pickQuestions(kind=mode){let pool=available.length?available:bank;if(kind==='hard'){let hardPool=bank.filter(q=>q.set>=21&&q.set<=25);if(hardSet!=='mixed')hardPool=hardPool.filter(q=>q.set===20+Number(hardSet));return hardSet==='mixed'?shuffle(hardPool).slice(0,80):hardPool.slice(0,80)}if(kind==='wrong'){const wrong=getWrong();pool=bank.filter(q=>wrong.has(q.id));return shuffle(pool).slice(0,Math.min(count,pool.length||bank.length))}if(kind==='calc'){pool=pool.filter(isCalculationQuestion);return shuffle(pool).slice(0,Math.min(count,pool.length))}if(kind==='official')return pickOfficial(bank);if(kind==='generated')return pickOfficial(pool);return shuffle(pool).slice(0,Math.min(count,pool.length));}
   function start(kind=mode){const picked=pickQuestions(kind);if(!picked.length)return;setQs(picked);setIdx(0);setAnswers({});setFlags({});setConf({});setShowAns(false);setSeconds(kind==='official'||kind==='generated'||kind==='hard'?7200:kind==='mock'?Math.round(picked.length*90):0);setRunning(kind==='official'||kind==='generated'||kind==='hard'||kind==='mock');setMode(kind);setScreen('test')}
   function submit(){setRunning(false);setShowAns(false);setScreen('results');setReview('wrong');if(!qs.length)return;const wrongSet=getWrong();qs.forEach(q=>answers[q.id]===q.answer?wrongSet.delete(q.id):wrongSet.add(q.id));saveWrong(wrongSet);const questionHistory=qs.map((q,n)=>({n:n+1,id:q.id,set:q.set,setLabel:setLabel(q.set),clo:q.clo,topic:q.topic,style:qStyle(q),difficulty:difficulty(q),selected:answers[q.id]==null?null:answers[q.id],selectedLabel:answers[q.id]==null?'Not answered':String.fromCharCode(65+answers[q.id]),answer:q.answer,answerLabel:String.fromCharCode(65+q.answer),correct:answers[q.id]===q.answer,flagged:Boolean(flags[q.id]),confidence:conf[q.id]||''}));const setSummary=Object.entries(questionHistory.reduce((acc,q)=>{const key=q.setLabel||setLabel(q.set);acc[key]=(acc[key]||0)+1;return acc},{})).map(([label,total])=>({label,total}));const topicSummary=Object.entries(questionHistory.reduce((acc,q)=>{acc[q.topic]=(acc[q.topic]||0)+1;return acc},{})).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([topic,total])=>({topic,total}));const attempt={id:Date.now(),date:new Date().toISOString(),mode,score,total:qs.length,pct,wrong:wrongIds.length,flagged:flaggedCount,sets:setSummary,topics:topicSummary,questions:questionHistory,clo:[1,2,3].map(c=>{const g=qs.filter(q=>q.clo===c);const s=g.reduce((a,q)=>a+(answers[q.id]===q.answer?1:0),0);return{clo:c,score:s,total:g.length,pct:g.length?Math.round(s/g.length*100):0}})};const h=[attempt,...getHistory()];saveHistory(h);setHistory(h)}
+  useEffect(()=>{submitRef.current=submit;});
+  useEffect(()=>{if(!running)return;const t=setInterval(()=>setSeconds(s=>{if(s<=1){setRunning(false);submitRef.current?.();return 0}return s-1}),1000);return()=>clearInterval(t)},[running]);
   function option(q,i){setAnswers(a=>({...a,[q.id]:i}));if(mode==='practice'||mode==='wrong'||mode==='calc')setShowAns(true)}
   function jump(n){const nextIdx=Math.max(0,Math.min(qs.length-1,n));const nextQ=qs[nextIdx];setIdx(nextIdx);setShowAns((mode==='practice'||mode==='wrong'||mode==='calc')&&nextQ&&answers[nextQ.id]!=null);setShowStudy(false)}
   function toggleSet(n){setSets(s=>{const x=new Set(s);x.has(n)?x.delete(n):x.add(n);return x})}
@@ -385,8 +392,8 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
   const navItems=qs.map((q,i)=>({q,i,answered:answers[q.id]!=null,flagged:!!flags[q.id],wrong:answers[q.id]!=null&&answers[q.id]!==q.answer}));
   const incorrectCount=navItems.filter(x=>x.wrong).length;
   const filteredNavItems=navItems.filter(x=>navFilter==='all'||(navFilter==='unanswered'&&!x.answered)||(navFilter==='flagged'&&x.flagged)||(navFilter==='incorrect'&&x.wrong));
-  if(err)return <div className={`app-shell theme-${theme} safe-loading-shell`}><main className="safe-loading-center"><section className="empty-card safe-loading-card error-state"><h1>Could not load Mock Test</h1><p>{err}</p><p>Check that public/questions.packed.json exists at the GitHub repository root after deployment.</p><button className="secondary-btn" onClick={onBack}>Back to Study Suite Menu</button></section></main></div>;
-  if(!bank.length)return <div className={`app-shell theme-${theme} safe-loading-shell`}><main className="safe-loading-center"><section className="empty-card safe-loading-card"><div className="spin"/><h1>Loading Mock Test</h1><p>Loading the compact IPPC question bank…</p><button className="secondary-btn" onClick={onBack}>Back to Study Suite Menu</button></section></main></div>;
+  if(err)return <div className={`app-shell book-landing book-module theme-${theme} safe-loading-shell`}><main className="safe-loading-center"><section className="empty-card safe-loading-card error-state"><h1>Could not load Mock Test</h1><p>{err}</p><p>Check that public/questions.packed.json exists at the GitHub repository root after deployment.</p><button className="secondary-btn" onClick={onBack}>Back to Study Suite Menu</button></section></main></div>;
+  if(!bank.length)return <div className={`app-shell book-landing book-module theme-${theme} safe-loading-shell`}><main className="safe-loading-center"><section className="empty-card safe-loading-card"><div className="spin"/><h1>Loading Mock Test</h1><p>Loading the compact IPPC question bank…</p><button className="secondary-btn" onClick={onBack}>Back to Study Suite Menu</button></section></main></div>;
 
   return <div className={`app-shell book-landing book-module book-mock-page theme-${theme} screen-${screen} ${compact?'compact-mode':''}`}>
     <BookTopbar current="mock" onLanding={onBack} onNotes={onNotes} onMock={()=>setScreen('home')} onFlashcards={()=>{window.location.hash='flashcards'}} onReport={()=>{window.location.hash='report'}} theme={theme} toggleTheme={toggleTheme} folio={screen==='test'?'Fol. 004':screen==='history'?'Fol. 010':'Fol. 003'} extra={<button className="book-nav-small-btn" onClick={()=>setSettingsOpen(true)}>Settings</button>} />
@@ -395,7 +402,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
     {screen==='home'&&<main className="page page-home">
       <BookPageHead eyebrow="Examination hall · 80 questions · 120 minutes" title="The" em="examination hall" lede="Generate a fresh sitting, drill the topics you keep losing, or build a custom paper from the bank." stats={[["2,000","Question bank"],["25","Sets + 5 Hard"],["12/36/32","CLO split"],["120m","Per sitting"]]} />
       <section className="hero-card surface"><div className="hero-copy"><span className="eyebrow">Mock generator mode</span><h1>Turn the bank into a real revision dashboard.</h1><p>Generated mocks lock to 80 questions and the 12/36/32 CLO split. Practice mode supports wrong-question drilling, confidence marking, review mode, and saved attempt history.</p><div className="quick-start-block"><h2>Quick Start</h2><div className="hero-actions"><button className="primary-btn" onClick={()=>start('generated')}>Generate fresh mock</button><button className="primary-btn practice-quick-btn" onClick={()=>start('practice')}>Practice</button><button className="secondary-btn calc-quick-btn" onClick={()=>start('calc')}>Calculation drill</button><button className="secondary-btn wrong-quick-btn" onClick={()=>start('wrong')}>Wrong questions only</button><button className="secondary-btn bank-quick-btn" onClick={()=>setScreen('bank')}>Browse bank</button></div></div></div><div className="hero-stats-grid"><div className="stat-card accent"><strong>80</strong><span>Generated mock questions</span></div><div className="stat-card"><strong>12</strong><span>CLO1 questions</span></div><div className="stat-card"><strong>36</strong><span>CLO2 questions</span></div><div className="stat-card"><strong>32</strong><span>CLO3 questions</span></div></div></section>
-      <section className="home-grid"><div className="surface config-card"><div className="section-head"><div><h2>Build a custom session</h2><p>Use mock generator for exam simulation, or custom filters for targeted revision.</p></div></div><div className="mode-switch"><button className={mode==='generated'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('generated');setCount(80)}}><span>Mock generator</span><small>Fresh 80 Q · 2 hours · 12/36/32 split</small></button><button className={mode==='hard'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('hard');setCount(80)}}><span>Hard Mode</span><small>5 advanced sets · only hard traps</small></button><button className={mode==='calc'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('calc');setCount(80)}}><span>Calculation drill</span><small>Bonds · options · payoffs</small></button><button className={mode==='mock'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('mock');setCount(80)}}><span>Custom timed</span><small>Your filters · timed</small></button><button className={mode==='practice'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('practice');setCount(80)}}><span>Practice</span><small>Instant answers</small></button><button className={mode==='wrong'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('wrong');setCount(80)}}><span>Wrong only</span><small>Drill previous mistakes</small></button></div>{mode==='hard'&&<div className="control-block hard-mode-panel"><div className="section-label-row"><h3>Advanced Hard Mode</h3><span className="soft-pill">80 Q · 2 hours · 100% Hard</span></div><p className="count-helper">Choose one fixed hard set, or use Mixed to draw 80 questions across all five advanced sets.</p><div className="chip-group"><button className={hardSet==='mixed'?'chip chip-on':'chip'} onClick={()=>setHardSet('mixed')}>Mixed hard</button>{[1,2,3,4,5].map(n=><button key={n} className={hardSet===String(n)?'chip chip-on':'chip'} onClick={()=>setHardSet(String(n))}>Hard {n}</button>)}</div></div>}{mode!=='generated'&&mode!=='hard'&&<div className="control-block"><div className="section-label-row"><h3>Question count</h3><span className="soft-pill">Available: {mode==='wrong'?getWrong().size:mode==='calc'?available.filter(q=>q.calc||qStyle(q)==='Calculation'||difficulty(q)==='Calculation').length:available.length}</span></div><div className="number-count-card"><label className="count-input-wrap"><span>Number of questions</span><input type="number" min="1" max={sessionAvailableCount||bank.length||1600} value={count} onChange={e=>setCount(Math.max(1,Math.floor(Number(e.target.value)||1)))}/></label><div className="range-meta"><strong>{count}</strong><span>{mode==='mock'?`${Math.round(count*1.5)} min estimate`:'Custom practice session'}</span></div><p className="count-helper">You can type any number. The app will use all matching questions if the requested number is higher than available.</p></div></div>}<div className="control-block"><div className="section-label-row"><h3>Sets</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setSets(new Set())}>Clear</button><button className="text-btn" onClick={()=>setSets(new Set(setNumbers.filter(n=>n<=20)))}>Select core</button></div></div><div className="chip-group">{setNumbers.map(n=><button key={n} className={sets.has(n)?'chip chip-on':'chip'} onClick={()=>toggleSet(n)}>{setLabel(n)}</button>)}</div></div><div className="control-block"><div className="section-label-row"><h3>CLO focus</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setClo(new Set())}>Clear</button><button className="text-btn" onClick={()=>setClo(new Set([1,2,3]))}>Select all</button></div></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={clo.has(n)?'chip chip-on':'chip'} onClick={()=>toggleClo(n)}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="control-block"><div className="section-label-row"><h3>Topics</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setTopics(new Set())}>Clear</button><button className="text-btn" onClick={()=>setTopics(new Set(allTopics))}>Select all</button></div></div><div className="chip-group scroll-chips">{allTopics.map(t=><button key={t} className={topics.has(t)?'chip chip-on':'chip'} onClick={()=>toggleTopic(t)}>{t}</button>)}</div></div><div className="button-row sticky-actions"><button className="secondary-btn" onClick={()=>{setSets(new Set(setNumbers.filter(n=>n<=20)));setTopics(new Set());setClo(new Set());setCount(80)}}>Reset filters</button><button className="primary-btn" onClick={()=>start(mode)}>Begin session</button></div></div><div className="home-side-stack"><div className="surface info-card"><div className="section-head compact"><div><h2>Attempt history</h2><p>{history.length?`Last score: ${history[0].pct}% · Weakest: CLO ${topWeak?.clo}`:'No attempts saved yet.'}</p></div></div><div className="blueprint-list">{history.slice(0,4).map(h=><div className="blueprint-item" key={h.id}><div><strong>{h.pct}%</strong><span>{new Date(h.date).toLocaleDateString()} · {h.mode}</span></div><b>{h.score}/{h.total}</b></div>)}</div><div className="button-row" style={{marginTop:16}}><button className="secondary-btn" onClick={()=>setScreen('history')}>View history</button></div></div><div className="surface info-card"><div className="section-head compact"><div><h2>New study features</h2><p>Review mode, confidence labels, formula helpers, textbook references, and difficulty tags are now integrated.</p></div></div><ul className="feature-list"><li>Wrong-question practice from saved attempts</li><li>Review all wrong, flagged, unanswered, or by CLO</li><li>Confidence tracking: confident, guessed, unsure</li><li>Formula helper and calculation drill for quick-win formulas</li><li>Practice mode gives instant result and explanation after each answer</li><li>Fresh topic-balanced mock generator</li><li>Advanced Hard Mode: 5 dedicated 80-question trap sets</li></ul></div></div></section>
+      <section className="home-grid"><div className="surface config-card"><div className="section-head"><div><h2>Build a custom session</h2><p>Use mock generator for exam simulation, or custom filters for targeted revision.</p></div></div><div className="mode-switch"><button className={mode==='generated'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('generated');setCount(80)}}><span>Mock generator</span><small>Fresh 80 Q · 2 hours · 12/36/32 split</small></button><button className={mode==='hard'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('hard');setCount(80)}}><span>Hard Mode</span><small>5 advanced sets · only hard traps</small></button><button className={mode==='calc'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('calc');setCount(80)}}><span>Calculation drill</span><small>Bonds · options · payoffs</small></button><button className={mode==='mock'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('mock');setCount(80)}}><span>Custom timed</span><small>Your filters · timed</small></button><button className={mode==='practice'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('practice');setCount(80)}}><span>Practice</span><small>Instant answers</small></button><button className={mode==='wrong'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('wrong');setCount(80)}}><span>Wrong only</span><small>Drill previous mistakes</small></button></div>{mode==='hard'&&<div className="control-block hard-mode-panel"><div className="section-label-row"><h3>Advanced Hard Mode</h3><span className="soft-pill">80 Q · 2 hours · 100% Hard</span></div><p className="count-helper">Choose one fixed hard set, or use Mixed to draw 80 questions across all five advanced sets.</p><div className="chip-group"><button className={hardSet==='mixed'?'chip chip-on':'chip'} onClick={()=>setHardSet('mixed')}>Mixed hard</button>{[1,2,3,4,5].map(n=><button key={n} className={hardSet===String(n)?'chip chip-on':'chip'} onClick={()=>setHardSet(String(n))}>Hard {n}</button>)}</div></div>}{mode!=='generated'&&mode!=='hard'&&<div className="control-block"><div className="section-label-row"><h3>Question count</h3><span className="soft-pill">Available: {mode==='wrong'?getWrong().size:mode==='calc'?available.filter(isCalculationQuestion).length:available.length}</span></div><div className="number-count-card"><label className="count-input-wrap"><span>Number of questions</span><input type="number" min="1" max={sessionAvailableCount||bank.length||1600} value={count} onChange={e=>setCount(Math.max(1,Math.floor(Number(e.target.value)||1)))}/></label><div className="range-meta"><strong>{count}</strong><span>{mode==='mock'?`${Math.round(count*1.5)} min estimate`:'Custom practice session'}</span></div><p className="count-helper">You can type any number. The app will use all matching questions if the requested number is higher than available.</p></div></div>}<div className="control-block"><div className="section-label-row"><h3>Sets</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setSets(new Set())}>Clear</button><button className="text-btn" onClick={()=>setSets(new Set(setNumbers.filter(n=>n<=20)))}>Select core</button></div></div><div className="chip-group">{setNumbers.map(n=><button key={n} className={sets.has(n)?'chip chip-on':'chip'} onClick={()=>toggleSet(n)}>{setLabel(n)}</button>)}</div></div><div className="control-block"><div className="section-label-row"><h3>CLO focus</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setClo(new Set())}>Clear</button><button className="text-btn" onClick={()=>setClo(new Set([1,2,3]))}>Select all</button></div></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={clo.has(n)?'chip chip-on':'chip'} onClick={()=>toggleClo(n)}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="control-block"><div className="section-label-row"><h3>Topics</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setTopics(new Set())}>Clear</button><button className="text-btn" onClick={()=>setTopics(new Set(allTopics))}>Select all</button></div></div><div className="chip-group scroll-chips">{allTopics.map(t=><button key={t} className={topics.has(t)?'chip chip-on':'chip'} onClick={()=>toggleTopic(t)}>{t}</button>)}</div></div><div className="button-row sticky-actions"><button className="secondary-btn" onClick={()=>{setSets(new Set(setNumbers.filter(n=>n<=20)));setTopics(new Set());setClo(new Set());setCount(80)}}>Reset filters</button><button className="primary-btn" onClick={()=>start(mode)}>Begin session</button></div></div><div className="home-side-stack"><div className="surface info-card"><div className="section-head compact"><div><h2>Attempt history</h2><p>{history.length?`Last score: ${history[0].pct}% · Weakest: CLO ${topWeak?.clo}`:'No attempts saved yet.'}</p></div></div><div className="blueprint-list">{history.slice(0,4).map(h=><div className="blueprint-item" key={h.id}><div><strong>{h.pct}%</strong><span>{new Date(h.date).toLocaleDateString()} · {h.mode}</span></div><b>{h.score}/{h.total}</b></div>)}</div><div className="button-row" style={{marginTop:16}}><button className="secondary-btn" onClick={()=>setScreen('history')}>View history</button></div></div><div className="surface info-card"><div className="section-head compact"><div><h2>New study features</h2><p>Review mode, confidence labels, formula helpers, textbook references, and difficulty tags are now integrated.</p></div></div><ul className="feature-list"><li>Wrong-question practice from saved attempts</li><li>Review all wrong, flagged, unanswered, or by CLO</li><li>Confidence tracking: confident, guessed, unsure</li><li>Formula helper and calculation drill for quick-win formulas</li><li>Practice mode gives instant result and explanation after each answer</li><li>Fresh topic-balanced mock generator</li><li>Advanced Hard Mode: 5 dedicated 80-question trap sets</li></ul></div></div></section>
     </main>}
 
     {screen==='test'&&current&&<main className="page page-test page-test-drawer">
@@ -515,7 +522,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 
     {screen==='history'&&<main className="page page-history"><section className="surface bank-panel history-panel"><div className="section-head"><div><span className="eyebrow muted">Progress tracker</span><h2>Saved progress</h2><p>Attempts are saved locally on this device. Open an attempt to see the set mix, CLO split, topics and question-level history.</p></div><button className="secondary-btn" onClick={()=>{localStorage.removeItem(HISTORY_KEY);localStorage.removeItem(WRONG_KEY);setHistory([])}}>Clear history</button></div><div className="bank-list history-list">{history.length?history.map(h=>{const setMix=h.sets||[];const topicMix=h.topics||[];const detail=h.questions||[];return <details className="history-attempt-card" key={h.id}><summary><div className="history-attempt-main"><strong>{h.pct}% · {h.score}/{h.total}</strong><span>{new Date(h.date).toLocaleString()} · {h.mode} · {h.wrong} wrong · {h.flagged} flagged</span></div><div className="toolbar-pills history-pills">{(h.clo||[]).map(c=><Pill key={c.clo}>CLO {c.clo}: {c.score}/{c.total} · {c.pct}%</Pill>)}<Pill>{detail.length?`${detail.length} question records`:'summary only'}</Pill></div></summary><div className="history-detail-grid"><div className="history-detail-card"><h3>Set breakdown</h3>{setMix.length?<div className="history-chip-list">{setMix.map(s=><span key={s.label}>{s.label}: <strong>{s.total}</strong></span>)}</div>:<p>Detailed set data is available for attempts saved from V131 onwards.</p>}</div><div className="history-detail-card"><h3>Topic mix</h3>{topicMix.length?<div className="history-chip-list">{topicMix.map(t=><span key={t.topic}>{t.topic}: <strong>{t.total}</strong></span>)}</div>:<p>Topic-level history was not stored for this older attempt.</p>}</div></div>{detail.length?<div className="history-question-table-wrap"><table className="history-question-table"><thead><tr><th>#</th><th>ID</th><th>Set</th><th>CLO</th><th>Topic</th><th>Style</th><th>Difficulty</th><th>Your answer</th><th>Correct</th><th>Status</th></tr></thead><tbody>{detail.map(q=><tr key={`${h.id}-${q.id}`} className={q.correct?'history-row-correct':'history-row-wrong'}><td>{q.n}</td><td>{q.id}</td><td>{q.setLabel||setLabel(q.set)}</td><td>CLO {q.clo}</td><td>{q.topic}</td><td>{q.style}</td><td>{q.difficulty}</td><td>{q.selectedLabel}{q.flagged?' · flagged':''}{q.confidence?` · ${q.confidence}`:''}</td><td>{q.answerLabel}</td><td>{q.correct?'Correct':'Wrong'}</td></tr>)}</tbody></table></div>:<div className="empty-card history-empty-detail"><h3>No detailed attempt breakdown saved</h3><p>This older attempt only contains the score and CLO summary. Finish a new session to store question-level set, topic and answer history.</p></div>}</details>}):<div className="empty-card"><h3>No history yet</h3><p>Finish a session to see score trends, set mix, topic mix and weak CLOs here.</p></div>}</div></section></main>}
 
-    {screen==='bank'&&<main className="page page-bank"><section className="surface bank-panel bank-panel-upgraded"><div className="bank-hero"><div><span className="eyebrow">Question library</span><h2>Search the full IPPC bank with cleaner navigation.</h2><p>Filter by set, topic, CLO, difficulty, and question style. Each card now includes a quality profile so you can target hard, applied and scenario-based items.</p></div><div className="bank-stats-grid"><div className="mini-stat bank-stat"><span>Total</span><strong>{bank.length}</strong></div><div className="mini-stat bank-stat"><span>Matches</span><strong>{filteredBank.length}</strong></div><div className="mini-stat bank-stat"><span>Wrong saved</span><strong>{getWrong().size}</strong></div></div></div><div className="bank-layout"><aside className="bank-sidebar"><div className="bank-filter-card"><div className="bank-filter-header"><div><span className="eyebrow muted">Filter panel</span><h3>Refine the bank</h3><p>Use the controls below to narrow the full question library quickly.</p></div><button className="secondary-btn bank-compact-reset" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all</button></div><label className="bank-field bank-search-field"><span>Search</span><input placeholder="Search callable bond, PIDM, CDD…" value={query} onChange={e=>setQuery(e.target.value)}/></label><div className="bank-filter-section"><div className="bank-section-title">Main filters</div><div className="filter-grid bank-filter-grid"><label className="bank-field"><span>Set</span><select value={bankSet} onChange={e=>setBankSet(e.target.value)}><option value="all">All sets</option>{setNumbers.map(n=><option key={n} value={n}>{setLabel(n)}</option>)}</select></label><label className="bank-field"><span>CLO</span><select value={bankClo} onChange={e=>setBankClo(e.target.value)}><option value="all">All CLOs</option>{[1,2,3].map(n=><option key={n} value={n}>CLO {n}</option>)}</select></label><label className="bank-field bank-field-full"><span>Topic</span><select value={bankTopic} onChange={e=>setBankTopic(e.target.value)}><option value="all">All topics</option>{allTopics.map(t=><option key={t}>{t}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="bank-section-title">Question profile</div><div className="filter-grid bank-profile-grid"><label className="bank-field"><span>Difficulty</span><select value={bankDiff} onChange={e=>setBankDiff(e.target.value)}><option value="all">All difficulty</option>{['Easy','Medium','Hard'].map(d=><option key={d}>{d}</option>)}</select></label><label className="bank-field"><span>Style</span><select value={bankStyle} onChange={e=>setBankStyle(e.target.value)}><option value="all">All styles</option>{['Scenario-based','Statement-combination','Calculation','Recall'].map(d=><option key={d}>{d}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="section-label-row"><h3>CLO quick filter</h3><button className="text-btn" onClick={()=>setBankClo('all')}>Clear</button></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={bankClo===String(n)?'chip chip-on':'chip'} onClick={()=>setBankClo(bankClo===String(n)?'all':String(n))}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="bank-filter-section bank-filter-section-soft"><div className="bank-mini-note"><strong>Tip:</strong> Use Search + Topic first, then refine by difficulty or Style = Scenario-based for applied exam practice.</div></div><div className="button-row bank-reset-row"><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all filters</button></div></div></aside><div className="bank-results-column"><div className="bank-results-header"><div><div className="bank-summary"><strong>{filteredBank.length}</strong> matches found</div><div className="bank-subsummary">Page {bankPage} of {pageCount}</div></div><div className="bank-results-actions"><Pill>{visibleBank.length} shown</Pill><Pill>{pageSize} per page</Pill></div></div>{!filteredBank.length&&<div className="empty-card bank-empty-state"><h3>No questions found.</h3><p>Try clearing the topic filter or searching a broader term.</p><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset filters</button></div>}<div className="bank-list upgraded-list">{visibleBank.map(q=><details key={q.id} className="bank-item upgraded-bank-item"><summary><div className="bank-card-head"><div className="summary-meta"><Pill>{q.id}</Pill><Pill>{setLabel(q.set)}</Pill><Pill>CLO {q.clo}</Pill><Pill>{q.topic}</Pill><Pill>{difficulty(q)}</Pill><Pill>{qStyle(q)}</Pill><Pill>{qualityLabel(q)}</Pill></div><span className="answer-badge">Answer {String.fromCharCode(65+q.answer)}</span></div><QuestionText text={q.text} className="summary-text"/><div className="bank-card-hint">Quality: {qualityLabel(q)} · {qStyle(q)} · Reference: {REF_MAP[q.topic]||`CLO ${q.clo}`}</div></summary><div className="bank-card-body"><div className="bank-card-actions"><button className="secondary-btn" onClick={()=>navigator.clipboard?.writeText(`${q.text}\n\nA. ${q.options[0]}\nB. ${q.options[1]}\nC. ${q.options[2]}\nD. ${q.options[3]}`)}>Copy question</button><button className="secondary-btn" onClick={()=>{setBankTopic(q.topic);setBankPage(1)}}>Practice this topic</button></div><ol className="bank-options">{q.options.map((o,i)=><li key={i} className={i===q.answer?'answer-hit':''}><span className="bank-option-label">{String.fromCharCode(65+i)}</span><span>{o}</span></li>)}</ol>{q.calc&&<pre className="bank-calc">{q.calc}</pre>}<div className="bank-explanation-wrap"><span className="answer-badge subtle-badge">Explanation</span><ExplanationPanel q={q} selected={null} correct={true} compact/></div></div></details>)}</div><div className="bank-pagination"><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.max(1,p-1))} disabled={bankPage===1}>← Prev</button><div className="pagination-pills">{Array.from({length:Math.min(5,pageCount)},(_,i)=>{const start=Math.min(Math.max(1,bankPage-2),Math.max(1,pageCount-4));const n=start+i;if(n>pageCount)return null;return <button key={n} className={n===bankPage?'chip chip-on':'chip'} onClick={()=>setBankPage(n)}>{n}</button>})}</div><form className="page-jump" onSubmit={e=>{e.preventDefault();const value=Number(e.currentTarget.elements.bankPageJump.value);if(value) setBankPage(Math.min(pageCount,Math.max(1,Math.floor(value))))}}><label>Go to page</label><input name="bankPageJump" type="number" min="1" max={pageCount} placeholder={String(bankPage)}/><button className="secondary-btn" type="submit">Go</button></form><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.min(pageCount,p+1))} disabled={bankPage===pageCount}>Next →</button></div></div></div></section></main>}
+    {screen==='bank'&&<main className="page page-bank"><section className="surface bank-panel bank-panel-upgraded"><div className="bank-hero"><div><span className="eyebrow">Question library</span><h2>Search the full IPPC bank with cleaner navigation.</h2><p>Filter by set, topic, CLO, difficulty, and question style. Each card now includes a quality profile so you can target hard, applied and scenario-based items.</p></div><div className="bank-stats-grid"><div className="mini-stat bank-stat"><span>Total</span><strong>{bank.length}</strong></div><div className="mini-stat bank-stat"><span>Matches</span><strong>{filteredBank.length}</strong></div><div className="mini-stat bank-stat"><span>Wrong saved</span><strong>{getWrong().size}</strong></div></div></div><button className={`bank-mobile-filter-toggle${bankFilterOpen?' filter-open':''}`} onClick={()=>setBankFilterOpen(v=>!v)} aria-expanded={bankFilterOpen} aria-controls="bank-filter-sidebar">{bankFilterOpen?'✕ Close Filters':'⊞ Filters'}</button><div className={`bank-layout${bankFilterOpen?' bank-filter-open':''}`}><aside className="bank-sidebar" id="bank-filter-sidebar"><div className="bank-filter-card"><div className="bank-filter-header"><div><span className="eyebrow muted">Filter panel</span><h3>Refine the bank</h3><p>Use the controls below to narrow the full question library quickly.</p></div><button className="secondary-btn bank-compact-reset" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all</button></div><label className="bank-field bank-search-field"><span>Search</span><input placeholder="Search callable bond, PIDM, CDD…" value={query} onChange={e=>setQuery(e.target.value)}/></label><div className="bank-filter-section"><div className="bank-section-title">Main filters</div><div className="filter-grid bank-filter-grid"><label className="bank-field"><span>Set</span><select value={bankSet} onChange={e=>setBankSet(e.target.value)}><option value="all">All sets</option>{setNumbers.map(n=><option key={n} value={n}>{setLabel(n)}</option>)}</select></label><label className="bank-field"><span>CLO</span><select value={bankClo} onChange={e=>setBankClo(e.target.value)}><option value="all">All CLOs</option>{[1,2,3].map(n=><option key={n} value={n}>CLO {n}</option>)}</select></label><label className="bank-field bank-field-full"><span>Topic</span><select value={bankTopic} onChange={e=>setBankTopic(e.target.value)}><option value="all">All topics</option>{allTopics.map(t=><option key={t}>{t}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="bank-section-title">Question profile</div><div className="filter-grid bank-profile-grid"><label className="bank-field"><span>Difficulty</span><select value={bankDiff} onChange={e=>setBankDiff(e.target.value)}><option value="all">All difficulty</option>{['Easy','Medium','Hard'].map(d=><option key={d}>{d}</option>)}</select></label><label className="bank-field"><span>Style</span><select value={bankStyle} onChange={e=>setBankStyle(e.target.value)}><option value="all">All styles</option>{['Scenario-based','Statement-combination','Calculation','Recall'].map(d=><option key={d}>{d}</option>)}</select></label></div></div><div className="bank-filter-section"><div className="section-label-row"><h3>CLO quick filter</h3><button className="text-btn" onClick={()=>setBankClo('all')}>Clear</button></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={bankClo===String(n)?'chip chip-on':'chip'} onClick={()=>setBankClo(bankClo===String(n)?'all':String(n))}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="bank-filter-section bank-filter-section-soft"><div className="bank-mini-note"><strong>Tip:</strong> Use Search + Topic first, then refine by difficulty or Style = Scenario-based for applied exam practice.</div></div><div className="button-row bank-reset-row"><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset all filters</button></div></div></aside><div className="bank-results-column"><div className="bank-results-header"><div><div className="bank-summary"><strong>{filteredBank.length}</strong> matches found</div><div className="bank-subsummary">Page {bankPage} of {pageCount}</div></div><div className="bank-results-actions"><Pill>{visibleBank.length} shown</Pill><Pill>{pageSize} per page</Pill></div></div>{!filteredBank.length&&<div className="empty-card bank-empty-state"><h3>No questions found.</h3><p>Try clearing the topic filter or searching a broader term.</p><button className="secondary-btn" onClick={()=>{setQuery('');setBankSet('all');setBankTopic('all');setBankClo('all');setBankDiff('all');setBankStyle('all')}}>Reset filters</button></div>}<div className="bank-list upgraded-list">{visibleBank.map(q=><details key={q.id} className="bank-item upgraded-bank-item"><summary><div className="bank-card-head"><div className="summary-meta"><Pill>{q.id}</Pill><Pill>{setLabel(q.set)}</Pill><Pill>CLO {q.clo}</Pill><Pill>{q.topic}</Pill><Pill>{difficulty(q)}</Pill><Pill>{qStyle(q)}</Pill><Pill>{qualityLabel(q)}</Pill></div><span className="answer-badge">Answer {String.fromCharCode(65+q.answer)}</span></div><QuestionText text={q.text} className="summary-text"/><div className="bank-card-hint">Quality: {qualityLabel(q)} · {qStyle(q)} · Reference: {REF_MAP[q.topic]||`CLO ${q.clo}`}</div></summary><div className="bank-card-body"><div className="bank-card-actions"><button className="secondary-btn" onClick={()=>navigator.clipboard?.writeText(`${q.text}\n\nA. ${q.options[0]}\nB. ${q.options[1]}\nC. ${q.options[2]}\nD. ${q.options[3]}`)}>Copy question</button><button className="secondary-btn" onClick={()=>{setBankTopic(q.topic);setBankPage(1)}}>Practice this topic</button></div><ol className="bank-options">{q.options.map((o,i)=><li key={i} className={i===q.answer?'answer-hit':''}><span className="bank-option-label">{String.fromCharCode(65+i)}</span><span>{o}</span></li>)}</ol>{q.calc&&<pre className="bank-calc">{q.calc}</pre>}<div className="bank-explanation-wrap"><span className="answer-badge subtle-badge">Explanation</span><ExplanationPanel q={q} selected={null} correct={true} compact/></div></div></details>)}</div><div className="bank-pagination"><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.max(1,p-1))} disabled={bankPage===1}>← Prev</button><div className="pagination-pills">{Array.from({length:Math.min(5,pageCount)},(_,i)=>{const start=Math.min(Math.max(1,bankPage-2),Math.max(1,pageCount-4));const n=start+i;if(n>pageCount)return null;return <button key={n} className={n===bankPage?'chip chip-on':'chip'} onClick={()=>setBankPage(n)}>{n}</button>})}</div><form className="page-jump" onSubmit={e=>{e.preventDefault();const value=Number(e.currentTarget.elements.bankPageJump.value);if(value) setBankPage(Math.min(pageCount,Math.max(1,Math.floor(value))))}}><label>Go to page</label><input name="bankPageJump" type="number" min="1" max={pageCount} placeholder={String(bankPage)}/><button className="secondary-btn" type="submit">Go</button></form><button className="secondary-btn" onClick={()=>setBankPage(p=>Math.min(pageCount,p+1))} disabled={bankPage===pageCount}>Next →</button></div></div></div></section></main>}
   </div>
 }
 
@@ -559,7 +566,7 @@ function BookTopbar({current='front',onLanding=()=>{},onNotes=()=>{},onMock=()=>
   return <header className="book-topbar" aria-label="IPPC Study Suite navigation">
     <button type="button" className="book-brand" onClick={onLanding}>
       <span className="book-mark">IPPC <span>&amp;</span> Co.</span>
-      <span className="book-vol">Vol. V153 · Study Suite</span>
+      <span className="book-vol">Vol. V167 · Study Suite</span>
     </button>
     <nav className="book-nav" aria-label="Main menu">
       {item('front','Frontispiece',onLanding)}
@@ -801,7 +808,7 @@ function ShortcutHintButton(){
 }
 
 /* ── Skip-to-content link (does NOT change URL hash) ─────────────── */
-function SkipLink({target='main-content'}){
+function SkipLink({target='app-main'}){
   const handleClick=(e)=>{
     e.preventDefault();
     const el=document.getElementById(target);
@@ -1037,9 +1044,9 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
     {id:'flashcards',roman:'III.',kicker:'Memorise rules',title:'Flashcards',suffix:'— the recall corridor',body:'Direct recall for sections, penalties, PIDM limits, AML and STR rules, and investor categories — tuned to the rhythms of a long study evening.',stats:[[String(FLASHCARD_DATA.length),'Cards'],['9','Decks'],['SR','Spaced']],enter:'Enter the recall corridor',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 2v6"/><path d="M8 2v6"/><path d="M2 10h20"/></svg>},
   ];
   const referenceCards=[
-    {action:()=>onEnter('report'),num:'i.',title:'V153 audit report',body:'Animated quality dashboard — CLO distribution, quality criteria, editorial timeline.',label:'Open'},
+    {action:()=>onEnter('report'),num:'i.',title:'V167 audit report',body:'Animated quality dashboard — CLO distribution, quality criteria, editorial timeline.',label:'Open'},
     {action:()=>onEnter('printable'),num:'ii.',title:'Printable notes',body:'Black-and-white PDF notes for offline revision and marginalia.',label:'Open'},
-    {action:()=>{window.location.href=AUDIT_SITE_PATH},num:'iii.',title:'About / project story',body:'V1 to V153 editorial timeline, cleanup history and deployment baseline.',label:'Open'},
+    {action:()=>{window.location.href=AUDIT_SITE_PATH},num:'iii.',title:'About / project story',body:'V1 to V167 editorial timeline, rewrite history and deployment baseline.',label:'Open'},
   ];
   const [heroRef,heroInView]=useInView(0.05);
   const scrolled=useScrolled(120);
@@ -1064,7 +1071,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
     <header className="book-topbar" aria-label="IPPC Study Suite navigation">
       <button type="button" className="book-brand" onClick={()=>onEnter('landing')}>
         <span className="book-mark">IPPC <span>&amp;</span> Co.</span>
-        <span className="book-vol">Vol. V153 · Study Suite</span>
+        <span className="book-vol">Vol. V167 · Study Suite</span>
       </button>
       <nav className="book-nav" aria-label="Main menu">
         <button type="button" className="current" onClick={()=>onEnter('landing')}>Frontispiece</button>
@@ -1090,10 +1097,10 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
       <section className="book-frontispiece">
         <div className="book-left-col">
-          <div className="book-colophon reveal d1">An exam-prep companion · Edition V153</div>
+          <div className="book-colophon reveal d1">An exam-prep companion · Edition V167</div>
           <h1 className="book-title reveal d2">Study <span className="em anim-underline">clearly.</span><br/>Practise<br/><span className="em anim-underline">deliberately.</span></h1>
           <p className="book-subtitle reveal d3">A quiet desk for IPPC candidates — notes to the left, mock papers to the right.</p>
-          <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, and the V153 quality trail — bound together as one deployable companion. Read in the morning, drill in the evening, and let the margins fill themselves.</p>
+          <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, and the V167 quality trail — bound together as one deployable companion. Read in the morning, drill in the evening, and let the margins fill themselves.</p>
           <div className="book-cta-row reveal d5">
             <button type="button" className="book-btn book-btn-primary hero-primary-btn" onClick={()=>onEnter('notes')}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -1109,18 +1116,18 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
             <div className="hms-div"/>
             <div className="hms-item has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards for direct recall — Acts, sections, fines, PIDM limits, AML and STR rules.`} tabIndex={0}><AnimatedCount value={FLASHCARD_DATA.length} className="hms-n"/><span className="hms-l">flashcards</span></div>
             <div className="hms-div"/>
-            <div className="hms-item has-tooltip" data-tooltip="V153 — the current edition (May 2026). 153 versions of editorial refinement since V1." tabIndex={0}><span className="hms-n">V153</span><span className="hms-l">edition</span></div>
+            <div className="hms-item has-tooltip" data-tooltip="V167 — the current edition (May 2026). 167 versions of editorial refinement since V1." tabIndex={0}><span className="hms-n">V167</span><span className="hms-l">edition</span></div>
           </div>
         </div>
         <aside className="book-right-col">
           {/* Animated seal */}
-          <div className="book-seal reveal d3 float-seal" aria-label="V153 interface edition">
-            <span className="v">V153</span>
+          <div className="book-seal reveal d3 float-seal" aria-label="V167 interface edition">
+            <span className="v">V167</span>
             <span className="lab"><span>Interface</span><span>Edition</span></span>
             <span className="book-seal-ring" aria-hidden="true">
               <svg viewBox="0 0 150 150" width="150" height="150">
                 <defs><path id="bookSealPath" d="M 75,75 m -65,0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0"/></defs>
-                <text><textPath href="#bookSealPath" startOffset="0">IPPC · STUDY SUITE · VOLUME ONE HUNDRED &amp; FIFTY-THREE · FULL UI REFRESH · </textPath></text>
+                <text><textPath href="#bookSealPath" startOffset="0">IPPC · STUDY SUITE · VOLUME ONE HUNDRED &amp; SIXTY-SEVEN · FULLY REWRITTEN ·</textPath></text>
               </svg>
             </span>
           </div>
@@ -1172,7 +1179,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
           {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,title:'Audit-verified',body:'Every question checked against the official IPPC Study Text and BNM/SC guidelines.'},
           {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,title:'Timed sittings',body:'120-minute lock with CLO-balanced generation — just like the real examination hall.'},
           {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,title:'Progress tracked',body:'Attempt history, wrong-question drilling, and confidence labels — all persisted locally.'},
-          {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,title:'Full explanations',body:'Why correct, why wrong (per distractor), worked calculations — every single question.'},
+          {icon:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,title:'Full explanations',body:'Why correct, statement analysis, and clean worked calculations where numerical workings are required.'},
         ].map((f,i)=>(
           <div key={f.title} className="lf-card" style={{animationDelay:`${i*0.1}s`}}>
             <div className="lf-icon">{f.icon}</div>
@@ -1195,7 +1202,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
       <footer className="book-footer">
         <span>© MMXXVI · IPPC Study Suite</span>
-        <span className="colophon-line">Set in Cormorant Garamond &amp; EB Garamond. Bound for V153.</span>
+        <span className="colophon-line">Set in Cormorant Garamond &amp; EB Garamond. Bound for V167.</span>
         <span>Fol. 001 / 009</span>
       </footer>
     </main>
@@ -1331,13 +1338,14 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     {v:'V100–V130',date:'Late 2025',title:'Full editorial audit',desc:'Systematic review of all 2,000 questions for accuracy, clarity, and IPPC Study Text alignment. Explanations restructured.'},
     {v:'V131–V145',date:'Early 2026',title:'Quality baseline V134',desc:'V134 audit report published. Explanation standardisation: Why correct, Why wrong, Worked calculation sections normalised.'},
     {v:'V146–V152',date:'Apr 2026',title:'UI alignment pass',desc:'Book-bound interface, curtain theme toggle, topic balancing engine, CLO weighting fixes, and flashcard deck expansion.'},
-    {v:'V153',date:'May 2026',title:'Current edition',desc:'Interactive audit dashboard, animated report page, editorial timeline evidence, and final printable notes alignment.'},
+    {v:'V153',date:'May 2026',title:'Book-bound study suite',desc:'Interactive audit dashboard, animated report page, editorial timeline evidence, and final printable notes alignment.'},
+    {v:'V154–V167',date:'May 2026',title:'Complete rewrite',desc:'All 25 sets rewritten to official-source standard. Sets 1–2 restored verbatim from IPPC Mock Examination source. Roman numeral explanations converted to statement-by-statement format. Calculation questions now show formula, workings, and final answer. Answer-length cueing patched to below 9%. Package size reduced from ~28 MB to ~4.4 MB.'},
   ];
   const metrics=[
     {label:'Total Questions',value:2000,icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,sub:'Across 25 sets',color:'#d6a84d',detail:'2,000 multiple-choice questions distributed across 25 sets — 20 core sets plus 5 advanced (Hard) sets. Every question reviewed for accuracy against the IPPC Study Text 3rd Edition.'},
     {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V134 baseline',color:'#4cc38a',detail:'All 2,000 questions verified against the V134 quality baseline — answer keys, distractor plausibility, CLO mapping, and IPPC reference clauses all checked.'},
     {label:'CLO Accuracy',value:98,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#9f7aea',detail:'98% of questions correctly map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
-    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation: Why correct, Why each distractor is wrong, plus a Worked calculation section for numerical items.'},
+    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation; calculation questions show formula-led workings instead of distractor-by-distractor commentary.'},
   ];
 
   const TABS=['overview','quality','timeline'];
@@ -1391,7 +1399,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     <main id="main-content" className="rp-main">
       {/* ── Animated hero metrics ───────────────────────────────────── */}
       <section className="rp-hero">
-        <div className="rp-hero-eyebrow">Question Bank Quality Report — V153 · May 2026</div>
+        <div className="rp-hero-eyebrow">Question Bank Quality Report — V167 · May 2026</div>
         <h1 className="rp-hero-title">A <em>complete audit</em> of the IPPC<br/>question bank.</h1>
         <p className="rp-hero-sub">Every question reviewed, explained, CLO-aligned, and tracked through the full editorial timeline.</p>
         <div className="rp-metrics-row">
@@ -1401,7 +1409,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Overview ────────────────────────────────────────────── */}
       {tab==='overview'&&<TabFade tabKey="overview">
-        <PullQuote attribution="Editorial brief, V153">
+        <PullQuote attribution="Editorial brief, V167">
           The examination paper must reflect the proportions the candidate will actually face — twelve from the financial system, thirty-six from regulations and conduct, thirty-two from debt and structured products.
         </PullQuote>
         {/* CLO bar chart */}
@@ -1460,13 +1468,13 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Timeline ─────────────────────────────────────────────── */}
       {tab==='timeline'&&<TabFade tabKey="timeline">
-        <PullQuote attribution="V153 deployment note">
-          One hundred and fifty-three editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
+        <PullQuote attribution="V167 deployment note">
+          One hundred and sixty-seven editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
         </PullQuote>
       <section id="rp-sec-timeline" className="rp-section rp-section-anchor">
         <div className="rp-section-head">
           <h2>Editorial Timeline</h2>
-          <p className="rp-drop-cap">The full progression from V1 to V153 — click any milestone to see detail.</p>
+          <p className="rp-drop-cap">The full progression from V1 to V167 — click any milestone to see detail.</p>
         </div>
         <div className="rp-timeline">
           {timeline.map((t,i)=>(
@@ -1650,14 +1658,14 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
   return <div className={`app-shell book-landing book-module book-notes-page theme-${theme}`}>
     <BookTopbar current="notes" onLanding={onBack} onNotes={()=>{}} onMock={onMock} onFlashcards={()=>{window.location.hash='flashcards'}} onReport={()=>{window.location.hash='report'}} theme={theme} toggleTheme={toggleTheme} folio="Fol. 002" />
     <main className="book-page">
-      <BookPageHead eyebrow="Reading room · Vol. V153 · Edition III" title="The" em="reading room" lede="Audited chapter notes — now merged into the book-bound reading interface, with the full legacy content restored and fitted to the new reader." stats={[["14","Chapters"],["38","Printable pages"],["~8h","Reading time"],["V153","Baseline"]]} />
+      <BookPageHead eyebrow="Reading room · Vol. V167 · Edition III" title="The" em="reading room" lede="Audited chapter notes — now merged into the book-bound reading interface, with the full legacy content restored and fitted to the new reader." stats={[["14","Chapters"],["38","Printable pages"],["~8h","Reading time"],["V167","Baseline"]]} />
       <div className="notes-shell book-notes-shell book-notes-merged-shell">
         <aside className="reader-side notes-reader-sidebar book-notes-toc">
           <div className="kicker">Reader mode</div>
           <h4>Study Notes</h4>
           <p>Use the contents list to jump through the actual notes. The full legacy notes content is merged below. Tables and long cards now scroll or wrap instead of being clipped.</p>
           <div className="mini-stat"><span className="v">3</span><span className="l">Core chapters</span></div>
-          <div className="mini-stat"><span className="v">V153</span><span className="l">Merged UI</span></div>
+          <div className="mini-stat"><span className="v">V167</span><span className="l">Merged UI</span></div>
           <div className="mini-stat"><span className="v">2,000</span><span className="l">Question links</span></div>
           <button className="full-btn" onClick={openNotesFull}>Open legacy full page</button>
           <button className="full-btn ghost" onClick={()=>{window.location.hash='printable'}}>Printable notes</button>
@@ -1674,7 +1682,7 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
           </div>
         </aside>
         <section className="notes-main notes-reader-frame-wrap book-notes-document">
-          <div className="notes-frame-bar"><span>Merged notes document</span><span>Full notes content, restored to old-version completeness inside the V153 book UI</span></div>
+          <div className="notes-frame-bar"><span>Merged notes document</span><span>Full notes content, restored to old-version completeness inside the V167 book UI</span></div>
           <div className="notes-hero">
             <div className="breadcrumbs"><span>AICB</span><span>·</span><span>FMAM</span><span>·</span><span>V2025</span><span>·</span><span>3rd Edition</span><span>·</span><span>Audited</span></div>
             <h2>IPPC Study Notes —<br/><span className="em">Comprehensive Reference</span></h2>
@@ -1694,7 +1702,7 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
             <div className="qbar"><button className="qbtn" onClick={()=>scrollToNoteSection('keyconcepts')}><span className="ic">★</span> Exam traps</button><button className="qbtn" onClick={()=>scrollToNoteSection('keydates')}><span className="ic">☰</span> Dates & fines</button><button className="qbtn" onClick={()=>scrollToNoteSection('formulas')}><span className="ic">∑</span> Formulas</button><button className="qbtn" onClick={()=>scrollToNoteSection('s2-4')}><span className="ic">◉</span> PIDM</button><button className="qbtn active" onClick={openNotesFull}>Legacy page</button></div>
             {searchStatus&&<div className="book-notes-search-status">{searchStatus}</div>}
           </div>
-          {notesHtml?<article className="book-notes-integrated" dangerouslySetInnerHTML={{__html:notesHtml}} />:<div className="book-notes-loading"><h3>Opening the reading room…</h3><p>Loading the full audited notes into the V153 reader.</p></div>}
+          {notesHtml?<article className="book-notes-integrated" dangerouslySetInnerHTML={{__html:notesHtml}} />:<div className="book-notes-loading"><h3>Opening the reading room…</h3><p>Loading the full audited notes into the V167 reader.</p></div>}
         </section>
       </div>
     </main>
@@ -1856,9 +1864,10 @@ function CombinedApp(){
   const viewRef=useRef(view);
   useEffect(()=>{viewRef.current=view;},[view]);
   const busyRef=useRef(false);
+  const pendingNavRef=useRef(null);
 
   const animateNavTo=useCallback((next)=>{
-    if(busyRef.current)return;
+    if(busyRef.current){pendingNavRef.current=next;return;}
     // 'colophon' is an external static page — navigate the tab after the doors close
     if(next==='colophon'){
       const reduced=typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1895,6 +1904,9 @@ function CombinedApp(){
         window.setTimeout(()=>{
           setTransition({phase:'idle',target:null});
           busyRef.current=false;
+          const queued=pendingNavRef.current;
+          pendingNavRef.current=null;
+          if(queued&&queued!==viewRef.current)animateNavTo(queued);
         },620);
       },240);
     },520);
@@ -1932,7 +1944,7 @@ function CombinedApp(){
     <BackToTop/>
     <DisplayToggle/>
     <ShortcutHintButton/>
-    {page}
+    <div id="app-main" className="main-content-anchor">{page}</div>
     <RoomDoorway phase={transition.phase} target={transition.target}/>
   </>;
 }

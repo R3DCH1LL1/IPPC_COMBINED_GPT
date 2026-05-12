@@ -344,6 +344,7 @@ select{
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+.main-content-anchor:focus{outline:none}
 body{
   margin:0;
   color:var(--text);
@@ -11390,4 +11391,581 @@ body .notes-portal-shell.book-themed-portal .printable-viewer-intro{
 @media(prefers-reduced-motion:reduce){
   .room-doorway .dw-panel, .room-doorway .dw-glow, .room-doorway .dw-label-wrap{animation:none!important;}
   .room-doorway{display:none!important;}
+}
+
+
+/* V159: consistent mock-question typography across plain and Roman numeral stems */
+.enhanced-question-copy .question-stem,
+.enhanced-question-copy.formatted-question-text,
+.enhanced-question-copy .formatted-question-text,
+.enhanced-question-copy .question-intro,
+.enhanced-question-copy .question-statement{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:1.34rem!important;
+  line-height:1.75!important;
+  font-weight:650;
+  letter-spacing:-.01em;
+  color:#f8fbff;
+  white-space:pre-wrap;
+}
+.enhanced-question-copy .question-intro{margin:0 0 12px!important;}
+.enhanced-question-copy .question-statement{margin:8px 0!important;padding-left:0;}
+.option-card .option-text{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:1.02rem;
+  line-height:1.7;
+  font-weight:600;
+  letter-spacing:-.005em;
+}
+.summary-text.formatted-question-text .question-intro,
+.summary-text.formatted-question-text .question-statement{
+  font-size:1.02rem!important;
+  line-height:1.75!important;
+  font-weight:700;
+  margin:6px 0!important;
+}
+.theme-light .enhanced-question-copy .question-stem,
+.theme-light .enhanced-question-copy .formatted-question-text,
+.theme-light .enhanced-question-copy .question-intro,
+.theme-light .enhanced-question-copy .question-statement{color:#1f2937;}
+.theme-light .option-card .option-text{color:#1f2937;}
+@media (max-width:760px){
+  .enhanced-question-copy .question-stem,
+  .enhanced-question-copy.formatted-question-text,
+  .enhanced-question-copy .formatted-question-text,
+  .enhanced-question-copy .question-intro,
+  .enhanced-question-copy .question-statement{
+    font-size:1.08rem!important;
+    line-height:1.55!important;
+  }
+  .option-card .option-text{font-size:.98rem;line-height:1.55;}
+}
+
+
+/* V163: explanation UI refinement + Roman numeral statement rendering fix */
+.modern-explanation{
+  border-radius:22px!important;
+  background:linear-gradient(180deg,rgba(22,26,32,.96),rgba(13,16,21,.94))!important;
+  border-color:rgba(245,213,139,.18)!important;
+}
+.explanation-hero{
+  grid-template-columns:minmax(0,1.15fr) minmax(240px,.85fr);
+  gap:16px;
+  padding:20px;
+  background:linear-gradient(135deg,rgba(245,213,139,.10),rgba(124,167,255,.055)),rgba(255,255,255,.02);
+}
+.explanation-sections{gap:12px;padding:16px 20px 20px;}
+.explanation-section{padding:15px;border-radius:18px;}
+.explanation-section-title h4{font-size:1rem;letter-spacing:-.015em;}
+.explanation-section-title span{flex:0 0 30px;}
+.statement-grid{gap:9px;}
+.statement-pill.parsed-statement{
+  display:grid;
+  grid-template-columns:44px 96px minmax(0,1fr);
+  align-items:start;
+  gap:10px;
+  padding:12px 14px;
+  padding-left:14px;
+}
+.statement-pill.parsed-statement:before{content:none!important;}
+.statement-roman{
+  display:inline-grid;
+  place-items:center;
+  min-width:34px;
+  height:30px;
+  border-radius:10px;
+  font-weight:950;
+  background:rgba(245,213,139,.14);
+  border:1px solid rgba(245,213,139,.22);
+  color:#ffe8ac;
+}
+.statement-status{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  min-height:30px;
+  padding:0 10px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:950;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  background:rgba(59,208,138,.14);
+  color:#d9ffea;
+  border:1px solid rgba(59,208,138,.28);
+}
+.statement-wrong .statement-status{
+  background:rgba(255,122,122,.13);
+  color:#ffe1e1;
+  border-color:rgba(255,122,122,.28);
+}
+.statement-body{line-height:1.62;color:#eaf1fb;}
+.wrong-option-grid{gap:8px;}
+.parsed-wrong-option{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr);
+  gap:10px;
+  align-items:start;
+}
+.wrong-option-letter{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:10px;
+  background:rgba(255,122,122,.12);
+  color:#ffd5d5;
+  border:1px solid rgba(255,122,122,.20);
+  font-weight:950;
+}
+.compact-explanation .explanation-hero{padding:16px;}
+.compact-explanation .explanation-sections{padding:14px 16px 16px;}
+.theme-light .modern-explanation{background:linear-gradient(180deg,#fffdf7,#fff7ec)!important;border-color:#dfcfb9!important;}
+.theme-light .statement-roman{background:#fff1d1;border-color:#ead2a5;color:#684719;}
+.theme-light .statement-status{background:#e9fff0;border-color:#bbe5c8;color:#186239;}
+.theme-light .statement-wrong .statement-status{background:#fff0ed;border-color:#efc4bb;color:#8c2d23;}
+.theme-light .statement-body{color:#2b2117;}
+@media (max-width:760px){
+  .explanation-hero{grid-template-columns:1fr;padding:16px;}
+  .explanation-sections{padding:14px;}
+  .statement-pill.parsed-statement{grid-template-columns:38px 1fr;gap:8px;}
+  .statement-status{justify-self:start;}
+  .statement-body{grid-column:1 / -1;}
+}
+
+/* ====================================================================
+   V167 — Book-palette fixup: loading screens, bank browser, mobile-first
+   ====================================================================
+
+   1. Loading / error screens — warm book palette.
+      The safe-loading-shell now carries book-landing book-module but we
+      also add a direct .theme-dark override so the dark state is correct.
+   2. Bank browser — eliminates remaining hardcoded navy/blue surfaces.
+   3. Explanation UI (V163 block) — book-module overrides so V163 rules
+      do not beat the book palette.
+   4. Mobile-first responsive pass — collapsible filter sidebar, 44 px
+      minimum tap targets, safe-area insets, landscape compact.
+   ==================================================================== */
+
+/* ── 1. Loading / error screens ─────────────────────────────────────── */
+.safe-loading-shell{
+  background:linear-gradient(180deg,#f8f1e6,#f3ead7)!important;
+}
+.safe-loading-shell.theme-dark{
+  background:#16110a!important;
+}
+/* Override the hardcoded dark-blue gradient from the v18 block */
+.theme-dark .safe-loading-card{
+  background:linear-gradient(180deg,#1d1810,#16110a)!important;
+  border-color:rgba(226,166,74,.20)!important;
+  box-shadow:0 24px 80px rgba(0,0,0,.38)!important;
+  color:#f0e6d0!important;
+}
+.theme-dark .safe-loading-card h1{color:#f0e6d0!important;}
+.theme-dark .spin{
+  border-color:rgba(226,166,74,.18)!important;
+  border-top-color:#e2a64a!important;
+}
+/* Light-mode spin: already close enough but use amber for consistency */
+.theme-light .spin{
+  border-color:rgba(176,122,26,.20)!important;
+  border-top-color:#b07a1a!important;
+}
+
+/* ── 2. Bank browser: remaining blue residuals ──────────────────────── */
+/* .bank-item summary inherits rgba(17,28,52,.78) from a combined rule */
+.book-module .bank-item summary,
+.book-landing .bank-item summary{
+  background:var(--book-paper-2,#ece0c5)!important;
+  color:var(--book-ink,#1f1a13)!important;
+}
+.book-module .bank-item[open]>summary,
+.book-landing .bank-item[open]>summary{
+  border-bottom:1px solid var(--book-rule,#d8c8a3)!important;
+}
+/* upgraded-bank-item blue background */
+.book-module .upgraded-bank-item,
+.book-landing .upgraded-bank-item{
+  background:var(--book-paper-2,#ece0c5)!important;
+  border-color:var(--book-rule,#d8c8a3)!important;
+}
+/* bank-stat cards */
+.book-module .bank-stat,
+.book-landing .bank-stat{
+  background:var(--book-paper,#f3ead7)!important;
+  border-color:var(--book-rule,#d8c8a3)!important;
+  color:var(--book-ink,#1f1a13)!important;
+}
+.book-module .bank-stat span,
+.book-landing .bank-stat span{color:var(--book-ink-3,#6b5b41)!important;}
+/* bank-field label text */
+.book-module .bank-field span,
+.book-landing .bank-field span{
+  color:var(--book-ink-2,#3a3024)!important;
+  font-family:'JetBrains Mono',monospace!important;
+  font-size:10px!important;
+  letter-spacing:.18em!important;
+  text-transform:uppercase!important;
+}
+/* bank-options list items */
+.book-module .bank-options li,
+.book-landing .bank-options li{
+  background:var(--book-paper,#f3ead7)!important;
+  border-color:var(--book-rule,#d8c8a3)!important;
+  color:var(--book-ink,#1f1a13)!important;
+}
+.book-module .bank-options li.answer-hit{
+  background:rgba(176,122,26,.10)!important;
+  border-color:rgba(176,122,26,.36)!important;
+}
+/* bank-option-label letter badge */
+.book-module .bank-option-label{
+  display:inline-grid;place-items:center;
+  width:28px;height:28px;border-radius:4px;
+  background:var(--book-paper-2,#ece0c5)!important;
+  border:1px solid var(--book-rule,#d8c8a3)!important;
+  color:var(--book-ink,#1f1a13)!important;
+  font-weight:700;font-family:'EB Garamond',serif!important;
+  flex-shrink:0;
+}
+.book-module .bank-options li.answer-hit .bank-option-label{
+  background:var(--book-amber,#b07a1a)!important;
+  border-color:var(--book-amber,#b07a1a)!important;
+  color:var(--book-paper,#f3ead7)!important;
+}
+/* subtle-badge (Explanation badge) */
+.book-module .subtle-badge,
+.book-landing .subtle-badge{
+  background:rgba(176,122,26,.08)!important;
+  border-color:rgba(176,122,26,.26)!important;
+  color:var(--book-amber-deep,#8a5a0c)!important;
+}
+/* bank section title monospace labels */
+.book-module .bank-section-title{
+  font-family:'JetBrains Mono',monospace!important;
+  font-size:10px!important;
+  letter-spacing:.2em!important;
+  text-transform:uppercase!important;
+  color:var(--book-ink-3,#6b5b41)!important;
+  margin-bottom:8px!important;
+}
+/* bank-mini-note tip box */
+.book-module .bank-mini-note{
+  font-family:'EB Garamond',Georgia,serif!important;
+  font-style:italic!important;
+  font-size:14px!important;
+  color:var(--book-ink-3,#6b5b41)!important;
+  padding:10px 14px!important;
+  border-left:2px solid var(--book-amber,#b07a1a)!important;
+  background:rgba(176,122,26,.06)!important;
+}
+/* active-filter-chip */
+.book-module .active-filter-chip,
+.book-landing .active-filter-chip{
+  border-color:rgba(176,122,26,.30)!important;
+  background:rgba(176,122,26,.10)!important;
+  color:var(--book-amber-deep,#8a5a0c)!important;
+}
+
+/* ── 3. V163 explanation UI — book-module overrides ─────────────────── */
+/* V163 added !important rules that beat V146; override them here */
+.book-module .modern-explanation,
+.book-module .explanation-card.modern-explanation{
+  background:var(--book-paper-2,#ece0c5)!important;
+  border-color:var(--book-rule,#d8c8a3)!important;
+  border-radius:3px!important;
+}
+.book-module.theme-dark .modern-explanation,
+.book-module.theme-dark .explanation-card.modern-explanation{
+  background:linear-gradient(180deg,var(--book-paper-2),var(--book-paper))!important;
+  border-color:rgba(226,166,74,.18)!important;
+}
+.book-module .explanation-hero{
+  background:linear-gradient(135deg,rgba(176,122,26,.07),rgba(176,122,26,.02))!important;
+}
+.book-module.theme-dark .explanation-hero{
+  background:linear-gradient(135deg,rgba(226,166,74,.08),rgba(226,166,74,.02))!important;
+}
+.book-module .statement-roman{
+  background:rgba(176,122,26,.09)!important;
+  border-color:rgba(176,122,26,.20)!important;
+  color:var(--book-amber-deep,#8a5a0c)!important;
+}
+.book-module.theme-dark .statement-roman{
+  background:rgba(226,166,74,.10)!important;
+  border-color:rgba(226,166,74,.20)!important;
+  color:var(--book-amber-deep,#f0b961)!important;
+}
+.book-module .statement-status{
+  background:rgba(47,143,92,.08)!important;
+  border-color:rgba(47,143,92,.20)!important;
+  color:var(--book-ink,#1f1a13)!important;
+}
+.book-module.theme-dark .statement-status{
+  background:rgba(76,195,138,.08)!important;
+  border-color:rgba(76,195,138,.18)!important;
+  color:var(--book-ink,#f0e6d0)!important;
+}
+.book-module .statement-wrong .statement-status{
+  background:rgba(182,85,85,.08)!important;
+  border-color:rgba(182,85,85,.20)!important;
+  color:var(--book-ink,#1f1a13)!important;
+}
+.book-module.theme-dark .statement-wrong .statement-status{
+  background:rgba(240,111,114,.08)!important;
+  border-color:rgba(240,111,114,.18)!important;
+  color:var(--book-ink,#f0e6d0)!important;
+}
+.book-module .statement-body{color:var(--book-ink-2,#3a3024)!important;}
+.book-module .wrong-option-letter{
+  background:rgba(182,85,85,.08)!important;
+  border-color:rgba(182,85,85,.16)!important;
+  color:var(--book-amber-deep,#8a5a0c)!important;
+}
+/* question text in book module (V159 set color:#f8fbff which is blue-white) */
+.book-module .enhanced-question-copy .question-stem,
+.book-module .enhanced-question-copy .formatted-question-text,
+.book-module .enhanced-question-copy .question-intro,
+.book-module .enhanced-question-copy .question-statement{
+  color:var(--book-ink,#1f1a13)!important;
+}
+
+/* ── 4. Mobile filter toggle button ─────────────────────────────────── */
+.bank-mobile-filter-toggle{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  min-height:44px;
+  padding:10px 20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:3px;
+  margin-bottom:14px;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+  /* book palette */
+  background:var(--book-paper-2,#ece0c5);
+  border:1px solid var(--book-rule,#d8c8a3);
+  color:var(--book-ink,#1f1a13);
+}
+.bank-mobile-filter-toggle:hover{
+  background:var(--book-paper,#f3ead7);
+  border-color:var(--book-amber,#b07a1a);
+  color:var(--book-amber-deep,#8a5a0c);
+}
+.bank-mobile-filter-toggle.filter-open{
+  background:var(--book-ink,#1f1a13);
+  border-color:var(--book-ink,#1f1a13);
+  color:var(--book-paper,#f3ead7);
+}
+
+/* ── 5. Super-mobile-friendly pass ──────────────────────────────────── */
+@media (max-width:760px){
+
+  /* Show filter toggle on mobile */
+  .bank-mobile-filter-toggle{display:flex;}
+
+  /* Hide sidebar by default; show when .bank-filter-open is toggled */
+  .book-module .bank-sidebar,
+  .book-landing .bank-sidebar{display:none!important;}
+  .book-module .bank-layout.bank-filter-open .bank-sidebar,
+  .book-landing .bank-layout.bank-filter-open .bank-sidebar{
+    display:block!important;
+    margin-bottom:16px;
+  }
+
+  /* Page padding: tighter on narrow screens */
+  .book-mock-page .page-bank,
+  .book-mock-page .page-home,
+  .book-mock-page .page-results,
+  .book-mock-page .page-summary,
+  .book-mock-page .page-history{
+    padding-left:14px!important;
+    padding-right:14px!important;
+    padding-bottom:80px!important;
+  }
+  .book-mock-page .page-test{
+    padding-left:14px!important;
+    padding-right:14px!important;
+    padding-bottom:96px!important;
+  }
+
+  /* 44 px minimum tap targets across all interactive controls */
+  .book-module .option-card,
+  .book-module .primary-btn,
+  .book-module .secondary-btn,
+  .book-module .nav-btn,
+  .book-module .text-btn,
+  .book-module .chip,
+  .book-module .mode-btn,
+  .book-module .navigator-trigger,
+  .book-module .book-nav-small-btn,
+  .book-module .bank-pagination button,
+  .book-module .bank-pagination .chip,
+  .book-module .drawer-close-btn,
+  .book-module .settings-row{
+    min-height:44px!important;
+  }
+  .book-module .option-card{
+    padding:14px 12px!important;
+    gap:12px!important;
+  }
+  .book-module .option-letter{
+    min-width:32px!important;
+    height:32px!important;
+    border-radius:6px!important;
+    flex-shrink:0!important;
+  }
+
+  /* Bank item: tighter padding on mobile */
+  .book-module .bank-item summary{padding:14px 12px!important;}
+  .book-module .bank-card-body{padding:10px 12px 14px!important;}
+  .book-module .bank-card-head{gap:6px!important;}
+  .book-module .summary-meta{gap:4px!important;flex-wrap:wrap!important;}
+  .book-module .soft-pill{font-size:10px!important;padding:3px 7px!important;}
+
+  /* Bank pagination: wraps and stays tappable */
+  .book-module .bank-pagination{
+    flex-wrap:wrap!important;
+    gap:8px!important;
+    padding:14px 0!important;
+    justify-content:center!important;
+  }
+  .book-module .bank-pagination button,
+  .book-module .bank-pagination .chip{
+    min-width:44px!important;
+    flex-shrink:0!important;
+  }
+  .book-module .page-jump{
+    width:100%!important;
+    justify-content:center!important;
+  }
+  .book-module .page-jump input{
+    width:64px!important;
+  }
+
+  /* Bank stats: 3-column stays compact */
+  .book-module .bank-stats-grid{
+    grid-template-columns:repeat(3,1fr)!important;
+    gap:8px!important;
+  }
+  .book-module .bank-stat{
+    padding:10px 8px!important;
+  }
+  .book-module .bank-stat strong{font-size:1.15rem!important;}
+
+  /* Hero card: stack on mobile */
+  .book-mock-page .hero-card{
+    grid-template-columns:1fr!important;
+    padding:20px 16px!important;
+    gap:20px!important;
+  }
+
+  /* BookPageHead: compact on mobile */
+  .book-page-head{
+    padding:22px 14px 16px!important;
+    gap:18px!important;
+  }
+  .book-page-head h1{font-size:clamp(32px,9vw,56px)!important;}
+  .book-page-head .lede{font-size:17px!important;margin-top:10px!important;}
+  .book-page-head .meta-stack{grid-template-columns:1fr 1fr!important;gap:12px!important;}
+
+  /* Topbar: tighter and scrollable nav */
+  .book-topbar{padding:10px 14px 0!important;gap:8px!important;}
+  .book-nav{gap:14px!important;font-size:14px!important;padding-bottom:10px!important;}
+  .book-nav button{min-height:36px!important;}
+
+  /* Settings drawer: bottom-sheet on mobile */
+  .settings-overlay{
+    align-items:flex-end!important;
+  }
+  .settings-overlay .settings-drawer{
+    width:100%!important;
+    max-width:100%!important;
+    border-radius:18px 18px 0 0!important;
+    bottom:0!important;
+    max-height:88vh!important;
+    overflow-y:auto!important;
+  }
+
+  /* Navigator drawer: full width on mobile */
+  .book-module .test-nav-drawer{
+    width:100%!important;
+    max-width:100%!important;
+    border-radius:18px 18px 0 0!important;
+  }
+  .test-nav-overlay{
+    align-items:flex-end!important;
+  }
+
+  /* Nav grid: 5-column on narrow so more questions fit */
+  .book-module .drawer-nav-grid,
+  .nav-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important;}
+
+  /* Exam progress strip: 2-column on narrow */
+  .book-module .exam-progress-strip{
+    grid-template-columns:repeat(2,1fr)!important;
+    gap:8px!important;
+  }
+
+  /* Mode switch: single column on narrow */
+  .book-mock-page .mode-switch{grid-template-columns:1fr!important;}
+
+  /* Chip groups: scroll horizontally on narrow */
+  .book-module .chip-group.scroll-chips{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    padding-bottom:4px!important;
+    gap:6px!important;
+    scrollbar-width:none!important;
+  }
+  .book-module .chip-group.scroll-chips::-webkit-scrollbar{display:none!important;}
+
+  /* History question table: horizontal scroll */
+  .history-question-table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;}
+  .history-question-table{min-width:700px!important;}
+}
+
+/* ── Extra-small screens (< 440 px) ─────────────────────────────────── */
+@media (max-width:440px){
+  .book-page-head h1{font-size:clamp(26px,8vw,40px)!important;}
+  .book-mock-page .hero-card{padding:16px 12px!important;}
+  .book-module .mini-stat{padding:10px 8px!important;}
+  .book-module .mini-stat strong{font-size:1.05rem!important;}
+  .book-module .chip{padding:8px 10px!important;font-size:11px!important;}
+  .book-module .chip small{display:none!important;}
+  .book-module .bank-hero h2{font-size:1.35rem!important;}
+  .book-topbar .book-mark{font-size:18px!important;}
+}
+
+/* ── Landscape mobile: save vertical space ───────────────────────────── */
+@media (max-width:760px) and (orientation:landscape){
+  .book-page-head{padding-top:14px!important;padding-bottom:10px!important;}
+  .book-module .exam-progress-strip{display:none!important;}
+}
+
+/* ── Safe-area insets (iOS notch / home indicator) ───────────────────── */
+@supports (padding:max(0px)){
+  .book-topbar{
+    padding-left:max(14px,env(safe-area-inset-left))!important;
+    padding-right:max(14px,env(safe-area-inset-right))!important;
+  }
+  @media (max-width:760px){
+    .book-mock-page .page-bank,
+    .book-mock-page .page-home,
+    .book-mock-page .page-results,
+    .book-mock-page .page-summary,
+    .book-mock-page .page-history{
+      padding-bottom:max(80px,calc(64px + env(safe-area-inset-bottom)))!important;
+    }
+    .book-mock-page .page-test{
+      padding-bottom:max(96px,calc(80px + env(safe-area-inset-bottom)))!important;
+    }
+  }
 }
