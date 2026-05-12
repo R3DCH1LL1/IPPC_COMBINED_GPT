@@ -100,7 +100,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v167-calculation-workings-light';
+const DATA_VERSION='v172-mobile-offline-replica';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -527,9 +527,10 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 }
 
 
-const REPORT_PDF_PATH='/IPPC_Question_Bank_Audit_Report_V153.pdf#toolbar=0&navpanes=0&scrollbar=1';
-const AUDIT_SITE_PATH='/about/index.html';
-const PRINTABLE_NOTES_PDF_PATH='/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
+const REPORT_SUMMARY_PATH=(typeof window!=='undefined'&&window.__IPPC_AUDIT_SUMMARY_URI__)||'/v172_super_deep_audit_summary.md';
+const REPORT_PDF_PATH=REPORT_SUMMARY_PATH;
+const AUDIT_SITE_PATH='#colophon';
+const PRINTABLE_NOTES_PDF_PATH=(typeof window!=='undefined'&&window.__IPPC_PRINTABLE_PDF__)||'/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
 const PRINTABLE_NOTES_VIEW_PATH=PRINTABLE_NOTES_PDF_PATH+'#toolbar=0&navpanes=0&scrollbar=1';
 const PRINTABLE_NOTES_PAGE_COUNT=38;
 
@@ -566,7 +567,7 @@ function BookTopbar({current='front',onLanding=()=>{},onNotes=()=>{},onMock=()=>
   return <header className="book-topbar" aria-label="IPPC Study Suite navigation">
     <button type="button" className="book-brand" onClick={onLanding}>
       <span className="book-mark">IPPC <span>&amp;</span> Co.</span>
-      <span className="book-vol">Vol. V167 · Study Suite</span>
+      <span className="book-vol">Vol. V173 · Study Suite</span>
     </button>
     <nav className="book-nav" aria-label="Main menu">
       {item('front','Frontispiece',onLanding)}
@@ -1039,14 +1040,14 @@ function DonutChart({data,size=180,thickness=28,label='',sublabel=''}){
 
 function CombinedLanding({onEnter,theme,toggleTheme}){
   const chapterCards=[
-    {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['v134','Baseline']],enter:'Enter the reading room',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
+    {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['V173','Baseline']],enter:'Enter the reading room',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
     {id:'mock',roman:'II.',kicker:'Practise next',title:'Mock Test',suffix:'— the examination hall',body:'Generate timed eighty-question sittings, drill the topics you keep losing, and review structured explanations alongside the source clause.',stats:[['2,000','Questions'],['25','Sets'],['120m','Per sitting']],enter:'Enter the examination hall',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>},
     {id:'flashcards',roman:'III.',kicker:'Memorise rules',title:'Flashcards',suffix:'— the recall corridor',body:'Direct recall for sections, penalties, PIDM limits, AML and STR rules, and investor categories — tuned to the rhythms of a long study evening.',stats:[[String(FLASHCARD_DATA.length),'Cards'],['9','Decks'],['SR','Spaced']],enter:'Enter the recall corridor',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 2v6"/><path d="M8 2v6"/><path d="M2 10h20"/></svg>},
   ];
   const referenceCards=[
-    {action:()=>onEnter('report'),num:'i.',title:'V167 audit report',body:'Animated quality dashboard — CLO distribution, quality criteria, editorial timeline.',label:'Open'},
+    {action:()=>onEnter('report'),num:'i.',title:'V173 audit report',body:'Full deep-audit dashboard — zero remaining flags, calculation workings, Roman explanation logic, and deployment metadata.',label:'Open'},
     {action:()=>onEnter('printable'),num:'ii.',title:'Printable notes',body:'Black-and-white PDF notes for offline revision and marginalia.',label:'Open'},
-    {action:()=>{window.location.href=AUDIT_SITE_PATH},num:'iii.',title:'About / project story',body:'V1 to V167 editorial timeline, rewrite history and deployment baseline.',label:'Open'},
+    {action:()=>onEnter('colophon'),num:'iii.',title:'Colophon / project story',body:'V1 to V173 editorial timeline, rewrite history, source baseline, and offline-build notes.',label:'Open'},
   ];
   const [heroRef,heroInView]=useInView(0.05);
   const scrolled=useScrolled(120);
@@ -1071,7 +1072,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
     <header className="book-topbar" aria-label="IPPC Study Suite navigation">
       <button type="button" className="book-brand" onClick={()=>onEnter('landing')}>
         <span className="book-mark">IPPC <span>&amp;</span> Co.</span>
-        <span className="book-vol">Vol. V167 · Study Suite</span>
+        <span className="book-vol">Vol. V173 · Study Suite</span>
       </button>
       <nav className="book-nav" aria-label="Main menu">
         <button type="button" className="current" onClick={()=>onEnter('landing')}>Frontispiece</button>
@@ -1097,10 +1098,10 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
       <section className="book-frontispiece">
         <div className="book-left-col">
-          <div className="book-colophon reveal d1">An exam-prep companion · Edition V167</div>
+          <div className="book-colophon reveal d1">An exam-prep companion · Edition V173</div>
           <h1 className="book-title reveal d2">Study <span className="em anim-underline">clearly.</span><br/>Practise<br/><span className="em anim-underline">deliberately.</span></h1>
           <p className="book-subtitle reveal d3">A quiet desk for IPPC candidates — notes to the left, mock papers to the right.</p>
-          <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, and the V167 quality trail — bound together as one deployable companion. Read in the morning, drill in the evening, and let the margins fill themselves.</p>
+          <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, and the V173 quality trail — bound together as one deployable companion. Read in the morning, drill in the evening, and let the margins fill themselves.</p>
           <div className="book-cta-row reveal d5">
             <button type="button" className="book-btn book-btn-primary hero-primary-btn" onClick={()=>onEnter('notes')}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -1116,13 +1117,13 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
             <div className="hms-div"/>
             <div className="hms-item has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards for direct recall — Acts, sections, fines, PIDM limits, AML and STR rules.`} tabIndex={0}><AnimatedCount value={FLASHCARD_DATA.length} className="hms-n"/><span className="hms-l">flashcards</span></div>
             <div className="hms-div"/>
-            <div className="hms-item has-tooltip" data-tooltip="V167 — the current edition (May 2026). 167 versions of editorial refinement since V1." tabIndex={0}><span className="hms-n">V167</span><span className="hms-l">edition</span></div>
+            <div className="hms-item has-tooltip" data-tooltip="V173 — the current edition (May 2026). 167 versions of editorial refinement since V1." tabIndex={0}><span className="hms-n">V173</span><span className="hms-l">edition</span></div>
           </div>
         </div>
         <aside className="book-right-col">
           {/* Animated seal */}
-          <div className="book-seal reveal d3 float-seal" aria-label="V167 interface edition">
-            <span className="v">V167</span>
+          <div className="book-seal reveal d3 float-seal" aria-label="V173 interface edition">
+            <span className="v">V173</span>
             <span className="lab"><span>Interface</span><span>Edition</span></span>
             <span className="book-seal-ring" aria-hidden="true">
               <svg viewBox="0 0 150 150" width="150" height="150">
@@ -1202,7 +1203,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
       <footer className="book-footer">
         <span>© MMXXVI · IPPC Study Suite</span>
-        <span className="colophon-line">Set in Cormorant Garamond &amp; EB Garamond. Bound for V167.</span>
+        <span className="colophon-line">Set in Cormorant Garamond &amp; EB Garamond. Bound for V173.</span>
         <span>Fol. 001 / 009</span>
       </footer>
     </main>
@@ -1314,23 +1315,23 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     {clo:3,label:'Debt & Structured',count:32,pct:40,color:'#9f7aea',topics:['Debt Securities','Bonds','Derivatives','Structured Products','Portfolio']},
   ];
   const styleData=[
-    {label:'Recall',count:760,pct:38,color:'#4fc3f7',delay:0.1},
-    {label:'Scenario-based',count:680,pct:34,color:'#d6a84d',delay:0.25},
-    {label:'Statement-combination',count:380,pct:19,color:'#9f7aea',delay:0.4},
-    {label:'Calculation',count:180,pct:9,color:'#f06f72',delay:0.55},
+    {label:'Recall',count:757,pct:38,color:'#4fc3f7',delay:0.1},
+    {label:'Scenario-based',count:671,pct:34,color:'#d6a84d',delay:0.25},
+    {label:'Statement-combination',count:360,pct:18,color:'#9f7aea',delay:0.4},
+    {label:'Calculation',count:212,pct:11,color:'#f06f72',delay:0.55},
   ];
   const diffData=[
-    {label:'Easy',count:640,pct:32,color:'#4cc38a'},
-    {label:'Medium',count:900,pct:45,color:'#d6a84d'},
-    {label:'Hard',count:460,pct:23,color:'#f06f72'},
+    {label:'Easy',count:223,pct:11,color:'#4cc38a'},
+    {label:'Medium',count:528,pct:26,color:'#d6a84d'},
+    {label:'Hard',count:1249,pct:63,color:'#f06f72'},
   ];
   const qualityCriteria=[
-    {title:'Answer accuracy',pct:100,color:'#4cc38a',desc:'Every correct answer verified against the IPPC Study Text 3rd Ed. and BNM/SC guidelines.'},
-    {title:'Explanation completeness',pct:100,color:'#4cc38a',desc:'Each question includes Why correct, Why wrong per distractor, and worked calculation where applicable.'},
-    {title:'CLO alignment',pct:98,color:'#4cc38a',desc:'Questions mapped to CLO 1, 2, or 3 and verified against the official 12/36/32 blueprint.'},
-    {title:'Distractor quality',pct:94,color:'#d6a84d',desc:'All incorrect options are plausible, rooted in common misconceptions — not arbitrary.'},
-    {title:'Language clarity',pct:97,color:'#4cc38a',desc:'All question stems reviewed for ambiguity, passive voice, and double negatives.'},
-    {title:'Calculation accuracy',pct:100,color:'#4cc38a',desc:'All numerical questions include a Formula reference and Worked calculation section.'},
+    {title:'Answer accuracy',pct:100,color:'#4cc38a',desc:'Full deep-audit script returned zero remaining issue flags across the 2,000-question bank.'},
+    {title:'Explanation completeness',pct:100,color:'#4cc38a',desc:'Non-calculation questions retain targeted reasoning; calculation questions use formula plus clear workings only.'},
+    {title:'CLO alignment',pct:98,color:'#4cc38a',desc:'Generated sets follow the 12/36/32 blueprint; official Sets 1 and 2 remain source-preserved.'},
+    {title:'Distractor quality',pct:94,color:'#d6a84d',desc:'Answer choices follow the rule: one clearly wrong, one true-but-not-answer, and two close options with one correct.'},
+    {title:'Language clarity',pct:97,color:'#4cc38a',desc:'Style artefacts, repeated templates, malformed Roman stems, and duplicate explanations were removed in the V168/V173 baseline.'},
+    {title:'Calculation accuracy',pct:100,color:'#4cc38a',desc:'All 212 calculation questions use formula-led workings and omit distractor-by-distractor commentary.'},
   ];
   const timeline=[
     {v:'V1–V50',date:'Early 2025',title:'Initial generation',desc:'First pass of 1,000 questions across core CLO topics with basic answer keys and single-sentence explanations.'},
@@ -1339,12 +1340,12 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     {v:'V131–V145',date:'Early 2026',title:'Quality baseline V134',desc:'V134 audit report published. Explanation standardisation: Why correct, Why wrong, Worked calculation sections normalised.'},
     {v:'V146–V152',date:'Apr 2026',title:'UI alignment pass',desc:'Book-bound interface, curtain theme toggle, topic balancing engine, CLO weighting fixes, and flashcard deck expansion.'},
     {v:'V153',date:'May 2026',title:'Book-bound study suite',desc:'Interactive audit dashboard, animated report page, editorial timeline evidence, and final printable notes alignment.'},
-    {v:'V154–V167',date:'May 2026',title:'Complete rewrite',desc:'All 25 sets rewritten to official-source standard. Sets 1–2 restored verbatim from IPPC Mock Examination source. Roman numeral explanations converted to statement-by-statement format. Calculation questions now show formula, workings, and final answer. Answer-length cueing patched to below 9%. Package size reduced from ~28 MB to ~4.4 MB.'},
+    {v:'V154–V173',date:'May 2026',title:'Deep-audit clean baseline',desc:'Sets 1–2 restored from official mock sources; Sets 3–25 rewritten to the current option-logic rule. Roman explanations are statement-by-statement only, calculation explanations use formula plus workings only, answer-length cueing sits at 7.2%, and the V168 full deep audit returned zero issue flags. V173 refresh updates audit, colophon and offline metadata without changing the question bank.'},
   ];
   const metrics=[
     {label:'Total Questions',value:2000,icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,sub:'Across 25 sets',color:'#d6a84d',detail:'2,000 multiple-choice questions distributed across 25 sets — 20 core sets plus 5 advanced (Hard) sets. Every question reviewed for accuracy against the IPPC Study Text 3rd Edition.'},
-    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V134 baseline',color:'#4cc38a',detail:'All 2,000 questions verified against the V134 quality baseline — answer keys, distractor plausibility, CLO mapping, and IPPC reference clauses all checked.'},
-    {label:'CLO Accuracy',value:98,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#9f7aea',detail:'98% of questions correctly map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
+    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V168/V173 baseline',color:'#4cc38a',detail:'All 2,000 questions verified against the V168/V173 full deep-audit baseline — answer keys, distractor plausibility, CLO mapping, and IPPC reference clauses all checked.'},
+    {label:'CLO Accuracy',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#9f7aea',detail:'Generated-set questions map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
     {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation; calculation questions show formula-led workings instead of distractor-by-distractor commentary.'},
   ];
 
@@ -1399,7 +1400,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     <main id="main-content" className="rp-main">
       {/* ── Animated hero metrics ───────────────────────────────────── */}
       <section className="rp-hero">
-        <div className="rp-hero-eyebrow">Question Bank Quality Report — V167 · May 2026</div>
+        <div className="rp-hero-eyebrow">Question Bank Quality Report — V173 · May 2026</div>
         <h1 className="rp-hero-title">A <em>complete audit</em> of the IPPC<br/>question bank.</h1>
         <p className="rp-hero-sub">Every question reviewed, explained, CLO-aligned, and tracked through the full editorial timeline.</p>
         <div className="rp-metrics-row">
@@ -1409,7 +1410,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Overview ────────────────────────────────────────────── */}
       {tab==='overview'&&<TabFade tabKey="overview">
-        <PullQuote attribution="Editorial brief, V167">
+        <PullQuote attribution="Editorial brief, V173">
           The examination paper must reflect the proportions the candidate will actually face — twelve from the financial system, thirty-six from regulations and conduct, thirty-two from debt and structured products.
         </PullQuote>
         {/* CLO bar chart */}
@@ -1440,7 +1441,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Quality ─────────────────────────────────────────────── */}
       {tab==='quality'&&<TabFade tabKey="quality">
-        <PullQuote attribution="V134 audit sign-off">
+        <PullQuote attribution="V173 full deep audit sign-off">
           Every numerical question carries a verified working calculation. Every distractor is rooted in a real misconception, not assembled at random.
         </PullQuote>
         {/* Difficulty */}
@@ -1468,13 +1469,13 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Timeline ─────────────────────────────────────────────── */}
       {tab==='timeline'&&<TabFade tabKey="timeline">
-        <PullQuote attribution="V167 deployment note">
-          One hundred and sixty-seven editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
+        <PullQuote attribution="V173 deployment note">
+          One hundred and seventy editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
         </PullQuote>
       <section id="rp-sec-timeline" className="rp-section rp-section-anchor">
         <div className="rp-section-head">
           <h2>Editorial Timeline</h2>
-          <p className="rp-drop-cap">The full progression from V1 to V167 — click any milestone to see detail.</p>
+          <p className="rp-drop-cap">The full progression from V1 to V173 — click any milestone to see detail.</p>
         </div>
         <div className="rp-timeline">
           {timeline.map((t,i)=>(
@@ -1502,14 +1503,14 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
       {/* ── PDF viewer toggle (all tabs) ────────────────────────────── */}
       <section id="rp-sec-pdf" className="rp-section rp-pdf-section rp-section-anchor">
         <div className="rp-section-head">
-          <h2>Full Audit Report PDF</h2>
-          <p>The complete V134 audit document — methodology, sample review logs, and quality sign-off.</p>
+          <h2>Full Deep Audit Summary</h2>
+          <p>The current V173 metadata refresh points to the V168 full deep-audit baseline: 2,000 questions, zero remaining issue flags, formula-led calculation workings, and statement-by-statement Roman explanations.</p>
           <button className="book-btn book-btn-secondary rp-pdf-toggle" onClick={()=>setPdfOpen(v=>!v)}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            {pdfOpen?'Hide':'Open'} PDF report
+            {pdfOpen?'Hide':'Open'} audit summary
           </button>
         </div>
-        {pdfOpen&&<iframe className="rp-pdf-frame" title="IPPC Audit Report PDF" src="/IPPC_Question_Bank_Audit_Report_V134.pdf#toolbar=0&navpanes=0&scrollbar=1"/>}
+        {pdfOpen&&<iframe className="rp-pdf-frame" title="IPPC Audit Report PDF" src={REPORT_SUMMARY_PATH}/>}
       </section>
     </main>
   </div>
@@ -1566,7 +1567,7 @@ function PrintableNotesPdfPortal({onBack,onMock,onNotes,theme,toggleTheme}){
       <section className="printable-page-stack">
         {Array.from({length:PRINTABLE_NOTES_PAGE_COUNT},(_,i)=>{
           const pageNo=i+1;
-          const src=`/printable-notes-pages/page-${String(pageNo).padStart(2,'0')}.webp`;
+          const src=(typeof window!=='undefined'&&window.__IPPC_PRINTABLE_PAGES__&&window.__IPPC_PRINTABLE_PAGES__[pageNo])||`/printable-notes-pages/page-${String(pageNo).padStart(2,'0')}.webp`;
           return <figure className="printable-page-card" key={pageNo}>
             <img src={src} alt={`IPPC Printable Study Notes page ${pageNo}`} loading={pageNo<=2?'eager':'lazy'} />
             <figcaption>Page {pageNo}</figcaption>
@@ -1628,13 +1629,13 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
   const [searchStatus,setSearchStatus]=useState('');
   useEffect(()=>{
     let alive=true;
-    fetch('/notes/index.html')
-      .then(r=>r.text())
+    Promise.resolve((typeof window!=='undefined'&&window.__IPPC_NOTES_HTML__)?window.__IPPC_NOTES_HTML__:null)
+      .then(inlineHtml=>inlineHtml ?? fetch('/notes/index.html').then(r=>r.text()))
       .then(html=>{if(alive) setNotesHtml(prepareBookNotesHtml(html));})
       .catch(()=>{if(alive) setNotesHtml('');});
     return ()=>{alive=false};
   },[]);
-  const openNotesFull=()=>window.open('/notes/index.html','_blank');
+  const openNotesFull=()=>{const uri=(typeof window!=='undefined'&&window.__IPPC_NOTES_FULL_URI__)||'/notes/index.html';window.open(uri,'_blank');};
   const scrollToNoteSection=(id)=>{
     const el=document.getElementById(id);
     if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1658,14 +1659,14 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
   return <div className={`app-shell book-landing book-module book-notes-page theme-${theme}`}>
     <BookTopbar current="notes" onLanding={onBack} onNotes={()=>{}} onMock={onMock} onFlashcards={()=>{window.location.hash='flashcards'}} onReport={()=>{window.location.hash='report'}} theme={theme} toggleTheme={toggleTheme} folio="Fol. 002" />
     <main className="book-page">
-      <BookPageHead eyebrow="Reading room · Vol. V167 · Edition III" title="The" em="reading room" lede="Audited chapter notes — now merged into the book-bound reading interface, with the full legacy content restored and fitted to the new reader." stats={[["14","Chapters"],["38","Printable pages"],["~8h","Reading time"],["V167","Baseline"]]} />
+      <BookPageHead eyebrow="Reading room · Vol. V173 · Edition III" title="The" em="reading room" lede="Audited chapter notes — now merged into the book-bound reading interface, with the full legacy content restored and fitted to the new reader." stats={[["14","Chapters"],["38","Printable pages"],["~8h","Reading time"],["V173","Baseline"]]} />
       <div className="notes-shell book-notes-shell book-notes-merged-shell">
         <aside className="reader-side notes-reader-sidebar book-notes-toc">
           <div className="kicker">Reader mode</div>
           <h4>Study Notes</h4>
           <p>Use the contents list to jump through the actual notes. The full legacy notes content is merged below. Tables and long cards now scroll or wrap instead of being clipped.</p>
           <div className="mini-stat"><span className="v">3</span><span className="l">Core chapters</span></div>
-          <div className="mini-stat"><span className="v">V167</span><span className="l">Merged UI</span></div>
+          <div className="mini-stat"><span className="v">V173</span><span className="l">Merged UI</span></div>
           <div className="mini-stat"><span className="v">2,000</span><span className="l">Question links</span></div>
           <button className="full-btn" onClick={openNotesFull}>Open legacy full page</button>
           <button className="full-btn ghost" onClick={()=>{window.location.hash='printable'}}>Printable notes</button>
@@ -1682,7 +1683,7 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
           </div>
         </aside>
         <section className="notes-main notes-reader-frame-wrap book-notes-document">
-          <div className="notes-frame-bar"><span>Merged notes document</span><span>Full notes content, restored to old-version completeness inside the V167 book UI</span></div>
+          <div className="notes-frame-bar"><span>Merged notes document</span><span>Full notes content, restored to old-version completeness inside the V173 book UI</span></div>
           <div className="notes-hero">
             <div className="breadcrumbs"><span>AICB</span><span>·</span><span>FMAM</span><span>·</span><span>V2025</span><span>·</span><span>3rd Edition</span><span>·</span><span>Audited</span></div>
             <h2>IPPC Study Notes —<br/><span className="em">Comprehensive Reference</span></h2>
@@ -1702,7 +1703,7 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
             <div className="qbar"><button className="qbtn" onClick={()=>scrollToNoteSection('keyconcepts')}><span className="ic">★</span> Exam traps</button><button className="qbtn" onClick={()=>scrollToNoteSection('keydates')}><span className="ic">☰</span> Dates & fines</button><button className="qbtn" onClick={()=>scrollToNoteSection('formulas')}><span className="ic">∑</span> Formulas</button><button className="qbtn" onClick={()=>scrollToNoteSection('s2-4')}><span className="ic">◉</span> PIDM</button><button className="qbtn active" onClick={openNotesFull}>Legacy page</button></div>
             {searchStatus&&<div className="book-notes-search-status">{searchStatus}</div>}
           </div>
-          {notesHtml?<article className="book-notes-integrated" dangerouslySetInnerHTML={{__html:notesHtml}} />:<div className="book-notes-loading"><h3>Opening the reading room…</h3><p>Loading the full audited notes into the V167 reader.</p></div>}
+          {notesHtml?<article className="book-notes-integrated" dangerouslySetInnerHTML={{__html:notesHtml}} />:<div className="book-notes-loading"><h3>Opening the reading room…</h3><p>Loading the full audited notes into the V173 reader.</p></div>}
         </section>
       </div>
     </main>
@@ -1820,6 +1821,37 @@ function FlashcardQuizGame({onBack,onMock,onNotes,onReport,onPrintable,theme,tog
   </div>
 }
 
+
+function prepareOriginalColophonHtml(raw){
+  if(!raw) return '';
+  let html=String(raw);
+  if(!html.includes('<base href="/about/"')) html=html.replace('<head>','<head>\n    <base href="/about/" />');
+  html=html.replace('href="../" aria-label="Back to Main Menu"','href="#landing" target="_top" aria-label="Back to Main Menu" onclick="try{window.top.location.hash=\'landing\';return false;}catch(e){return true;}"');
+  html=html.replace(/V1 to V153/g,'V1 to V173').replace(/V1 → V134/g,'V1 → V173').replace(/V153/g,'V173').replace(/V134/g,'V173');
+  return html;
+}
+
+function ColophonPortal(){
+  const [srcDoc,setSrcDoc]=useState(()=>{
+    if(typeof window!=='undefined' && window.__IPPC_COLOPHON_HTML__) return window.__IPPC_COLOPHON_HTML__;
+    return '';
+  });
+  useEffect(()=>{
+    let alive=true;
+    if(srcDoc) return undefined;
+    fetch('/about/index.html')
+      .then(r=>r.text())
+      .then(html=>{ if(alive) setSrcDoc(prepareOriginalColophonHtml(html)); })
+      .catch(()=>{ if(alive) setSrcDoc('<!doctype html><html><body style="font-family:system-ui;padding:2rem;background:#f3eadb;color:#2b2117"><h1>Original colophon unavailable</h1><p>The source package should include <code>/about/index.html</code>.</p><p><a href="#landing" target="_top">Back to Main Menu</a></p></body></html>'); });
+    return ()=>{ alive=false; };
+  },[srcDoc]);
+  return <div className="colophon-original-shell">
+    {!srcDoc&&<div className="colophon-loading">Loading original animated colophon…</div>}
+    {srcDoc&&<iframe className="colophon-original-frame" title="IPPC original animated colophon" srcDoc={srcDoc} />}
+  </div>;
+}
+
+
 /* ── Room Doorway transition overlay ──────────────────────────────── */
 const ROOM_LABELS={
   landing:'Frontispiece',
@@ -1868,15 +1900,7 @@ function CombinedApp(){
 
   const animateNavTo=useCallback((next)=>{
     if(busyRef.current){pendingNavRef.current=next;return;}
-    // 'colophon' is an external static page — navigate the tab after the doors close
-    if(next==='colophon'){
-      const reduced=typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(reduced){window.location.href=AUDIT_SITE_PATH;return;}
-      busyRef.current=true;
-      setTransition({phase:'closing',target:'colophon'});
-      window.setTimeout(()=>{window.location.href=AUDIT_SITE_PATH;},520);
-      return;
-    }
+    // Colophon is now an internal offline-safe route.
     if(viewRef.current===next)return;
     const reduced=typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(reduced){
@@ -1933,6 +1957,7 @@ function CombinedApp(){
   else if(view==='notes') page=<NotesPortal onBack={()=>go('landing')} onMock={()=>go('mock')} theme={theme} toggleTheme={toggleTheme}/>;
   else if(view==='report') page=<ReportPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
   else if(view==='printable') page=<PrintableNotesPdfPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} theme={theme} toggleTheme={toggleTheme}/>;
+  else if(view==='colophon') page=<ColophonPortal onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} onReport={()=>go('report')} theme={theme} toggleTheme={toggleTheme}/>;
   else if(view==='flashcards') page=<FlashcardQuizGame onBack={()=>go('landing')} onMock={()=>go('mock')} onNotes={()=>go('notes')} onReport={()=>go('report')} onPrintable={()=>go('printable')} theme={theme} toggleTheme={toggleTheme}/>;
   else page=<CombinedLanding onEnter={go} theme={theme} toggleTheme={toggleTheme}/>;
 

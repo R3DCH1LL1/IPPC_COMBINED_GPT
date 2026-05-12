@@ -11969,3 +11969,718 @@ body .notes-portal-shell.book-themed-portal .printable-viewer-intro{
     }
   }
 }
+
+/* ────────────────────────────────────────────────────────────────
+   V170 patch — mobile mock test, dark dropdowns, and book settings
+   ──────────────────────────────────────────────────────────────── */
+:root.theme-dark select,
+body.theme-dark select,
+.theme-dark select,
+.book-module.theme-dark select,
+.book-module.theme-dark .bank-field select,
+.book-module.theme-dark .filter-grid select,
+.book-module.theme-dark .bank-profile-grid select,
+.book-module.theme-dark .bank-filter-grid select{
+  color-scheme: dark!important;
+  background:linear-gradient(180deg,rgba(18,25,42,.98),rgba(9,14,28,.98))!important;
+  color:#f4ead6!important;
+  border:1px solid rgba(214,168,77,.34)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 10px 28px rgba(0,0,0,.18)!important;
+  appearance:auto!important;
+  -webkit-appearance:menulist!important;
+}
+:root.theme-dark select option,
+body.theme-dark select option,
+.theme-dark select option,
+.book-module.theme-dark select option{
+  background:#111827!important;
+  color:#f4ead6!important;
+}
+.book-module.theme-dark .bank-field span,
+.book-module.theme-dark .bank-section-title,
+.book-module.theme-dark .bank-summary,
+.book-module.theme-dark .bank-subsummary{
+  color:#f4ead6!important;
+}
+.theme-light select,
+.book-module.theme-light select,
+.book-module.theme-light .bank-field select{
+  color-scheme:light!important;
+  background:#f9efd9!important;
+  color:#241b10!important;
+  border:1px solid rgba(138,90,12,.24)!important;
+}
+.theme-light select option,
+.book-module.theme-light select option{
+  background:#fff7e8!important;
+  color:#241b10!important;
+}
+
+/* Settings drawer restyle — same book-bound language as the main UI */
+.book-module .settings-overlay,
+.notes-settings-shell.settings-overlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:240!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:20px!important;
+}
+.book-module .settings-backdrop,
+.notes-settings-shell .settings-backdrop{
+  position:absolute!important;
+  inset:0!important;
+  background:rgba(17,14,10,.52)!important;
+  border:0!important;
+  border-radius:0!important;
+  backdrop-filter:blur(10px)!important;
+}
+.book-module .settings-drawer,
+.notes-settings-shell .settings-drawer{
+  position:relative!important;
+  width:min(460px,calc(100vw - 32px))!important;
+  max-height:88vh!important;
+  overflow:auto!important;
+  padding:0!important;
+  border-radius:26px!important;
+  background:linear-gradient(180deg,var(--book-paper,#f3ead7),var(--book-paper-2,#ece0c5))!important;
+  border:1px solid rgba(138,90,12,.24)!important;
+  box-shadow:0 30px 90px rgba(39,24,7,.28),inset 0 1px 0 rgba(255,255,255,.45)!important;
+  color:var(--book-ink,#1f1a13)!important;
+}
+.book-module.theme-dark .settings-drawer,
+.theme-book-dark .settings-drawer,
+.notes-settings-shell .theme-dark .settings-drawer{
+  background:linear-gradient(180deg,#141c2f,#0d1324)!important;
+  border-color:rgba(214,168,77,.26)!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)!important;
+  color:#f4ead6!important;
+}
+.book-module .settings-head,
+.notes-settings-shell .settings-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  padding:22px 22px 16px!important;
+  border-bottom:1px solid rgba(138,90,12,.18)!important;
+}
+.book-module.theme-dark .settings-head,
+.theme-book-dark .settings-head{border-bottom-color:rgba(214,168,77,.18)!important;}
+.book-module .settings-head h3,
+.notes-settings-shell .settings-head h3{
+  margin:2px 0 0!important;
+  font-family:'Cormorant Garamond',Georgia,serif!important;
+  font-size:1.55rem!important;
+  letter-spacing:.01em!important;
+  color:inherit!important;
+}
+.book-module .settings-body,
+.notes-settings-shell .settings-body{display:grid!important;gap:12px!important;padding:18px 22px 22px!important;}
+.book-module .settings-row,
+.notes-settings-shell .settings-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  width:100%!important;
+  min-height:54px!important;
+  padding:14px 16px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(138,90,12,.18)!important;
+  background:rgba(255,247,232,.62)!important;
+  color:inherit!important;
+  text-decoration:none!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34)!important;
+}
+.book-module.theme-dark .settings-row,
+.theme-book-dark .settings-row{
+  background:rgba(255,255,255,.035)!important;
+  border-color:rgba(214,168,77,.18)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+.book-module .settings-row span,
+.notes-settings-shell .settings-row span{font-weight:700!important;color:inherit!important;}
+.book-module .settings-row strong,
+.notes-settings-shell .settings-row strong{font-family:'JetBrains Mono',monospace!important;color:var(--book-amber-deep,#8a5a0c)!important;}
+.book-module.theme-dark .settings-row strong,
+.theme-book-dark .settings-row strong{color:#f0c76c!important;}
+.book-module .drawer-close-btn,
+.notes-settings-shell .drawer-close-btn{
+  width:42px!important;height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:999px!important;border:1px solid rgba(138,90,12,.20)!important;background:rgba(255,247,232,.7)!important;color:inherit!important;font-size:24px!important;line-height:1!important;
+}
+.book-module.theme-dark .drawer-close-btn,
+.theme-book-dark .drawer-close-btn{background:rgba(255,255,255,.06)!important;border-color:rgba(214,168,77,.22)!important;}
+
+/* Wider mobile usability pass for mock test and bank */
+@media (max-width:820px){
+  .book-module.book-mock-page{overflow-x:hidden!important;}
+  .book-module .page{padding-left:12px!important;padding-right:12px!important;}
+  .book-module .book-page-head{margin-left:0!important;margin-right:0!important;border-radius:22px!important;}
+  .book-module .book-page-head .meta-stack,
+  .book-module .summary-grid,
+  .book-module .hero-stats-grid,
+  .book-module .bank-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .book-module .home-grid,
+  .book-module .results-grid,
+  .book-module .bank-layout{grid-template-columns:1fr!important;}
+  .book-module .bank-sidebar{position:static!important;width:100%!important;max-height:none!important;}
+  .book-module .bank-filter-card{padding:14px!important;border-radius:22px!important;}
+  .book-module .bank-filter-header{gap:10px!important;}
+  .book-module .bank-filter-grid,
+  .book-module .bank-profile-grid,
+  .book-module .filter-grid{grid-template-columns:1fr!important;gap:10px!important;}
+  .book-module .bank-field input,
+  .book-module .bank-field select,
+  .book-module input,
+  .book-module select{font-size:16px!important;width:100%!important;min-height:48px!important;}
+  .book-module .bank-results-header{align-items:flex-start!important;flex-direction:column!important;gap:10px!important;}
+  .book-module .bank-card-head{flex-direction:column!important;align-items:flex-start!important;}
+  .book-module .bank-card-actions{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;}
+  .book-module .bank-options{padding-left:0!important;}
+  .book-module .bank-options li{display:grid!important;grid-template-columns:34px minmax(0,1fr)!important;gap:10px!important;align-items:flex-start!important;}
+  .book-module .bank-pagination{display:grid!important;grid-template-columns:1fr 1fr!important;align-items:center!important;}
+  .book-module .bank-pagination .pagination-pills,
+  .book-module .bank-pagination .page-jump{grid-column:1/-1!important;}
+  .book-module .page-jump{display:grid!important;grid-template-columns:1fr 86px auto!important;gap:8px!important;}
+  .book-module .page-jump input{width:100%!important;}
+}
+
+@media (max-width:640px){
+  .book-topbar{position:sticky!important;top:0!important;z-index:90!important;background:rgba(11,14,24,.94)!important;border-bottom:1px solid rgba(214,168,77,.15)!important;backdrop-filter:blur(16px)!important;}
+  .theme-light .book-topbar{background:rgba(249,239,217,.94)!important;border-bottom-color:rgba(138,90,12,.15)!important;}
+  .book-topbar .book-nav{display:flex!important;overflow-x:auto!important;white-space:nowrap!important;gap:10px!important;padding-bottom:8px!important;scrollbar-width:none!important;}
+  .book-topbar .book-nav::-webkit-scrollbar{display:none!important;}
+  .book-topbar .book-nav button,
+  .book-topbar .book-nav-small-btn{flex:0 0 auto!important;min-height:38px!important;padding:8px 10px!important;font-size:12px!important;}
+
+  .book-module .page-test{padding:10px 10px 104px!important;}
+  .book-module .question-panel{border-radius:22px!important;padding:12px!important;}
+  .book-module .question-toolbar.sticky-test-header{position:sticky!important;top:58px!important;z-index:30!important;border-radius:18px!important;padding:10px!important;background:rgba(16,24,42,.94)!important;backdrop-filter:blur(14px)!important;}
+  .book-module.theme-light .question-toolbar.sticky-test-header{background:rgba(250,241,224,.94)!important;}
+  .book-module .test-title-row{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;align-items:start!important;}
+  .book-module .test-title-row h2{font-size:1.2rem!important;margin:2px 0 0!important;}
+  .book-module .navigator-trigger{width:100%!important;justify-content:center!important;min-height:42px!important;}
+  .book-module .test-toolbar-side{width:100%!important;align-items:stretch!important;gap:8px!important;}
+  .book-module .toolbar-pills{display:flex!important;overflow-x:auto!important;white-space:nowrap!important;gap:6px!important;padding-bottom:2px!important;scrollbar-width:none!important;}
+  .book-module .toolbar-pills::-webkit-scrollbar{display:none!important;}
+  .book-module .toolbar-pills .soft-pill,
+  .book-module .timer-pill{flex:0 0 auto!important;font-size:10px!important;padding:5px 8px!important;}
+  .book-module .danger-btn{min-height:40px!important;width:100%!important;}
+  .book-module .exam-progress-strip{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;}
+  .book-module .exam-progress-strip div{padding:7px 6px!important;border-radius:13px!important;}
+  .book-module .exam-progress-strip span{font-size:9px!important;}
+  .book-module .exam-progress-strip strong{font-size:.86rem!important;}
+  .book-module .progress-card{padding:9px!important;border-radius:15px!important;}
+  .book-module .progress-topline{font-size:11px!important;gap:8px!important;}
+  .book-module .question-copy{padding:14px!important;border-radius:18px!important;}
+  .book-module .question-copy-label{margin-bottom:8px!important;}
+  .book-module .question-stem,
+  .book-module .formatted-question-text{font-size:clamp(16px,4.2vw,18px)!important;line-height:1.55!important;}
+  .book-module .question-statement{padding:8px 10px!important;margin:7px 0!important;border-radius:12px!important;}
+  .book-module .study-aids-toggle-row{display:grid!important;grid-template-columns:1fr!important;gap:6px!important;font-size:12px!important;}
+  .book-module .options-list{gap:9px!important;}
+  .book-module .option-card{min-height:50px!important;padding:12px 11px!important;border-radius:16px!important;align-items:flex-start!important;text-align:left!important;}
+  .book-module .option-text{font-size:15px!important;line-height:1.42!important;}
+  .book-module .confidence-row{display:flex!important;overflow-x:auto!important;gap:6px!important;padding:6px 0!important;scrollbar-width:none!important;}
+  .book-module .confidence-row span{flex:0 0 auto!important;align-self:center!important;}
+  .book-module .confidence-row .chip{flex:0 0 auto!important;}
+  .book-module .modern-explanation{border-radius:18px!important;padding:12px!important;}
+  .book-module .explanation-hero{grid-template-columns:1fr!important;gap:10px!important;padding:12px!important;}
+  .book-module .statement-line{grid-template-columns:34px minmax(0,1fr)!important;gap:8px!important;padding:10px!important;}
+  .book-module .statement-status{font-size:10px!important;}
+  .book-module .test-action-bar{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important;padding:7px 6px calc(8px + env(safe-area-inset-bottom,0px))!important;}
+  .book-module .test-action-bar .action-btn{min-width:0!important;padding:8px 4px!important;min-height:48px!important;border-radius:14px!important;}
+  .book-module .test-action-bar .action-icon{font-size:16px!important;line-height:1!important;}
+  .book-module .test-action-bar .action-label{font-size:9px!important;line-height:1.05!important;letter-spacing:.02em!important;}
+  .book-module .settings-overlay,
+  .notes-settings-shell.settings-overlay{align-items:flex-end!important;padding:0!important;}
+  .book-module .settings-drawer,
+  .notes-settings-shell .settings-drawer{width:100%!important;max-width:100%!important;border-radius:24px 24px 0 0!important;max-height:86vh!important;}
+  .book-module .settings-head,
+  .notes-settings-shell .settings-head{padding:18px 18px 12px!important;}
+  .book-module .settings-body,
+  .notes-settings-shell .settings-body{padding:14px 18px calc(18px + env(safe-area-inset-bottom,0px))!important;}
+  .book-module .settings-row,
+  .notes-settings-shell .settings-row{min-height:58px!important;border-radius:16px!important;padding:13px 14px!important;}
+}
+
+@media (max-width:380px){
+  .book-module .exam-progress-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .book-module .test-action-bar .action-label{display:none!important;}
+  .book-module .test-action-bar .action-btn{min-height:44px!important;}
+  .book-module .book-page-head .meta-stack,
+  .book-module .summary-grid,
+  .book-module .hero-stats-grid,
+  .book-module .bank-stats-grid{grid-template-columns:1fr!important;}
+}
+
+/* ────────────────────────────────────────────────────────────────
+   V172 — mobile mock-test redesign and horizontal-overflow hard fix
+   The previous mobile lobby could still become wider than the viewport
+   because long chip rows and large mode cards escaped their containers.
+   This pass makes the Mock page phone-first without changing data logic.
+   ──────────────────────────────────────────────────────────────── */
+html,
+body,
+#root{
+  width:100%!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+}
+body{overscroll-behavior-x:none!important;}
+.book-module,
+.app-shell,
+.book-landing,
+.book-mock-page,
+.book-module .page,
+.book-mock-page .page-home,
+.book-mock-page .page-test,
+.book-mock-page .page-bank,
+.book-mock-page .page-results,
+.book-mock-page .page-history,
+.book-mock-page .page-summary{
+  width:100%!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+  box-sizing:border-box!important;
+}
+.book-module *,
+.book-module *::before,
+.book-module *::after{box-sizing:border-box!important;}
+.book-module img,
+.book-module svg,
+.book-module canvas,
+.book-module video{max-width:100%!important;}
+.book-module .surface,
+.book-module .hero-card,
+.book-module .config-card,
+.book-module .control-block,
+.book-module .info-card,
+.book-module .question-panel,
+.book-module .question-card,
+.book-module .bank-filter-card,
+.book-module .bank-main,
+.book-module .bank-item{min-width:0!important;max-width:100%!important;}
+
+@media (max-width:760px){
+  /* Overall mobile shell */
+  html,body,#root{min-width:0!important;}
+  .book-module.book-mock-page{
+    padding:0!important;
+    margin:0!important;
+    min-width:0!important;
+    background:var(--book-bg,#efe3c6)!important;
+  }
+  .book-mock-page .page-home,
+  .book-mock-page .page-bank,
+  .book-mock-page .page-results,
+  .book-mock-page .page-summary,
+  .book-mock-page .page-history{
+    padding:10px 10px calc(96px + env(safe-area-inset-bottom,0px))!important;
+    gap:12px!important;
+  }
+  .book-mock-page .page-test{
+    padding:8px 8px calc(92px + env(safe-area-inset-bottom,0px))!important;
+  }
+
+  /* Compact mock lobby header */
+  .book-mock-page.screen-home .book-page-head{
+    display:block!important;
+    padding:16px 14px!important;
+    margin:0 0 10px!important;
+    border-radius:20px!important;
+    min-height:auto!important;
+  }
+  .book-mock-page.screen-home .book-page-head .eyebrow{
+    font-size:9px!important;
+    letter-spacing:.16em!important;
+    margin-bottom:6px!important;
+  }
+  .book-mock-page.screen-home .book-page-head h1{
+    font-size:clamp(29px,8.2vw,42px)!important;
+    line-height:1.02!important;
+    max-width:100%!important;
+    margin:0!important;
+    letter-spacing:-.03em!important;
+  }
+  .book-mock-page.screen-home .book-page-head .lede{
+    font-size:14px!important;
+    line-height:1.38!important;
+    margin:8px 0 0!important;
+    max-width:100%!important;
+  }
+  .book-mock-page.screen-home .book-page-head .meta-stack{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    margin-top:12px!important;
+  }
+  .book-mock-page.screen-home .book-page-head .meta-card,
+  .book-mock-page.screen-home .book-page-head .meta-item{
+    min-height:54px!important;
+    padding:10px 8px!important;
+    border-radius:14px!important;
+  }
+
+  /* Hero: keep it, but make it a light compact quick-start card instead of a huge block */
+  .book-mock-page.screen-home .hero-card{
+    display:block!important;
+    padding:14px!important;
+    margin:0 0 10px!important;
+    border-radius:20px!important;
+    min-height:auto!important;
+  }
+  .book-mock-page.screen-home .hero-copy .eyebrow,
+  .book-mock-page.screen-home .hero-copy p,
+  .book-mock-page.screen-home .hero-stats-grid,
+  .book-mock-page.screen-home .quick-start-block h2{display:none!important;}
+  .book-mock-page.screen-home .hero-copy h1{
+    font-size:22px!important;
+    line-height:1.05!important;
+    max-width:100%!important;
+    margin:0 0 12px!important;
+    letter-spacing:-.02em!important;
+  }
+  .book-mock-page.screen-home .hero-actions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+  }
+  .book-mock-page.screen-home .hero-actions .primary-btn,
+  .book-mock-page.screen-home .hero-actions .secondary-btn,
+  .book-mock-page.screen-home .hero-actions button{
+    min-width:0!important;
+    width:100%!important;
+    min-height:46px!important;
+    padding:10px 9px!important;
+    border-radius:14px!important;
+    justify-content:center!important;
+    text-align:center!important;
+    font-size:12px!important;
+    line-height:1.15!important;
+    white-space:normal!important;
+  }
+  .book-mock-page.screen-home .hero-actions .primary-btn:first-child{
+    grid-column:1 / -1!important;
+  }
+
+  /* Main layout */
+  .book-mock-page.screen-home .home-grid{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .book-mock-page.screen-home .config-card{
+    padding:12px!important;
+    border-radius:20px!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .book-mock-page.screen-home .section-head{margin-bottom:10px!important;}
+  .book-mock-page.screen-home .section-head h2{
+    font-size:24px!important;
+    line-height:1.05!important;
+    margin:0 0 4px!important;
+  }
+  .book-mock-page.screen-home .section-head p{
+    font-size:13px!important;
+    line-height:1.35!important;
+    margin:0!important;
+    white-space:normal!important;
+  }
+
+  /* Mode selector: compact two-column cards */
+  .book-mock-page.screen-home .mode-switch,
+  .book-mock-page .config-card .mode-switch{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    padding:0!important;
+    margin:10px 0 12px!important;
+    overflow:visible!important;
+    border:0!important;
+    background:transparent!important;
+    width:100%!important;
+  }
+  .book-mock-page.screen-home .mode-btn,
+  .book-mock-page .config-card .mode-btn{
+    min-width:0!important;
+    width:100%!important;
+    min-height:74px!important;
+    height:auto!important;
+    padding:12px 10px!important;
+    border-radius:16px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    text-align:left!important;
+    overflow:hidden!important;
+  }
+  .book-mock-page.screen-home .mode-btn span,
+  .book-mock-page .config-card .mode-btn span{
+    font-size:20px!important;
+    line-height:1.05!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    max-width:100%!important;
+  }
+  .book-mock-page.screen-home .mode-btn small,
+  .book-mock-page .config-card .mode-btn small{
+    display:block!important;
+    margin-top:5px!important;
+    font-size:8.5px!important;
+    line-height:1.25!important;
+    letter-spacing:.09em!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    max-width:100%!important;
+  }
+
+  /* Filter panels: compact, no nested horizontal scrolling */
+  .book-mock-page.screen-home .control-block{
+    padding:12px!important;
+    margin:10px 0 0!important;
+    border-radius:18px!important;
+    max-height:none!important;
+    overflow:hidden!important;
+  }
+  .book-mock-page.screen-home .section-label-row{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:10px!important;
+    margin-bottom:10px!important;
+  }
+  .book-mock-page.screen-home .section-label-row h3{
+    font-size:18px!important;
+    margin:0!important;
+    line-height:1.1!important;
+  }
+  .book-mock-page.screen-home .filter-actions{display:flex!important;gap:6px!important;flex-shrink:0!important;}
+  .book-mock-page.screen-home .filter-actions .text-btn{
+    min-height:34px!important;
+    padding:7px 9px!important;
+    font-size:10px!important;
+    white-space:nowrap!important;
+  }
+  .book-mock-page.screen-home .chip-group,
+  .book-mock-page.screen-home .chip-group.scroll-chips,
+  .book-mock-page.screen-home .chip-group-wide{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px!important;
+    overflow:visible!important;
+    max-height:none!important;
+    width:100%!important;
+    padding:0!important;
+  }
+  .book-mock-page.screen-home .control-block:nth-of-type(4) .chip-group,
+  .book-mock-page.screen-home .control-block .chip-group.scroll-chips{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-height:190px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    padding-right:2px!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .book-mock-page.screen-home .chip{
+    width:100%!important;
+    min-width:0!important;
+    min-height:42px!important;
+    height:auto!important;
+    padding:8px 8px!important;
+    border-radius:14px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    font-size:12px!important;
+    line-height:1.15!important;
+    white-space:normal!important;
+    word-break:normal!important;
+    overflow-wrap:anywhere!important;
+  }
+  .book-mock-page.screen-home .chip small{
+    display:none!important;
+  }
+  .book-mock-page.screen-home .chip-group-wide .chip{
+    min-height:48px!important;
+    font-size:13px!important;
+  }
+
+  /* Sticky begin/reset row: always within viewport */
+  .book-mock-page.screen-home .button-row.sticky-actions{
+    position:sticky!important;
+    bottom:calc(68px + env(safe-area-inset-bottom,0px))!important;
+    z-index:55!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+    margin:12px -2px 0!important;
+    padding:8px!important;
+    border-radius:18px!important;
+    background:rgba(247,238,218,.92)!important;
+    border:1px solid rgba(138,90,12,.14)!important;
+    backdrop-filter:blur(12px)!important;
+    box-shadow:0 12px 34px rgba(63,43,15,.12)!important;
+  }
+  .book-mock-page.theme-dark.screen-home .button-row.sticky-actions{
+    background:rgba(20,16,9,.90)!important;
+    border-color:rgba(214,168,77,.18)!important;
+  }
+  .book-mock-page.screen-home .button-row.sticky-actions .primary-btn,
+  .book-mock-page.screen-home .button-row.sticky-actions .secondary-btn{
+    min-width:0!important;
+    width:100%!important;
+    min-height:46px!important;
+    border-radius:14px!important;
+    padding:10px 8px!important;
+    font-size:12px!important;
+    text-align:center!important;
+    justify-content:center!important;
+    white-space:normal!important;
+  }
+
+  /* Side cards are useful but should not dominate the first screen on phones */
+  .book-mock-page.screen-home .home-side-stack{
+    margin-top:12px!important;
+    display:grid!important;
+    gap:10px!important;
+  }
+  .book-mock-page.screen-home .home-side-stack .info-card{
+    padding:14px!important;
+    border-radius:18px!important;
+  }
+  .book-mock-page.screen-home .home-side-stack .info-card:nth-child(2) .feature-list li:nth-child(n+4){display:none!important;}
+
+  /* Question-taking page: tighter and more predictable */
+  .book-mock-page.screen-test .page-test{
+    padding-left:8px!important;
+    padding-right:8px!important;
+    padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))!important;
+  }
+  .book-mock-page.screen-test .test-layout,
+  .book-mock-page.screen-test .exam-grid{
+    display:block!important;
+    width:100%!important;
+  }
+  .book-mock-page.screen-test .question-card,
+  .book-mock-page.screen-test .question-panel{
+    padding:10px!important;
+    border-radius:18px!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .book-mock-page.screen-test .question-toolbar.sticky-test-header,
+  .book-mock-page.screen-test .sticky-test-header{
+    position:sticky!important;
+    top:0!important;
+    z-index:60!important;
+    margin:0 0 8px!important;
+    border-radius:16px!important;
+    padding:9px!important;
+  }
+  .book-mock-page.screen-test .test-title-row{
+    display:grid!important;
+    grid-template-columns:44px minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+  .book-mock-page.screen-test .test-title-row h2{
+    font-size:17px!important;
+    line-height:1.1!important;
+    margin:0!important;
+  }
+  .book-mock-page.screen-test .navigator-trigger{
+    width:44px!important;
+    min-width:44px!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0!important;
+  }
+  .book-mock-page.screen-test .toolbar-pills{
+    display:flex!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    gap:6px!important;
+    scrollbar-width:none!important;
+  }
+  .book-mock-page.screen-test .toolbar-pills::-webkit-scrollbar{display:none!important;}
+  .book-mock-page.screen-test .question-copy,
+  .book-mock-page.screen-test .enhanced-question-copy{
+    padding:12px!important;
+    border-radius:16px!important;
+    overflow-wrap:anywhere!important;
+  }
+  .book-mock-page.screen-test .qprompt,
+  .book-mock-page.screen-test .question-stem,
+  .book-mock-page.screen-test .formatted-question-text,
+  .book-mock-page.screen-test .enhanced-question-copy .question-stem p{
+    font-size:16px!important;
+    line-height:1.45!important;
+    overflow-wrap:anywhere!important;
+  }
+  .book-mock-page.screen-test .option-card,
+  .book-mock-page.screen-test .answer{
+    display:grid!important;
+    grid-template-columns:34px minmax(0,1fr)!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:48px!important;
+    padding:10px!important;
+    gap:10px!important;
+    border-radius:14px!important;
+  }
+  .book-mock-page.screen-test .option-text,
+  .book-mock-page.screen-test .answer span:last-child{
+    font-size:14px!important;
+    line-height:1.36!important;
+    overflow-wrap:anywhere!important;
+  }
+  .book-mock-page.screen-test .test-action-bar{
+    left:0!important;
+    right:0!important;
+    bottom:0!important;
+    width:100%!important;
+    max-width:100vw!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    gap:4px!important;
+    padding:7px 6px calc(8px + env(safe-area-inset-bottom,0px))!important;
+    border-radius:18px 18px 0 0!important;
+  }
+  .book-mock-page.screen-test .test-action-bar .action-btn,
+  .book-mock-page.screen-test .test-action-bar .primary-btn,
+  .book-mock-page.screen-test .test-action-bar .secondary-btn{
+    min-width:0!important;
+    min-height:44px!important;
+    padding:7px 3px!important;
+    border-radius:12px!important;
+  }
+  .book-mock-page.screen-test .test-action-bar .action-label{font-size:8.5px!important;}
+
+  /* Floating buttons and bottom nav should not hide content */
+  .display-toggle{right:14px!important;bottom:calc(128px + env(safe-area-inset-bottom,0px))!important;}
+  .back-to-top{right:14px!important;bottom:calc(76px + env(safe-area-inset-bottom,0px))!important;}
+  .mobile-tab-bar{max-width:100vw!important;overflow:hidden!important;}
+}
+
+@media (max-width:390px){
+  .book-mock-page.screen-home .mode-switch,
+  .book-mock-page .config-card .mode-switch{grid-template-columns:1fr!important;}
+  .book-mock-page.screen-home .mode-btn,
+  .book-mock-page .config-card .mode-btn{min-height:62px!important;}
+  .book-mock-page.screen-home .mode-btn span,
+  .book-mock-page .config-card .mode-btn span{font-size:19px!important;}
+  .book-mock-page.screen-home .chip-group,
+  .book-mock-page.screen-home .chip-group-wide{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+}
+
+
+/* V173: restore original animated colophon site inside the app/offline replica. */
+.colophon-original-shell{position:fixed;inset:0;background:#f3eadb;z-index:40;overflow:hidden;}
+.colophon-original-frame{width:100%;height:100%;border:0;display:block;background:#f3eadb;}
+.colophon-loading{min-height:100dvh;display:grid;place-items:center;background:#f3eadb;color:#2b2117;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,6vw,54px);font-style:italic;}
+@supports(height:100svh){.colophon-original-frame{height:100svh}.colophon-original-shell{height:100svh}}

@@ -1,0 +1,364 @@
+{
+  "version": "V173",
+  "source_baseline": "V168 deep-audit fixes question bank; V173 metadata/offline refresh",
+  "sets": 25,
+  "questions": 2000,
+  "questions_per_set_ok": true,
+  "type_counts": {
+    "Statement-combination": 360,
+    "Recall": 757,
+    "Scenario-based": 671,
+    "Calculation": 212
+  },
+  "difficulty_counts": {
+    "Hard": 1249,
+    "Medium": 528,
+    "Easy": 223
+  },
+  "calculation_questions": 212,
+  "calculation_formula_working_only_ok": true,
+  "roman_questions": 360,
+  "roman_statement_by_statement_ok": true,
+  "answer_distribution_by_set": [
+    {
+      "set": 1,
+      "A": 14,
+      "B": 17,
+      "C": 35,
+      "D": 14
+    },
+    {
+      "set": 2,
+      "A": 20,
+      "B": 20,
+      "C": 29,
+      "D": 11
+    },
+    {
+      "set": 3,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 4,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 5,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 6,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 7,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 8,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 9,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 10,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 11,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 12,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 13,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 14,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 15,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 16,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 17,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 18,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 19,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 20,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 21,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 22,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 23,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 24,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    },
+    {
+      "set": 25,
+      "A": 20,
+      "B": 20,
+      "C": 20,
+      "D": 20
+    }
+  ],
+  "clo_distribution_by_set": [
+    {
+      "set": 1,
+      "CLO1": 16,
+      "CLO2": 33,
+      "CLO3": 31
+    },
+    {
+      "set": 2,
+      "CLO1": 15,
+      "CLO2": 41,
+      "CLO3": 24
+    },
+    {
+      "set": 3,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 4,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 5,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 6,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 7,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 8,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 9,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 10,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 11,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 12,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 13,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 14,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 15,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 16,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 17,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 18,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 19,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 20,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 21,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 22,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 23,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 24,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    },
+    {
+      "set": 25,
+      "CLO1": 12,
+      "CLO2": 36,
+      "CLO3": 32
+    }
+  ],
+  "answer_length": {
+    "unique_longest_correct_count": 144,
+    "unique_longest_correct_pct": 7.2,
+    "tied_longest_correct_count": 228,
+    "close_distractor_within_10_chars_count": 1790,
+    "close_distractor_within_10_chars_pct": 89.5
+  },
+  "audit_issues_total": 0,
+  "critical_or_high_issues": 0,
+  "build_test": "passed: npm ci && npm run build",
+  "package_size_mb": 4.4,
+  "notes": "Official Set 1 and Set 2 stems/options/answers are preserved; explanations were normalised where required for app consistency and calculation-working format.",
+  "v172_change": "Updated audit and colophon text and created fully offline HTML. No question-bank content changes from V168 baseline."
+}
