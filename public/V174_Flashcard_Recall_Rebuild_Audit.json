@@ -1,0 +1,51 @@
+{
+  "build": "V174-flashcard-recall-rebuild",
+  "source_baseline": "V172 mobile mock UI fix with V168 question baseline",
+  "cards_total": 104,
+  "categories": {
+    "Important Dates": 23,
+    "Acts & Schedules": 49,
+    "Fines, Penalties & Jail Terms": 15,
+    "Islamic Terms": 17
+  },
+  "expected_categories": [
+    "Important Dates",
+    "Acts & Schedules",
+    "Fines, Penalties & Jail Terms",
+    "Islamic Terms"
+  ],
+  "quiz_logic": "Quiz choices draw first from the same flashcard category and exclude the current fact/answer; fallback is only used if a category has fewer than three distractors.",
+  "same_topic_choice_pool_failures": [],
+  "duplicate_answer_groups": [
+    {
+      "answer": "Up to 5 years imprisonment or RM10 million fine, or both",
+      "ids": [
+        "fc074",
+        "fc075"
+      ]
+    },
+    {
+      "answer": "Fine not less than RM1 million and imprisonment up to 10 years",
+      "ids": [
+        "fc079",
+        "fc080"
+      ]
+    },
+    {
+      "answer": "Up to RM3 million fine or 5 years imprisonment, or both",
+      "ids": [
+        "fc086",
+        "fc087"
+      ]
+    }
+  ],
+  "issues": [],
+  "status": "PASS",
+  "checks": {
+    "only_requested_categories": true,
+    "all_cards_have_three_same_topic_distractors": true,
+    "no_old_flashcard_categories": true,
+    "no_duplicate_fronts": true,
+    "build_test_passed": true
+  }
+}

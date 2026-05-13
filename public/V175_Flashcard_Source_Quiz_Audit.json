@@ -1,0 +1,87 @@
+{
+  "version": "V175 Flashcard Source Audit and Quiz Patch",
+  "card_count": 104,
+  "category_counts": {
+    "Important Dates": 23,
+    "Acts & Schedules": 49,
+    "Fines, Penalties & Jail Terms": 15,
+    "Islamic Terms": 17
+  },
+  "tag_counts": {
+    "Important Dates / Institution dates": 3,
+    "Important Dates / Capital markets law": 1,
+    "Important Dates / Central bank law": 1,
+    "Important Dates / Islamic banking law": 1,
+    "Important Dates / Financial services law": 1,
+    "Important Dates / Product governance": 1,
+    "Important Dates / Wholesale market conduct": 3,
+    "Important Dates / Capital market platforms": 1,
+    "Important Dates / Moneylending guidelines": 1,
+    "Important Dates / AML/CFT/CPF": 1,
+    "Important Dates / ECF secondary trading": 1,
+    "Important Dates / Product disclosure": 1,
+    "Important Dates / Study text": 1,
+    "Important Dates / Module specification": 2,
+    "Important Dates / Deposit insurance": 2,
+    "Important Dates / AMLA reporting": 2,
+    "Acts & Schedules / Core Acts": 8,
+    "Acts & Schedules / FSA provisions": 7,
+    "Acts & Schedules / FSA schedules": 2,
+    "Acts & Schedules / IFSA provisions": 2,
+    "Acts & Schedules / Wholesale conduct": 2,
+    "Acts & Schedules / CMSA provisions": 12,
+    "Acts & Schedules / CMSA schedules": 3,
+    "Acts & Schedules / Product issuance": 1,
+    "Acts & Schedules / AMLA provisions": 12,
+    "Fines, Penalties & Jail Terms / FSA penalties": 2,
+    "Fines, Penalties & Jail Terms / IFSA penalties": 1,
+    "Fines, Penalties & Jail Terms / CMSA penalties": 6,
+    "Fines, Penalties & Jail Terms / AMLA penalties": 6,
+    "Islamic Terms / Prohibited concepts": 3,
+    "Islamic Terms / Core concepts": 8,
+    "Islamic Terms / Islamic insurance": 1,
+    "Islamic Terms / Islamic debt": 3,
+    "Islamic Terms / Islamic structure": 1,
+    "Islamic Terms / Islamic law": 1
+  },
+  "source_alignment": {
+    "supported": 104,
+    "flagged": 0
+  },
+  "scope_restriction": {
+    "requested_categories_only": true,
+    "required_categories": [
+      "Important Dates",
+      "Acts & Schedules",
+      "Fines, Penalties & Jail Terms",
+      "Islamic Terms"
+    ]
+  },
+  "quiz_distractor_logic": {
+    "same_tag_first": true,
+    "same_category_fallback": true,
+    "global_fallback_used": 0,
+    "scope_counts": {
+      "category": 45,
+      "tag": 59
+    },
+    "cards_using_category_fallback_because_tag_too_small": 45
+  },
+  "quality_checks": {
+    "duplicate_fronts": 0,
+    "penalty_format_flags": 0,
+    "direct_recall_prompts": 104
+  },
+  "issues": [],
+  "overall_issue_count": 0,
+  "overall_status": "PASS",
+  "patches_applied": [
+    "Updated AMLA Act answer to full Study Text title",
+    "Patched quiz engine to prefer same tag/sub-topic before same category",
+    "Updated FLASHCARD_VERSION to V175"
+  ],
+  "build_test": {
+    "command": "npm ci && npm run build",
+    "status": "PASS"
+  }
+}

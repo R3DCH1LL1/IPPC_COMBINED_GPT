@@ -11116,6 +11116,12 @@ body .notes-portal-shell.book-themed-portal .printable-viewer-intro{
   }
 }
 
+/* ── Colophon original animated page (iframe shell) ───────────────── */
+.colophon-original-shell{position:fixed;inset:0;background:#f3eadb;z-index:40;overflow:hidden;}
+.colophon-original-frame{width:100%;height:100%;border:0;display:block;background:#f3eadb;}
+.colophon-loading{min-height:100dvh;display:grid;place-items:center;background:#f3eadb;color:#2b2117;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,6vw,54px);font-style:italic;}
+@supports(height:100svh){.colophon-original-frame{height:100svh}.colophon-original-shell{height:100svh}}
+
 /* ====================================================================
    V156 — Library doorway transition overlay
    Two paneled wood-style doors close in from each side, hold briefly
@@ -12678,9 +12684,181 @@ body{overscroll-behavior-x:none!important;}
   .book-mock-page.screen-home .chip-group-wide{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
 }
 
-
-/* V173: restore original animated colophon site inside the app/offline replica. */
-.colophon-original-shell{position:fixed;inset:0;background:#f3eadb;z-index:40;overflow:hidden;}
-.colophon-original-frame{width:100%;height:100%;border:0;display:block;background:#f3eadb;}
-.colophon-loading{min-height:100dvh;display:grid;place-items:center;background:#f3eadb;color:#2b2117;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,6vw,54px);font-style:italic;}
-@supports(height:100svh){.colophon-original-frame{height:100svh}.colophon-original-shell{height:100svh}}
+/* V174 flashcard recall rebuild: four-deck straight recall UI */
+.book-flashcard-page .book-page-head .lede,
+.book-flashcard-page .flashcard-hero p{
+  max-width:58ch;
+}
+.book-flashcard-page .flashcard-layout{
+  align-items:stretch!important;
+}
+.book-flashcard-page .flashcard-sidebar{
+  max-height:calc(100vh - 120px);
+  overflow:auto;
+}
+.book-flashcard-page .flashcard-filter-list{
+  gap:10px!important;
+}
+.book-flashcard-page .flash-filter{
+  min-height:56px;
+  line-height:1.15;
+}
+.book-flashcard-page .flash-filter span{
+  overflow-wrap:anywhere;
+}
+.book-flashcard-page .flashcard-mode-card{
+  border-radius:4px!important;
+  background:var(--book-paper)!important;
+  border:1px solid var(--book-rule)!important;
+}
+.book-flashcard-page .flashcard-main-card{
+  display:flex;
+  flex-direction:column;
+  min-height:580px;
+}
+.book-flashcard-page .flashcard-question-box{
+  min-height:220px!important;
+  margin-bottom:18px;
+}
+.book-flashcard-page .flashcard-question-box p{
+  max-width:30ch;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.book-flashcard-page .flashcard-quiz-options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.book-flashcard-page .flash-choice{
+  min-height:74px;
+  display:flex;
+  align-items:center;
+  font-size:1.04rem;
+  line-height:1.28;
+}
+.book-flashcard-page .flashcard-answer-box.revealed{
+  grid-column:1 / -1;
+}
+.book-flashcard-page .flashcard-card-actions{
+  margin-top:auto!important;
+  padding-top:18px;
+}
+.book-flashcard-page .flashcard-score-grid strong{
+  color:var(--book-amber-deep);
+}
+.book-module.theme-dark .book-flashcard-page .flashcard-mode-card,
+.book-module.theme-dark .book-flashcard-page .flashcard-score-grid div,
+.book-module.theme-dark .book-flashcard-page .flashcard-question-box,
+.book-module.theme-dark .book-flashcard-page .flashcard-answer-box,
+.book-module.theme-dark .book-flashcard-page .flash-filter,
+.book-module.theme-dark .book-flashcard-page .flash-choice{
+  background:var(--card)!important;
+  border-color:var(--line)!important;
+  color:var(--text)!important;
+}
+@media(max-width:760px){
+  .book-flashcard-page .flashcard-page{
+    padding:14px 12px 86px!important;
+  }
+  .book-flashcard-page .book-page-head{
+    padding:24px 12px 12px!important;
+  }
+  .book-flashcard-page .book-page-head h1{
+    font-size:clamp(38px,12vw,54px)!important;
+  }
+  .book-flashcard-page .flashcard-hero{
+    display:none!important;
+  }
+  .book-flashcard-page .flashcard-layout{
+    gap:12px!important;
+  }
+  .book-flashcard-page .flashcard-sidebar{
+    order:0!important;
+    position:static!important;
+    max-height:none!important;
+    padding:14px!important;
+    border-radius:10px!important;
+  }
+  .book-flashcard-page .flashcard-sidebar .section-head{
+    display:none!important;
+  }
+  .book-flashcard-page .flashcard-filter-list{
+    display:flex!important;
+    flex-direction:row!important;
+    overflow-x:auto!important;
+    gap:8px!important;
+    padding:2px 2px 8px!important;
+    scroll-snap-type:x mandatory;
+  }
+  .book-flashcard-page .flash-filter{
+    flex:0 0 auto!important;
+    min-width:154px!important;
+    min-height:50px!important;
+    padding:10px 12px!important;
+    scroll-snap-align:start;
+  }
+  .book-flashcard-page .flashcard-mode-card{
+    margin-top:8px!important;
+    padding:10px!important;
+  }
+  .book-flashcard-page .flashcard-mode-buttons{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+  }
+  .book-flashcard-page .flashcard-main-card{
+    order:1!important;
+    min-height:auto!important;
+    padding:16px!important;
+    border-radius:12px!important;
+  }
+  .book-flashcard-page .flashcard-card-head{
+    align-items:center!important;
+    gap:10px!important;
+    padding-bottom:10px!important;
+    margin-bottom:12px!important;
+  }
+  .book-flashcard-page .flashcard-card-head h2{
+    font-size:1.35rem!important;
+  }
+  .book-flashcard-page .flashcard-counter strong{
+    font-size:1.65rem!important;
+  }
+  .book-flashcard-page .flashcard-question-box{
+    min-height:150px!important;
+    padding:20px 16px!important;
+    border-radius:12px!important;
+  }
+  .book-flashcard-page .flashcard-question-box p{
+    font-size:clamp(1.28rem,7vw,1.85rem)!important;
+    max-width:24ch!important;
+  }
+  .book-flashcard-page .flashcard-quiz-options{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  .book-flashcard-page .flash-choice{
+    min-height:54px!important;
+    padding:12px 14px!important;
+    border-radius:10px!important;
+    font-size:1rem!important;
+  }
+  .book-flashcard-page .flashcard-answer-box{
+    min-height:unset!important;
+    padding:14px!important;
+    border-radius:10px!important;
+  }
+  .book-flashcard-page .flashcard-card-actions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+    padding-top:12px!important;
+  }
+  .book-flashcard-page .flashcard-card-actions button{
+    min-width:0!important;
+    width:100%;
+  }
+  .book-flashcard-page .flashcard-card-actions button:last-child{
+    grid-column:auto!important;
+  }
+}

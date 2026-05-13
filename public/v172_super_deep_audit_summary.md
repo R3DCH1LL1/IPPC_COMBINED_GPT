@@ -1,38 +1,47 @@
-# V172 Audit / Colophon Refresh Summary
+# IPPC Study Suite V174 — Current Audit Summary
 
-**Result: PASS — no remaining audit issues detected by the full deep audit script.**
+## Current build
 
-- Sets audited: **25**
-- Questions audited: **2000**
-- 80 questions per set: **Yes**
-- Build test: **Passed**
-- Critical/high issues: **0**
-- Total issue flags: **0**
+V174 is the flashcard recall rebuild based on the V172 mobile/offline website and the V168 full deep-audit-clean question bank baseline.
 
-## Key checks
+## Question bank baseline retained
 
-- Calculation questions: **212**, all now use formula + workings only.
-- Roman numeral questions: **360**, all use statement-by-statement explanation only.
-- Duplicate options: **0**
-- Empty stems/explanations: **0**
-- Invalid answer indices: **0**
-- Exact duplicate stems: **0**
-- Critical near-duplicate stems: **0**
-- Repeated Roman statements: **0**
-- Exact duplicate explanations: **0**
-- Style artefact phrases: **0**
+- 2,000 questions
+- 25 sets
+- 80 MCQs per set
+- Formula-led calculation explanations
+- Statement-by-statement Roman numeral explanations
+- Answer-length cueing controlled from the V168 deep-audit baseline
+- Previous full deep audit status: zero remaining issue flags before the flashcard rebuild
 
-## Answer length cueing
+## Flashcard rebuild audit
 
-- Correct answer uniquely longest: **144/2000 = 7.20%**
-- Questions with a close-length distractor within 10 characters: **1790/2000 = 89.50%**
+Status: PASS
 
-## Module weighting and answer balance
+The flashcard module now tests only the four requested straight-recall areas:
 
-- Generated sets were checked against the 15% / 45% / 40% CLO weighting target where applicable.
-- Generated sets were checked for balanced A/B/C/D answer distribution.
+| Deck | Cards |
+|---|---:|
+| Important Dates | 23 |
+| Acts & Schedules | 49 |
+| Fines, Penalties & Jail Terms | 15 |
+| Islamic Terms | 17 |
+| **Total** | **104** |
 
+## Flashcard quiz option logic
 
-## V172 metadata refresh
+Quiz distractors are selected from the same deck/category but from a different fact.
 
-V172 updates the app-facing audit and colophon text and packages a fully offline single HTML file. It does not change the V168 question-bank baseline.
+- Penalty question → all choices are other penalty/fine/jail-term answers.
+- Date question → all choices are other dates.
+- Acts & Schedules question → all choices are other Acts, Sections or Schedules.
+- Islamic term question → all choices are other Islamic terms.
+
+## Checks passed
+
+- Only requested flashcard categories remain.
+- No old flashcard categories remain.
+- No broad investor-category/PIDM/general-rule cards remain in the flashcard deck.
+- Every card has at least three same-topic distractors available.
+- No duplicate prompts.
+- Build test passed.
