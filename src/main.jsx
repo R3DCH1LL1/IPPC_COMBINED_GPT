@@ -100,7 +100,7 @@ async function readGzipJson(res){
   }
   throw new Error('Browser does not support gzip stream decoding');
 }
-const DATA_VERSION='v175-flashcard-source-audit-quiz-patch';
+const DATA_VERSION='v195-explanation-ui-audit-colophon-patch';
 async function fetchPackedData(){
   if(window.__IPPC_PACKED_DATA__) return window.__IPPC_PACKED_DATA__;
   // Safer for Vercel/GitHub: load plain JSON first so the app never depends on browser gzip stream decoding.
@@ -195,15 +195,19 @@ function CalcHelper({q}){
 function answerLetter(index){return index==null?'—':String.fromCharCode(65+Number(index));}
 function normalizeExplanationText(raw){
   const markerWords=[
+    'Explanation:',
+    'Statement analysis:',
     'Statement-by-statement explanation:',
     'Statement-by-statement analysis:',
     'Why this is correct:',
     'Why this answer is correct:',
     'Worked calculation:',
-    'Why the other options are wrong:'
+    'Why the other options are wrong:',
+    'Why the other options are not correct:'
   ];
   let text=String(raw||'')
     .replace(/\s+/g,' ')
+    .replace(/\s*([—–])\s*/g,' $1 ')
     .replace(/\s+([,.;:])/g,'$1')
     .replace(/\.\s*\./g,'.')
     .trim();
@@ -216,14 +220,17 @@ function normalizeExplanationText(raw){
 function splitExplanationSections(raw){
   const normalized=normalizeExplanationText(raw);
   const labels=[
+    'Explanation:',
+    'Statement analysis:',
     'Statement-by-statement explanation:',
     'Statement-by-statement analysis:',
     'Why this is correct:',
     'Why this answer is correct:',
     'Worked calculation:',
-    'Why the other options are wrong:'
+    'Why the other options are wrong:',
+    'Why the other options are not correct:'
   ];
-  const answerMatch=normalized.match(/^Answer:\s*([A-D])\s*-\s*([\s\S]*?)(?=\n(?:Statement-by-statement explanation:|Statement-by-statement analysis:|Why this is correct:|Why this answer is correct:|Worked calculation:|Why the other options are wrong:)|$)/i);
+  const answerMatch=normalized.match(/^(?:Correct\s+answer|Answer):\s*([A-D])\s*(?:[-—–])\s*([\s\S]*?)(?=\n(?:Explanation:|Statement analysis:|Statement-by-statement explanation:|Statement-by-statement analysis:|Why this is correct:|Why this answer is correct:|Worked calculation:|Why the other options are wrong:|Why the other options are not correct:)|$)/i);
   const answerLetterValue=answerMatch?.[1]||'';
   const answerText=(answerMatch?.[2]||'').trim();
   const pick=(label,nextLabels=labels)=>{
@@ -237,14 +244,14 @@ function splitExplanationSections(raw){
     });
     return normalized.slice(from,end).trim();
   };
-  const correct=pick('Why this is correct:')||pick('Why this answer is correct:');
+  const correct=pick('Why this is correct:')||pick('Why this answer is correct:')||pick('Explanation:');
   return {
     answerLetterValue,
     answerText,
     correct,
-    statements:pick('Statement-by-statement explanation:')||pick('Statement-by-statement analysis:'),
+    statements:pick('Statement analysis:')||pick('Statement-by-statement explanation:')||pick('Statement-by-statement analysis:'),
     calc:pick('Worked calculation:'),
-    wrong:pick('Why the other options are wrong:')
+    wrong:pick('Why the other options are wrong:')||pick('Why the other options are not correct:')
   };
 }
 function textBlocks(text){
@@ -256,30 +263,35 @@ function textBlocks(text){
 }
 function wrongOptionBlocks(text){
   return String(text||'')
-    .replace(/\s+(?=[A-D]\s[-–]\s)/g,'\n')
+    .replace(/\s+(?=[A-D](?:\.|\s[-–])\s*(?:Incorrect|Wrong)?\s*(?:[-—–])?)/g,'\n')
     .split(/\n+/g)
     .map(t=>t.trim())
     .filter(Boolean);
 }
 function statementBlocks(text){
-  return String(text||'')
+  const normalized=String(text||'')
+    .replace(/\b(I|II|III|IV|V|VI)\.\s+(?=(?:I|II|III|IV|V|VI)\.)/g,'')
+    .replace(/\b(I|II|III|IV|V|VI)\.\s+(?=(?:Correct|Incorrect|Wrong)\s*[-—–])/gi,'$1. ')
+    .replace(/\b(I|II|III|IV|V|VI)\.\s+(?!(?:Correct|Incorrect|Wrong)\s*[-—–])/gi,'\n$1. ')
+    .replace(/\n\s*(Correct|Incorrect|Wrong)\s*[-—–]\s*/gi,' $1 — ');
+  return normalized
     .replace(/\s+(?=(?:I|II|III|IV|V|VI)\.\s+(?:Correct|Incorrect|Wrong)\s*[-—])/g,'\n')
     .split(/\n+/g)
     .map(t=>t.trim())
     .filter(Boolean);
 }
 function optionNoteLabel(line){
-  const m=String(line||'').match(/^([A-D])\s[-–]\s([\s\S]*)$/);
+  const m=String(line||'').match(/^([A-D])(?:\.|\s[-–])\s*(?:(Incorrect|Wrong)\s*[-—–]\s*)?([\s\S]*)$/i);
   if(!m)return null;
-  return {letter:m[1],body:m[2].trim()};
+  return {letter:m[1],status:m[2]||'',body:m[3].trim()};
 }
 function WrongOptionNote({line}){
   const parsed=optionNoteLabel(line);
   if(!parsed)return <div className="wrong-option-note">{line}</div>;
-  return <div className="wrong-option-note parsed-wrong-option"><span className="wrong-option-letter">{parsed.letter}</span><span>{parsed.body}</span></div>;
+  return <div className="wrong-option-note parsed-wrong-option"><span className="wrong-option-letter">{parsed.letter}</span>{parsed.status&&<span className="wrong-option-status">{parsed.status}</span>}<span className="wrong-option-body">{parsed.body}</span></div>;
 }
 function StatementNote({line}){
-  const parsed=String(line||'').match(/^(I|II|III|IV|V|VI)\.\s*(Correct|Incorrect|Wrong)\s*[-—]\s*([\s\S]*)$/i);
+  const parsed=String(line||'').match(/^(I|II|III|IV|V|VI)\.\s*(Correct|Incorrect|Wrong)\s*[-—–]\s*([\s\S]*)$/i);
   const wrong=parsed?/^(Incorrect|Wrong)$/i.test(parsed[2]):/\b(?:Incorrect|Wrong)\b/i.test(line);
   if(!parsed) return <div className={wrong?'statement-pill statement-wrong':'statement-pill statement-correct'}>{line}</div>;
   return <div className={wrong?'statement-pill statement-wrong parsed-statement':'statement-pill statement-correct parsed-statement'}><span className="statement-roman">{parsed[1]}</span><span className="statement-status">{wrong?'Incorrect':'Correct'}</span><span className="statement-body">{parsed[3].trim()}</span></div>;
@@ -1040,14 +1052,14 @@ function DonutChart({data,size=180,thickness=28,label='',sublabel=''}){
 
 function CombinedLanding({onEnter,theme,toggleTheme}){
   const chapterCards=[
-    {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['V193','Baseline']],enter:'Enter the reading room',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
+    {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['V195','Baseline']],enter:'Enter the reading room',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
     {id:'mock',roman:'II.',kicker:'Practise next',title:'Mock Test',suffix:'— the examination hall',body:'Generate timed eighty-question sittings, drill the topics you keep losing, and review structured explanations alongside the source clause.',stats:[['2,000','Questions'],['25','Sets'],['120m','Per sitting']],enter:'Enter the examination hall',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>},
     {id:'flashcards',roman:'III.',kicker:'Memorise rules',title:'Flashcards',suffix:'— the recall corridor',body:'Straight recall for the four high-yield memory decks: important dates, Acts and Schedules, fines / penalties / jail terms, and Islamic terms.',stats:[[String(FLASHCARD_DATA.length),'Cards'],[String(FLASHCARD_CATEGORIES.length-1),'Decks'],['MCQ','Quiz']],enter:'Enter the recall corridor',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 2v6"/><path d="M8 2v6"/><path d="M2 10h20"/></svg>},
   ];
   const referenceCards=[
-    {action:()=>onEnter('report'),num:'i.',title:'V193 audit report',body:'Full deep-audit dashboard — six patches closed, 218 calculation questions with workings, CLO metadata corrected, and deployment metadata.',label:'Open'},
+    {action:()=>onEnter('report'),num:'i.',title:'V195 audit report',body:'Full deep-audit dashboard — V193 source/content baseline plus the V194/V195 explanation-quality and explanation-UI patches.',label:'Open'},
     {action:()=>onEnter('printable'),num:'ii.',title:'Printable notes',body:'Black-and-white PDF notes for offline revision and marginalia.',label:'Open'},
-    {action:()=>onEnter('colophon'),num:'iii.',title:'Colophon / project story',body:'V1 to V193 editorial timeline, rewrite history, source baseline, and late-stage patch cycle notes.',label:'Open'},
+    {action:()=>onEnter('colophon'),num:'iii.',title:'Colophon / project story',body:'V1 to V195 editorial timeline, rewrite history, source baseline, explanation cleanup, and UI patch notes.',label:'Open'},
   ];
   const [heroRef,heroInView]=useInView(0.05);
   const scrolled=useScrolled(120);
@@ -1072,7 +1084,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
     <header className="book-topbar" aria-label="IPPC Study Suite navigation">
       <button type="button" className="book-brand" onClick={()=>onEnter('landing')}>
         <span className="book-mark">IPPC <span>&amp;</span> Co.</span>
-        <span className="book-vol">Vol. V193 · Study Suite</span>
+        <span className="book-vol">Vol. V195 · Study Suite</span>
       </button>
       <nav className="book-nav" aria-label="Main menu">
         <button type="button" className="current" onClick={()=>onEnter('landing')}>Frontispiece</button>
@@ -1098,10 +1110,10 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
       <section className="book-frontispiece">
         <div className="book-left-col">
-          <div className="book-colophon reveal d1">An exam-prep companion · Edition V193</div>
+          <div className="book-colophon reveal d1">An exam-prep companion · Edition V195</div>
           <h1 className="book-title reveal d2">Study <span className="em anim-underline">clearly.</span><br/>Practise<br/><span className="em anim-underline">deliberately.</span></h1>
           <p className="book-subtitle reveal d3">A quiet desk for IPPC candidates — notes to the left, mock papers to the right.</p>
-          <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, and the V193 Set 19 CLO metadata patch — bound together as one deployable companion. Read in the morning, drill in the evening, and let the margins fill themselves.</p>
+          <p className="book-lede reveal d4">A focused exam-prep suite assembled around audited chapter notes, two thousand mock questions, a flashcard ladder for direct recall, the V193 Set 19 CLO metadata patch, and the V195 explanation-quality and explanation-UI pass — bound together as one deployable companion.</p>
           <div className="book-cta-row reveal d5">
             <button type="button" className="book-btn book-btn-primary hero-primary-btn" onClick={()=>onEnter('notes')}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -1117,18 +1129,18 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
             <div className="hms-div"/>
             <div className="hms-item has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards for direct recall — dates, Acts, Schedules, penalties and Islamic terms.`} tabIndex={0}><AnimatedCount value={FLASHCARD_DATA.length} className="hms-n"/><span className="hms-l">flashcards</span></div>
             <div className="hms-div"/>
-            <div className="hms-item has-tooltip" data-tooltip="V193 — the current edition (May 2026). 193 versions of editorial refinement since V1." tabIndex={0}><span className="hms-n">V193</span><span className="hms-l">edition</span></div>
+            <div className="hms-item has-tooltip" data-tooltip="V195 — the current edition (May 2026). Explanation content, scenario/recall UI, colophon and audit metadata are now aligned." tabIndex={0}><span className="hms-n">V195</span><span className="hms-l">edition</span></div>
           </div>
         </div>
         <aside className="book-right-col">
           {/* Animated seal */}
           <div className="book-seal reveal d3 float-seal" aria-label="V193 interface edition">
-            <span className="v">V193</span>
+            <span className="v">V195</span>
             <span className="lab"><span>Interface</span><span>Edition</span></span>
             <span className="book-seal-ring" aria-hidden="true">
               <svg viewBox="0 0 150 150" width="150" height="150">
                 <defs><path id="bookSealPath" d="M 75,75 m -65,0 a 65,65 0 1,1 130,0 a 65,65 0 1,1 -130,0"/></defs>
-                <text><textPath href="#bookSealPath" startOffset="0">IPPC · STUDY SUITE · VOLUME ONE HUNDRED &amp; NINETY-THREE · EXAM-GRADE ·</textPath></text>
+                <text><textPath href="#bookSealPath" startOffset="0">IPPC · STUDY SUITE · VOLUME ONE HUNDRED &amp; NINETY-FIVE · EXAM-GRADE ·</textPath></text>
               </svg>
             </span>
           </div>
@@ -1203,7 +1215,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
 
       <footer className="book-footer">
         <span>© MMXXVI · IPPC Study Suite</span>
-        <span className="colophon-line">Set in Cormorant Garamond &amp; EB Garamond. Bound for V193.</span>
+        <span className="colophon-line">Set in Cormorant Garamond &amp; EB Garamond. Bound for V195.</span>
         <span>Fol. 001 / 009</span>
       </footer>
     </main>
@@ -1327,10 +1339,10 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
   ];
   const qualityCriteria=[
     {title:'Answer accuracy',pct:100,color:'#4cc38a',desc:'Full deep-audit script returned zero remaining issue flags across the 2,000-question bank.'},
-    {title:'Explanation completeness',pct:100,color:'#4cc38a',desc:'Non-calculation questions retain targeted reasoning; calculation questions use formula plus clear workings only.'},
+    {title:'Explanation completeness',pct:100,color:'#4cc38a',desc:'Sets 3–25 now use targeted why-correct and why-wrong reasoning, with generic fallback language removed from recall, scenario and statement-combination explanations.'},
     {title:'CLO alignment',pct:98,color:'#4cc38a',desc:'Generated sets follow the 12/36/32 blueprint; official Sets 1 and 2 remain source-preserved.'},
     {title:'Distractor quality',pct:94,color:'#d6a84d',desc:'Answer choices follow the rule: one clearly wrong, one true-but-not-answer, and two close options with one correct.'},
-    {title:'Language clarity',pct:97,color:'#4cc38a',desc:'Style artefacts, repeated templates, malformed Roman stems, and duplicate explanations were removed through the V174–V193 patch cycle.'},
+    {title:'Language clarity',pct:99,color:'#4cc38a',desc:'Style artefacts, repeated templates, malformed Roman stems, duplicate explanations, and broad wrong-answer phrasing were removed through the V174–V195 patch cycle.'},
     {title:'Calculation accuracy',pct:100,color:'#4cc38a',desc:'All 218 calculation questions use formula-led workings and omit distractor-by-distractor commentary.'},
   ];
   const timeline=[
@@ -1340,13 +1352,14 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     {v:'V131–V145',date:'Early 2026',title:'Quality baseline V134',desc:'V134 audit report published. Explanation standardisation: Why correct, Why wrong, Worked calculation sections normalised.'},
     {v:'V146–V152',date:'Apr 2026',title:'UI alignment pass',desc:'Book-bound interface, curtain theme toggle, topic balancing engine, CLO weighting fixes, and flashcard deck expansion.'},
     {v:'V153',date:'May 2026',title:'Book-bound study suite',desc:'Interactive audit dashboard, animated report page, editorial timeline evidence, and final printable notes alignment.'},
-    {v:'V174–V193',date:'May 2026',title:'Late-stage quality cycle',desc:'Flashcards rebuilt into four source-audited recall decks. Sets 3–25 patched across six passes: 269 explanation-topic mismatches fixed, 1,160 generic explanations rewritten, Set 3 quality pass, 330 Roman numeral explanations reformatted, 566 duplicate stems resolved, and the V193 Set 19 CLO metadata correction (12/36/32 restored). Final: 2,000 questions, zero duplicate stems, 218 calculation questions all with formula and workings, A/B/C/D = 460 each.'},
+    {v:'V174–V193',date:'May 2026',title:'Late-stage quality cycle',desc:'Flashcards rebuilt into four source-audited recall decks. Sets 3–25 patched across six passes: 269 explanation-topic mismatches fixed, 1,160 generic explanations rewritten, Set 3 quality pass, 330 Roman numeral explanations reformatted, 566 duplicate stems resolved, and the V193 Set 19 CLO metadata correction (12/36/32 restored).'},
+    {v:'V194–V195',date:'May 2026',title:'Explanation and UI sign-off',desc:'Final explanation-only review checked 1,840 questions across Sets 3–25, removed remaining broad fallback wording, repaired content mismatches that explanation alone could not fix, and extended the structured explanation-card UI from statement-combination items to scenario-based and recall questions.'},
   ];
   const metrics=[
     {label:'Total Questions',value:2000,icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,sub:'Across 25 sets',color:'#d6a84d',detail:'2,000 multiple-choice questions distributed across 25 sets — 20 core sets plus 5 advanced (Hard) sets. Every question reviewed for accuracy against the IPPC Study Text 3rd Edition.'},
-    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V173/V193 baseline',color:'#4cc38a',detail:'All 2,000 questions verified through the V173–V193 quality cycle — six targeted patches, zero duplicate stems, 218 calculation questions with formula and workings, CLO metadata corrected to 12/36/32.'},
+    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V173/V195 baseline',color:'#4cc38a',detail:'All 2,000 questions verified through the V173–V195 quality cycle — six targeted content patches, zero duplicate stems, 218 calculation questions with formula and workings, CLO metadata corrected to 12/36/32, and explanation UI standardised across recall, scenario and statement-combination items.'},
     {label:'CLO Accuracy',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#9f7aea',detail:'Generated-set questions map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
-    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation; calculation questions show formula-led workings instead of distractor-by-distractor commentary.'},
+    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation; recall and scenario explanations now render in the same card UI as statement combinations, and calculation questions show formula-led workings.'},
   ];
 
   const TABS=['overview','quality','timeline'];
@@ -1400,7 +1413,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     <main id="main-content" className="rp-main">
       {/* ── Animated hero metrics ───────────────────────────────────── */}
       <section className="rp-hero">
-        <div className="rp-hero-eyebrow">Question Bank Quality Report — V193 · May 2026</div>
+        <div className="rp-hero-eyebrow">Question Bank Quality Report — V195 · May 2026</div>
         <h1 className="rp-hero-title">A <em>complete audit</em> of the IPPC<br/>question bank.</h1>
         <p className="rp-hero-sub">Every question reviewed, explained, CLO-aligned, and tracked through the full editorial timeline.</p>
         <div className="rp-metrics-row">
@@ -1410,7 +1423,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Overview ────────────────────────────────────────────── */}
       {tab==='overview'&&<TabFade tabKey="overview">
-        <PullQuote attribution="Editorial brief, V193">
+        <PullQuote attribution="Editorial brief, V195">
           The examination paper must reflect the proportions the candidate will actually face — twelve from the financial system, thirty-six from regulations and conduct, thirty-two from debt and structured products.
         </PullQuote>
         {/* CLO bar chart */}
@@ -1441,7 +1454,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Quality ─────────────────────────────────────────────── */}
       {tab==='quality'&&<TabFade tabKey="quality">
-        <PullQuote attribution="V193 full deep audit sign-off">
+        <PullQuote attribution="V195 full deep audit sign-off">
           Every numerical question carries a verified working calculation. Every distractor is rooted in a real misconception, not assembled at random.
         </PullQuote>
         {/* Difficulty */}
@@ -1469,13 +1482,13 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
 
       {/* ── Tab: Timeline ─────────────────────────────────────────────── */}
       {tab==='timeline'&&<TabFade tabKey="timeline">
-        <PullQuote attribution="V193 deployment note">
-          One hundred and ninety-three editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
+        <PullQuote attribution="V195 deployment note">
+          One hundred and ninety-five editions of patient revision, sign-off, and re-binding — each version a verifiable step in the audit trail.
         </PullQuote>
       <section id="rp-sec-timeline" className="rp-section rp-section-anchor">
         <div className="rp-section-head">
           <h2>Editorial Timeline</h2>
-          <p className="rp-drop-cap">The full progression from V1 to V193 — click any milestone to see detail.</p>
+          <p className="rp-drop-cap">The full progression from V1 to V195 — click any milestone to see detail.</p>
         </div>
         <div className="rp-timeline">
           {timeline.map((t,i)=>(
@@ -1504,7 +1517,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
       <section id="rp-sec-pdf" className="rp-section rp-pdf-section rp-section-anchor">
         <div className="rp-section-head">
           <h2>Full Deep Audit Summary</h2>
-          <p>V193 closes the six-patch quality cycle on the V173 baseline: 2,000 questions, zero duplicate stems, 218 calculation questions with formula and workings, statement-by-statement Roman explanations, and Set 19 CLO split restored to 12/36/32.</p>
+          <p>V195 closes the current quality cycle on the V173 baseline: 2,000 questions, zero duplicate stems, 218 calculation questions with formula and workings, statement-by-statement Roman explanations, Set 19 CLO split restored to 12/36/32, and structured explanation cards now applied to recall, scenario and statement-combination questions.</p>
           <button className="book-btn book-btn-secondary rp-pdf-toggle" onClick={()=>setPdfOpen(v=>!v)}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             {pdfOpen?'Hide':'Open'} audit summary

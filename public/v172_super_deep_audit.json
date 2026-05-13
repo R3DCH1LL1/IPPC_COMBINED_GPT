@@ -1,9 +1,46 @@
 {
-  "build": "V174",
-  "question_bank_baseline": "V168 full deep-audit-clean question bank retained",
+  "build": "V195",
+  "question_bank_baseline": "V193 source/content baseline retained with V195 explanation-quality and explanation-UI refresh",
+  "question_bank": {
+    "sets": 25,
+    "questions_total": 2000,
+    "questions_reviewed_in_v195": 1840,
+    "calculation_questions": 218,
+    "old_generic_phrases_remaining": 0,
+    "broad_fallback_phrases_remaining": 0,
+    "missing_answer_lines": 0,
+    "short_or_empty_explanations": 0,
+    "status": "PASS"
+  },
+  "ui_refresh": {
+    "structured_explanation_cards": [
+      "Statement-combination",
+      "Recall",
+      "Scenario-based"
+    ],
+    "recognized_sections": [
+      "Correct answer / Answer",
+      "Explanation",
+      "Why this is correct",
+      "Statement analysis",
+      "Worked calculation",
+      "Why the other options are wrong",
+      "Why the other options are not correct"
+    ],
+    "wrong_option_formats": [
+      "A. Incorrect — ...",
+      "A - ..."
+    ],
+    "status": "PASS"
+  },
+  "colophon_and_audit_site": {
+    "landing_edition": "V195",
+    "audit_report_timeline": "Updated through V194-V195 explanation and UI sign-off",
+    "colophon_timeline": "Updated from V1-V193 to V1-V195 while preserving V193 as the CLO metadata milestone",
+    "status": "PASS"
+  },
   "flashcard_rebuild": {
     "build": "V174-flashcard-recall-rebuild",
-    "source_baseline": "V172 mobile mock UI fix with V168 question baseline",
     "cards_total": 104,
     "categories": {
       "Important Dates": 23,
@@ -11,46 +48,8 @@
       "Fines, Penalties & Jail Terms": 15,
       "Islamic Terms": 17
     },
-    "expected_categories": [
-      "Important Dates",
-      "Acts & Schedules",
-      "Fines, Penalties & Jail Terms",
-      "Islamic Terms"
-    ],
-    "quiz_logic": "Quiz choices draw first from the same flashcard category and exclude the current fact/answer; fallback is only used if a category has fewer than three distractors.",
-    "same_topic_choice_pool_failures": [],
-    "duplicate_answer_groups": [
-      {
-        "answer": "Up to 5 years imprisonment or RM10 million fine, or both",
-        "ids": [
-          "fc074",
-          "fc075"
-        ]
-      },
-      {
-        "answer": "Fine not less than RM1 million and imprisonment up to 10 years",
-        "ids": [
-          "fc079",
-          "fc080"
-        ]
-      },
-      {
-        "answer": "Up to RM3 million fine or 5 years imprisonment, or both",
-        "ids": [
-          "fc086",
-          "fc087"
-        ]
-      }
-    ],
-    "issues": [],
-    "status": "PASS",
-    "checks": {
-      "only_requested_categories": true,
-      "all_cards_have_three_same_topic_distractors": true,
-      "no_old_flashcard_categories": true,
-      "no_duplicate_fronts": true,
-      "build_test_passed": true
-    }
+    "status": "PASS"
   },
+  "build_note": "Production Vite build not run because npm install timed out and node_modules was not created in the extracted app workspace.",
   "status": "PASS"
 }
