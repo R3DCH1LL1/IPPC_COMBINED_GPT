@@ -1,0 +1,524 @@
+{
+  "sourceAudit": "C:/Users/Chee Hong/Desktop/IPPC_AICB/V193_AUDIT_AGAIN_REFINED.md",
+  "questionBank": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "parsedHighPriorityRows": 50,
+  "categoryCounts": {
+    "duplicate explanation text": 48,
+    "calculation-working weakness": 1,
+    "multiple-plausible-correct option risk": 1
+  },
+  "confirmedRealFlags": 50,
+  "duplicateFlagRows": 48,
+  "duplicateGroupsExpandedToQuestionRows": 82,
+  "fixedRows": 84,
+  "remainingDuplicateTargets": 0,
+  "invalidAnswerIndexes": [],
+  "emptyExplanations": [],
+  "answerLetterMismatches": [],
+  "fixed": [
+    {
+      "id": "S03Q01",
+      "reason": "duplicate explanation group from S03Q01",
+      "category": "duplicate explanation text",
+      "topic": "Fit and Proper"
+    },
+    {
+      "id": "S12Q76",
+      "reason": "duplicate explanation group from S03Q01",
+      "category": "duplicate explanation text",
+      "topic": "Fit and Proper"
+    },
+    {
+      "id": "S04Q15",
+      "reason": "duplicate explanation group from S04Q15",
+      "category": "duplicate explanation text",
+      "topic": "AML"
+    },
+    {
+      "id": "S06Q52",
+      "reason": "duplicate explanation group from S04Q15",
+      "category": "duplicate explanation text",
+      "topic": "AML"
+    },
+    {
+      "id": "S04Q24",
+      "reason": "duplicate explanation group from S04Q24",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S12Q59",
+      "reason": "duplicate explanation group from S04Q24",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S05Q71",
+      "reason": "duplicate explanation group from S05Q71",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S11Q38",
+      "reason": "duplicate explanation group from S05Q71",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S06Q37",
+      "reason": "duplicate explanation group from S06Q37",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S11Q11",
+      "reason": "duplicate explanation group from S06Q37",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S06Q53",
+      "reason": "duplicate explanation group from S06Q53",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S08Q07",
+      "reason": "duplicate explanation group from S06Q53",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S06Q79",
+      "reason": "duplicate explanation group from S06Q79",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S15Q46",
+      "reason": "duplicate explanation group from S06Q79",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S07Q11",
+      "reason": "duplicate explanation group from S07Q11",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S19Q40",
+      "reason": "duplicate explanation group from S07Q11",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S07Q34",
+      "reason": "duplicate explanation group from S07Q34",
+      "category": "duplicate explanation text",
+      "topic": "Product Disclosure"
+    },
+    {
+      "id": "S15Q10",
+      "reason": "duplicate explanation group from S07Q34",
+      "category": "duplicate explanation text",
+      "topic": "Product Disclosure"
+    },
+    {
+      "id": "S07Q57",
+      "reason": "duplicate explanation group from S07Q57",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S15Q44",
+      "reason": "duplicate explanation group from S07Q57",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S07Q77",
+      "reason": "duplicate explanation group from S07Q77",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S11Q07",
+      "reason": "duplicate explanation group from S07Q77",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S08Q44",
+      "reason": "duplicate explanation group from S08Q44",
+      "category": "duplicate explanation text",
+      "topic": "PIDM"
+    },
+    {
+      "id": "S18Q03",
+      "reason": "duplicate explanation group from S08Q44",
+      "category": "duplicate explanation text",
+      "topic": "Regulators"
+    },
+    {
+      "id": "S08Q56",
+      "reason": "duplicate explanation group from S08Q56",
+      "category": "duplicate explanation text",
+      "topic": "PIDM"
+    },
+    {
+      "id": "S11Q80",
+      "reason": "duplicate explanation group from S08Q56",
+      "category": "duplicate explanation text",
+      "topic": "PIDM"
+    },
+    {
+      "id": "S08Q70",
+      "reason": "duplicate explanation group from S08Q70",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S14Q67",
+      "reason": "duplicate explanation group from S08Q70",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S11Q03",
+      "reason": "duplicate explanation group from S11Q03",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S14Q01",
+      "reason": "duplicate explanation group from S11Q03",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S11Q20",
+      "reason": "duplicate explanation group from S11Q20",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S14Q23",
+      "reason": "duplicate explanation group from S11Q20",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S12Q44",
+      "reason": "duplicate explanation group from S12Q44",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S14Q69",
+      "reason": "duplicate explanation group from S12Q44",
+      "category": "duplicate explanation text",
+      "topic": "Portfolio"
+    },
+    {
+      "id": "S13Q08",
+      "reason": "duplicate explanation group from S13Q08",
+      "category": "duplicate explanation text",
+      "topic": "AML"
+    },
+    {
+      "id": "S18Q33",
+      "reason": "duplicate explanation group from S13Q08",
+      "category": "duplicate explanation text",
+      "topic": "AML"
+    },
+    {
+      "id": "S13Q39",
+      "reason": "duplicate explanation group from S13Q39",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S16Q71",
+      "reason": "duplicate explanation group from S13Q39",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S13Q44",
+      "reason": "duplicate explanation group from S13Q44",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S17Q54",
+      "reason": "duplicate explanation group from S13Q44",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S13Q74",
+      "reason": "duplicate explanation group from S13Q74",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S17Q17",
+      "reason": "duplicate explanation group from S13Q74",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S18Q59",
+      "reason": "duplicate explanation group from S13Q74",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S14Q02",
+      "reason": "duplicate explanation group from S14Q02",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S15Q25",
+      "reason": "duplicate explanation group from S14Q02",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S15Q45",
+      "reason": "duplicate explanation group from S15Q45",
+      "category": "duplicate explanation text",
+      "topic": "Fit and Proper"
+    },
+    {
+      "id": "S18Q40",
+      "reason": "duplicate explanation group from S15Q45",
+      "category": "duplicate explanation text",
+      "topic": "Fit and Proper"
+    },
+    {
+      "id": "S16Q04",
+      "reason": "duplicate explanation group from S16Q04",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S17Q02",
+      "reason": "duplicate explanation group from S16Q04",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S16Q29",
+      "reason": "duplicate explanation group from S16Q29",
+      "category": "duplicate explanation text",
+      "topic": "Derivatives"
+    },
+    {
+      "id": "S19Q14",
+      "reason": "duplicate explanation group from S16Q29",
+      "category": "duplicate explanation text",
+      "topic": "Derivatives"
+    },
+    {
+      "id": "S16Q38",
+      "reason": "duplicate explanation group from S16Q38",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S19Q26",
+      "reason": "duplicate explanation group from S16Q38",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S16Q43",
+      "reason": "duplicate explanation group from S16Q43",
+      "category": "duplicate explanation text",
+      "topic": "Derivatives"
+    },
+    {
+      "id": "S17Q28",
+      "reason": "duplicate explanation group from S16Q43",
+      "category": "duplicate explanation text",
+      "topic": "Derivatives"
+    },
+    {
+      "id": "S17Q05",
+      "reason": "duplicate explanation group from S17Q05",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S18Q55",
+      "reason": "duplicate explanation group from S17Q05",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S17Q16",
+      "reason": "duplicate explanation group from S17Q16",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S19Q60",
+      "reason": "duplicate explanation group from S17Q16",
+      "category": "duplicate explanation text",
+      "topic": "Derivatives"
+    },
+    {
+      "id": "S17Q22",
+      "reason": "duplicate explanation group from S17Q22",
+      "category": "duplicate explanation text",
+      "topic": "Guidelines"
+    },
+    {
+      "id": "S19Q03",
+      "reason": "duplicate explanation group from S17Q22",
+      "category": "duplicate explanation text",
+      "topic": "Guidelines"
+    },
+    {
+      "id": "S20Q10",
+      "reason": "duplicate explanation group from S20Q10",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S20Q56",
+      "reason": "duplicate explanation group from S20Q10",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S21Q32",
+      "reason": "duplicate explanation group from S21Q32",
+      "category": "duplicate explanation text",
+      "topic": "FSA"
+    },
+    {
+      "id": "S22Q16",
+      "reason": "duplicate explanation group from S21Q32",
+      "category": "duplicate explanation text",
+      "topic": "FSA"
+    },
+    {
+      "id": "S21Q42",
+      "reason": "duplicate explanation group from S21Q42",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S22Q34",
+      "reason": "duplicate explanation group from S21Q42",
+      "category": "duplicate explanation text",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S22Q05",
+      "reason": "duplicate explanation group from S22Q05",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S23Q25",
+      "reason": "duplicate explanation group from S22Q05",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S22Q55",
+      "reason": "duplicate explanation group from S22Q55",
+      "category": "duplicate explanation text",
+      "topic": "FEA Rules"
+    },
+    {
+      "id": "S23Q27",
+      "reason": "duplicate explanation group from S22Q55",
+      "category": "duplicate explanation text",
+      "topic": "FEA Rules"
+    },
+    {
+      "id": "S25Q28",
+      "reason": "duplicate explanation group from S22Q55",
+      "category": "duplicate explanation text",
+      "topic": "FEA Rules"
+    },
+    {
+      "id": "S23Q10",
+      "reason": "duplicate explanation group from S23Q10",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S24Q38",
+      "reason": "duplicate explanation group from S23Q10",
+      "category": "duplicate explanation text",
+      "topic": "Financial Markets"
+    },
+    {
+      "id": "S23Q42",
+      "reason": "duplicate explanation group from S23Q42",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S25Q68",
+      "reason": "duplicate explanation group from S23Q42",
+      "category": "duplicate explanation text",
+      "topic": "Structured Products"
+    },
+    {
+      "id": "S23Q62",
+      "reason": "duplicate explanation group from S23Q62",
+      "category": "duplicate explanation text",
+      "topic": "Sophisticated Investors"
+    },
+    {
+      "id": "S25Q31",
+      "reason": "duplicate explanation group from S23Q62",
+      "category": "duplicate explanation text",
+      "topic": "Sophisticated Investors"
+    },
+    {
+      "id": "S23Q68",
+      "reason": "duplicate explanation group from S23Q68",
+      "category": "duplicate explanation text",
+      "topic": "Regulators"
+    },
+    {
+      "id": "S25Q64",
+      "reason": "duplicate explanation group from S23Q68",
+      "category": "duplicate explanation text",
+      "topic": "Regulators"
+    },
+    {
+      "id": "S23Q79",
+      "reason": "duplicate explanation group from S23Q79",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S24Q11",
+      "reason": "duplicate explanation group from S23Q79",
+      "category": "duplicate explanation text",
+      "topic": "KYC"
+    },
+    {
+      "id": "S13Q55",
+      "reason": "calculation working needed formula/substitution/final value",
+      "category": "calculation-working weakness",
+      "topic": "Bonds"
+    },
+    {
+      "id": "S22Q26",
+      "reason": "stem/options allowed multiple problematic conduct answers; distractors made clearly proper",
+      "category": "multiple-plausible-correct option risk",
+      "topic": "Conduct"
+    }
+  ]
+}

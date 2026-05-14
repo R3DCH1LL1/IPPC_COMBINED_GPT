@@ -1,0 +1,822 @@
+{
+  "flagCount": 145,
+  "explanationFixes": 81,
+  "metadataFixes": 74,
+  "falsePositiveOrAlreadyFixed": 5,
+  "fixed": [
+    {
+      "id": "3_68",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "4_75",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "5_03",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "5_04",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "5_39",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "5_67",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "6_15",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "6_59",
+      "type": "explanation",
+      "issue": "Product-disclosure explanation appears in a non-disclosure item"
+    },
+    {
+      "id": "6_75",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "7_30",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "7_47",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "7_52",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "7_70",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "8_01",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "8_08",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "8_69",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "9_09",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "9_20",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "9_38",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "9_58",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "10_46",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "10_47",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "10_50",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "11_72",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "12_58",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "13_44",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "14_26",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "14_63",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "15_55",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "15_68",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "15_76",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "16_19",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "16_30",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "16_38",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "16_76",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "17_54",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "17_76",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "18_09",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "18_57",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "19_20",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "19_22",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "19_26",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "20_30",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "21_04",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "21_33",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "21_37",
+      "type": "explanation",
+      "issue": "Product-disclosure explanation appears in a non-disclosure item"
+    },
+    {
+      "id": "21_73",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "22_21",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "22_42",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "22_55",
+      "type": "explanation",
+      "issue": "Product-disclosure explanation appears in a non-disclosure item"
+    },
+    {
+      "id": "22_62",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "22_70",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "23_27",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "23_43",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "23_59",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "23_62",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "23_80",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "24_13",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "24_18",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "24_26",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "24_49",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "25_13",
+      "type": "explanation",
+      "issue": "AML/CFT explanation appears in a non-AML item"
+    },
+    {
+      "id": "25_28",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "25_31",
+      "type": "explanation",
+      "issue": "PIDM/deposit-insurance explanation appears in a non-PIDM item"
+    },
+    {
+      "id": "25_77",
+      "type": "explanation",
+      "issue": "CMSA explanation appears in a non-CMSA item"
+    },
+    {
+      "id": "4_05",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to CMSA"
+    },
+    {
+      "id": "4_08",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as FEA Rules but content looks closer to Product Disclosure"
+    },
+    {
+      "id": "5_04",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to Bonds"
+    },
+    {
+      "id": "5_25",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as KYC but content looks closer to AML"
+    },
+    {
+      "id": "5_39",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to FEA Rules"
+    },
+    {
+      "id": "6_11",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Financial Markets but content looks closer to CMSA"
+    },
+    {
+      "id": "6_12",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Financial Markets but content looks closer to Regulators"
+    },
+    {
+      "id": "7_20",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as FEA Rules but content looks closer to Regulators"
+    },
+    {
+      "id": "7_47",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Financial Markets but content looks closer to Derivatives"
+    },
+    {
+      "id": "9_09",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to Bonds"
+    },
+    {
+      "id": "9_11",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to Derivatives"
+    },
+    {
+      "id": "9_44",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as KYC but content looks closer to AML"
+    },
+    {
+      "id": "9_49",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Financial Markets but content looks closer to Regulators"
+    },
+    {
+      "id": "10_04",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to AML"
+    },
+    {
+      "id": "10_29",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Financial Markets but content looks closer to Conduct"
+    },
+    {
+      "id": "10_46",
+      "type": "explanation_from_metadata",
+      "issue": "Tagged as Guidelines but content looks closer to Debt Securities"
+    }
+  ],
+  "metadata": [
+    {
+      "id": "4_02",
+      "from": "Guidelines",
+      "to": "Derivatives"
+    },
+    {
+      "id": "4_05",
+      "from": "Guidelines",
+      "to": "CMSA"
+    },
+    {
+      "id": "4_08",
+      "from": "FEA Rules",
+      "to": "Product Disclosure"
+    },
+    {
+      "id": "4_16",
+      "from": "Guidelines",
+      "to": "Derivatives"
+    },
+    {
+      "id": "4_19",
+      "from": "Guidelines",
+      "to": "PIDM"
+    },
+    {
+      "id": "4_20",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "4_22",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "4_33",
+      "from": "KYC",
+      "to": "Guidelines"
+    },
+    {
+      "id": "4_43",
+      "from": "Guidelines",
+      "to": "Portfolio"
+    },
+    {
+      "id": "4_54",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "4_56",
+      "from": "Guidelines",
+      "to": "Financial Markets"
+    },
+    {
+      "id": "4_75",
+      "from": "Guidelines",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "5_04",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "5_06",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "5_11",
+      "from": "FEA Rules",
+      "to": "Product Disclosure"
+    },
+    {
+      "id": "5_14",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "5_20",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "5_25",
+      "from": "KYC",
+      "to": "AML"
+    },
+    {
+      "id": "5_27",
+      "from": "Sophisticated Investors",
+      "to": "Market Structure"
+    },
+    {
+      "id": "5_33",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "5_39",
+      "from": "Guidelines",
+      "to": "FEA Rules"
+    },
+    {
+      "id": "5_41",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "5_43",
+      "from": "Financial Markets",
+      "to": "Structured Products"
+    },
+    {
+      "id": "5_54",
+      "from": "Financial Markets",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "5_56",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "5_69",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "6_08",
+      "from": "Financial Markets",
+      "to": "Regulators"
+    },
+    {
+      "id": "6_09",
+      "from": "Financial Markets",
+      "to": "Bonds"
+    },
+    {
+      "id": "6_11",
+      "from": "Financial Markets",
+      "to": "CMSA"
+    },
+    {
+      "id": "6_12",
+      "from": "Financial Markets",
+      "to": "Debt Securities"
+    },
+    {
+      "id": "6_14",
+      "from": "Guidelines",
+      "to": "Market Structure"
+    },
+    {
+      "id": "6_23",
+      "from": "KYC",
+      "to": "Sophisticated Investors"
+    },
+    {
+      "id": "6_27",
+      "from": "Guidelines",
+      "to": "Derivatives"
+    },
+    {
+      "id": "6_28",
+      "from": "CMSA",
+      "to": "Fit and Proper"
+    },
+    {
+      "id": "6_36",
+      "from": "Guidelines",
+      "to": "Debt Securities"
+    },
+    {
+      "id": "6_44",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "6_48",
+      "from": "Financial Markets",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "6_62",
+      "from": "KYC",
+      "to": "Portfolio"
+    },
+    {
+      "id": "7_09",
+      "from": "Guidelines",
+      "to": "Market Participants"
+    },
+    {
+      "id": "7_10",
+      "from": "CMSA",
+      "to": "Fit and Proper"
+    },
+    {
+      "id": "7_13",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "7_15",
+      "from": "Guidelines",
+      "to": "Product Disclosure"
+    },
+    {
+      "id": "7_16",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "7_20",
+      "from": "FEA Rules",
+      "to": "Product Disclosure"
+    },
+    {
+      "id": "7_30",
+      "from": "Financial Markets",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "7_35",
+      "from": "Financial Markets",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "7_45",
+      "from": "FEA Rules",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "7_47",
+      "from": "Financial Markets",
+      "to": "Derivatives"
+    },
+    {
+      "id": "8_05",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "8_09",
+      "from": "FEA Rules",
+      "to": "Regulators"
+    },
+    {
+      "id": "8_10",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "8_22",
+      "from": "Guidelines",
+      "to": "FEA Rules"
+    },
+    {
+      "id": "8_33",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "8_34",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "9_05",
+      "from": "Financial Markets",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "9_06",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "9_07",
+      "from": "Financial Markets",
+      "to": "Market Structure"
+    },
+    {
+      "id": "9_09",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "9_11",
+      "from": "Guidelines",
+      "to": "Derivatives"
+    },
+    {
+      "id": "9_21",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "9_25",
+      "from": "Guidelines",
+      "to": "Portfolio"
+    },
+    {
+      "id": "9_28",
+      "from": "Guidelines",
+      "to": "Portfolio"
+    },
+    {
+      "id": "9_39",
+      "from": "KYC",
+      "to": "Sophisticated Investors"
+    },
+    {
+      "id": "9_44",
+      "from": "KYC",
+      "to": "AML"
+    },
+    {
+      "id": "9_49",
+      "from": "Financial Markets",
+      "to": "Debt Securities"
+    },
+    {
+      "id": "9_64",
+      "from": "Guidelines",
+      "to": "Structured Products"
+    },
+    {
+      "id": "10_02",
+      "from": "Sophisticated Investors",
+      "to": "BNM"
+    },
+    {
+      "id": "10_04",
+      "from": "Guidelines",
+      "to": "Financial Markets"
+    },
+    {
+      "id": "10_07",
+      "from": "Financial Markets",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "10_20",
+      "from": "Guidelines",
+      "to": "Islamic Banking"
+    },
+    {
+      "id": "10_29",
+      "from": "Financial Markets",
+      "to": "Conduct"
+    },
+    {
+      "id": "10_46",
+      "from": "Guidelines",
+      "to": "Debt Securities"
+    },
+    {
+      "id": "10_52",
+      "from": "Guidelines",
+      "to": "Bonds"
+    },
+    {
+      "id": "10_56",
+      "from": "Guidelines",
+      "to": "Bonds"
+    }
+  ],
+  "falsePos": [
+    {
+      "id": "3_04",
+      "type": "metadata",
+      "reason": "Kept Market Participants; CSV suggestion is broad/false positive"
+    },
+    {
+      "id": "3_08",
+      "type": "metadata",
+      "reason": "Kept Bonds; CSV suggestion is broad/false positive"
+    },
+    {
+      "id": "3_14",
+      "type": "metadata",
+      "reason": "Kept Financial Markets; CSV suggestion is broad/false positive"
+    },
+    {
+      "id": "3_21",
+      "type": "metadata",
+      "reason": "Kept Structured Products; CSV suggestion is broad/false positive"
+    },
+    {
+      "id": "3_77",
+      "type": "metadata",
+      "reason": "Kept Conduct; CSV suggestion is broad/false positive"
+    }
+  ],
+  "secondPassExplanationRegenerated": 73,
+  "secondPassNote": "Reran high-severity explanation rewrites with corrected STR word-boundary detection.",
+  "manualResidualFixes": [
+    "5_04",
+    "6_75",
+    "8_01",
+    "8_08",
+    "10_29"
+  ],
+  "finalResidualDomainMismatches": 0
+}

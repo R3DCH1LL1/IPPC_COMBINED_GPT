@@ -1,0 +1,271 @@
+{
+  "auditFile": "C:/Users/Chee Hong/Desktop/V193_LATEST_CLEAN_REAUDIT.md",
+  "checkedAgainst": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "detailedHighConfidenceCopiedDomainRows": 22,
+  "artificialWrapperStemRows": 29,
+  "duplicateStemGroupsInAudit": 2,
+  "patchActions": 51,
+  "validationAfterPatch": {
+    "highConfidenceCopiedDomainRowsStillReproducing": 0,
+    "artificialWrapperRowsStillReproducing": 0,
+    "listedDuplicateStemGroupsStillExactDuplicates": 0
+  },
+  "note": "Patched all detailed high-confidence copied-domain explanation rows, all artificial-wrapper stem rows, and the two exact duplicate-stem groups listed in the markdown audit. Broader aggregate duplicate-explanation groups were not row-expanded in the markdown.",
+  "fixes": [
+    {
+      "id": "S04Q08",
+      "category": "Copied-domain explanation",
+      "action": "Replaced FEA explanation with product-comparison disclosure rationale."
+    },
+    {
+      "id": "S05Q39",
+      "category": "Copied-domain explanation",
+      "action": "Removed derivative option-value wording from FEA explanation."
+    },
+    {
+      "id": "S09Q11",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Regulators and replaced FEA explanation."
+    },
+    {
+      "id": "S10Q47",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Bonds and replaced FEA explanation."
+    },
+    {
+      "id": "S11Q06",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML/PEP explanation from FEA row."
+    },
+    {
+      "id": "S13Q32",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML/PEP explanation from FEA row."
+    },
+    {
+      "id": "S15Q48",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML/PEP explanation and cleaned FEA stem capitalisation."
+    },
+    {
+      "id": "S16Q19",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Debt Securities and replaced FEA explanation."
+    },
+    {
+      "id": "S17Q61",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML/PEP explanation from FEA row."
+    },
+    {
+      "id": "S20Q14",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Product Disclosure and removed AML filler."
+    },
+    {
+      "id": "S20Q47",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML filler from FEA explanation."
+    },
+    {
+      "id": "S20Q79",
+      "category": "Copied-domain explanation / wrapper stem",
+      "action": "Changed topic, cleaned stem and removed AML filler."
+    },
+    {
+      "id": "S21Q26",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Product Disclosure and removed AML filler."
+    },
+    {
+      "id": "S21Q54",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML filler from FSA secrecy explanation."
+    },
+    {
+      "id": "S21Q75",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Portfolio and removed AML wording."
+    },
+    {
+      "id": "S22Q32",
+      "category": "Copied-domain explanation / wrapper stem",
+      "action": "Cleaned suitability stem and removed AML filler."
+    },
+    {
+      "id": "S22Q63",
+      "category": "Copied-domain explanation / wrapper stem",
+      "action": "Changed topic, cleaned stem and removed AML filler."
+    },
+    {
+      "id": "S24Q04",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML filler from structured-product disclosure explanation."
+    },
+    {
+      "id": "S24Q44",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML filler from disclosure timing explanation."
+    },
+    {
+      "id": "S24Q66",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Derivatives and removed AML filler."
+    },
+    {
+      "id": "S25Q08",
+      "category": "Copied-domain explanation",
+      "action": "Removed AML filler from product disclosure explanation."
+    },
+    {
+      "id": "S25Q34",
+      "category": "Copied-domain explanation",
+      "action": "Changed topic to Market Structure and removed AML filler."
+    },
+    {
+      "id": "S15Q38",
+      "category": "Wrapper stem",
+      "action": "Removed customer-confidentiality wrapper from YTM stem and explanation."
+    },
+    {
+      "id": "S18Q57",
+      "category": "Wrapper stem",
+      "action": "Cleaned vague FEA stem and explanation."
+    },
+    {
+      "id": "S18Q68",
+      "category": "Wrapper stem",
+      "action": "Removed unnecessary wrapper phrasing from sophisticated-investor stem."
+    },
+    {
+      "id": "S22Q01",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Conduct and cleaned client-order priority stem."
+    },
+    {
+      "id": "S22Q09",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Conduct and cleaned churning stem."
+    },
+    {
+      "id": "S22Q10",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Qualifications and cleaned qualification stem."
+    },
+    {
+      "id": "S22Q13",
+      "category": "Wrapper stem",
+      "action": "Changed topic to FSA and corrected confidentiality explanation."
+    },
+    {
+      "id": "S22Q14",
+      "category": "Wrapper stem",
+      "action": "Removed unrelated wrapper from AML onboarding stem."
+    },
+    {
+      "id": "S22Q15",
+      "category": "Wrapper stem",
+      "action": "Removed unrelated regulatory-request wrapper from product-governance stem."
+    },
+    {
+      "id": "S22Q20",
+      "category": "Wrapper stem",
+      "action": "Cleaned CMSA regulated-activity stem and explanation."
+    },
+    {
+      "id": "S22Q26",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Conduct and cleaned wholesale-conduct stem."
+    },
+    {
+      "id": "S22Q37",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Product Disclosure and cleaned timing stem."
+    },
+    {
+      "id": "S22Q40",
+      "category": "Wrapper stem",
+      "action": "Cleaned risk-profile mismatch stem and explanation."
+    },
+    {
+      "id": "S22Q41",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Product Disclosure and cleaned PHS stem/explanation."
+    },
+    {
+      "id": "S22Q42",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Sophisticated Investors and removed FEA wrapper/explanation."
+    },
+    {
+      "id": "S22Q48",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Portfolio and cleaned rebalancing stem."
+    },
+    {
+      "id": "S22Q49",
+      "category": "Wrapper stem",
+      "action": "Changed topic to AML and cleaned laundering-sequence stem/explanation."
+    },
+    {
+      "id": "S22Q52",
+      "category": "Wrapper stem",
+      "action": "Cleaned FSA secrecy stem and explanation."
+    },
+    {
+      "id": "S22Q55",
+      "category": "Wrapper stem",
+      "action": "Changed mismatched structured-product wrapper to match FEA answer set."
+    },
+    {
+      "id": "S22Q57",
+      "category": "Wrapper stem",
+      "action": "Cleaned Section 97 principal-dealing stem."
+    },
+    {
+      "id": "S22Q59",
+      "category": "Wrapper stem",
+      "action": "Changed topic to Conduct and cleaned quote-conduct stem/explanation."
+    },
+    {
+      "id": "S22Q61",
+      "category": "Wrapper stem",
+      "action": "Changed topic to CMSA and cleaned Section 92 stem/explanation."
+    },
+    {
+      "id": "S22Q62",
+      "category": "Wrapper stem",
+      "action": "Cleaned prospectus-registration stem."
+    },
+    {
+      "id": "S22Q67",
+      "category": "Wrapper stem",
+      "action": "Cleaned vulnerable-client suitability stem/explanation."
+    },
+    {
+      "id": "S22Q69",
+      "category": "Wrapper stem",
+      "action": "Removed unrelated Labuan/risk-profile wrapper from mis-selling stem."
+    },
+    {
+      "id": "S22Q79",
+      "category": "Wrapper stem",
+      "action": "Cleaned fit-and-proper validity stem/explanation."
+    },
+    {
+      "id": "S16Q72",
+      "category": "Duplicate stem",
+      "action": "Changed duplicate stem, topic and explanation for diversification row."
+    },
+    {
+      "id": "S17Q43",
+      "category": "Duplicate stem",
+      "action": "Changed duplicate stem and cleaned portfolio explanation."
+    },
+    {
+      "id": "S23Q51",
+      "category": "Duplicate stem",
+      "action": "Changed duplicate stem and corrected wrong derivative topic/options."
+    }
+  ]
+}

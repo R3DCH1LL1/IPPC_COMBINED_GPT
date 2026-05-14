@@ -1,0 +1,225 @@
+{
+  "sourceAudit": "C:/Users/Chee Hong/Desktop/IPPC_AICB/V193_GO_REFINED_AUDIT.md",
+  "questionBank": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "parsedHighPriorityRows": 25,
+  "confirmedAndFixed": 25,
+  "topicCorrectionsApplied": 12,
+  "remainingHighPriorityMarkers": 0,
+  "remainingHighPriority": [],
+  "exactDuplicateExplanationGroups": 0,
+  "duplicateStemGroups": 0,
+  "invalidAnswerIndexes": [],
+  "emptyExplanations": [],
+  "answerLetterMismatches": [],
+  "fixed": [
+    {
+      "id": "S05Q49",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Bonds",
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Book building based on the facts."
+    },
+    {
+      "id": "S07Q67",
+      "category": "explanation contradicts correct-answer purpose",
+      "auditTopic": "FSA",
+      "previousTopic": "FSA",
+      "newTopic": "FSA",
+      "answer": "A bank's compliance manager shares a customer's account details with a competitor bank's CEO during a networking event, claiming it helps them price their services competitively."
+    },
+    {
+      "id": "S08Q31",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "KYC",
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "KYC establishes the facts needed to understand the customer and authority to act."
+    },
+    {
+      "id": "S09Q73",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Derivatives",
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "An agreement to exchange interest cash flows based on agreed reference terms."
+    },
+    {
+      "id": "S15Q01",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Guidelines",
+      "previousTopic": "Guidelines",
+      "newTopic": "Financial Markets",
+      "answer": "It supports longer-term equity and debt financing and gives investors market liquidity."
+    },
+    {
+      "id": "S16Q10",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Financial Markets",
+      "previousTopic": "Financial Markets",
+      "newTopic": "Derivatives",
+      "answer": "An option gives the buyer the right, but not the obligation, to buy or sell an underlying at a specified price."
+    },
+    {
+      "id": "S16Q68",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Financial Markets",
+      "previousTopic": "Financial Markets",
+      "newTopic": "Bonds",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms."
+    },
+    {
+      "id": "S16Q73",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Bonds",
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Periodic coupon income and repayment of principal at maturity according to the bond terms."
+    },
+    {
+      "id": "S17Q62",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Sophisticated Investors",
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "Sophisticated Investors",
+      "answer": "Sophisticated status affects offering eligibility but does not permit false or misleading conduct."
+    },
+    {
+      "id": "S17Q77",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Conduct",
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Client information should be protected and shared only where authorised, required by law, or needed for legitimate job functions."
+    },
+    {
+      "id": "S18Q72",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Financial Markets",
+      "previousTopic": "Financial Markets",
+      "newTopic": "Bonds",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms."
+    },
+    {
+      "id": "S18Q80",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "KYC",
+      "previousTopic": "KYC",
+      "newTopic": "Market Participants",
+      "answer": "They seek profit from temporary price differences across related markets or instruments."
+    },
+    {
+      "id": "S19Q50",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Sophisticated Investors",
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "Sophisticated Investors",
+      "answer": "LEAP Market shares are accessible only to sophisticated investors."
+    },
+    {
+      "id": "S20Q29",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Guidelines",
+      "previousTopic": "Guidelines",
+      "newTopic": "Bonds",
+      "answer": "They are issued below par and the investor earns return from the difference between purchase price and redemption value, using the stated product terms."
+    },
+    {
+      "id": "S20Q65",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Derivatives",
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms, using the stated product terms."
+    },
+    {
+      "id": "S21Q01",
+      "category": "explanation contradicts correct-answer purpose",
+      "auditTopic": "KYC",
+      "previousTopic": "KYC",
+      "newTopic": "FSA",
+      "answer": "Disclose client holdings to a third-party marketer for cross-selling."
+    },
+    {
+      "id": "S21Q10",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Financial Markets",
+      "previousTopic": "Financial Markets",
+      "newTopic": "KYC",
+      "answer": "Sell a high-risk product without checking understanding, horizon and risk appetite."
+    },
+    {
+      "id": "S21Q70",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Bonds",
+      "previousTopic": "Bonds",
+      "newTopic": "Conduct",
+      "answer": "The customer may be misled about the product’s true risk-return profile."
+    },
+    {
+      "id": "S21Q74",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "KYC",
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "Do not make a recommendation until sufficient information is obtained."
+    },
+    {
+      "id": "S22Q54",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Financial Markets",
+      "previousTopic": "Financial Markets",
+      "newTopic": "Market Participants",
+      "answer": "The first is a dealer/trader; the second is a broker."
+    },
+    {
+      "id": "S23Q02",
+      "category": "explanation contradicts correct-answer purpose",
+      "auditTopic": "Conduct",
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Encourage repeated switching mainly to generate commissions."
+    },
+    {
+      "id": "S23Q61",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Structured Products",
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "An option component referencing the equity index."
+    },
+    {
+      "id": "S24Q10",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Financial Markets",
+      "previousTopic": "Financial Markets",
+      "newTopic": "Market Participants",
+      "answer": "The first is a dealer/trader; the second is a broker."
+    },
+    {
+      "id": "S24Q64",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Structured Products",
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "An option component referencing the equity index."
+    },
+    {
+      "id": "S25Q41",
+      "category": "wrong-domain explanation framing",
+      "auditTopic": "Structured Products",
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "An option component referencing the equity index."
+    }
+  ],
+  "finalValidation": {
+    "total": 2000,
+    "exactDuplicateExplanationGroups": 0,
+    "duplicateStemGroups": 0,
+    "invalidAnswerIndexes": 0,
+    "emptyExplanations": 0,
+    "answerLetterMismatches": 0,
+    "remainingFlaggedStaleMarkers": 0
+  }
+}

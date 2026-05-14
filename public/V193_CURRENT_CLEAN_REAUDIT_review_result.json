@@ -1,0 +1,2416 @@
+{
+  "sourceAudit": "C:/Users/Chee Hong/Desktop/V193_CURRENT_CLEAN_REAUDIT.md",
+  "questionBank": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "parsedTableRows": 300,
+  "uniqueFlaggedQuestions": 254,
+  "severityCounts": {
+    "critical": 5,
+    "high": 295
+  },
+  "categoryCounts": {
+    "wrong-domain AML explanation": 5,
+    "topic metadata mismatch": 94,
+    "copied/wrong-domain explanation phrase": 194,
+    "duplicate explanation text": 7
+  },
+  "confirmedAndFixed": 223,
+  "notConfirmedOrAlreadyAcceptable": 31,
+  "remainingConfirmedBadMarkers": 0,
+  "remainingConfirmedBad": [],
+  "fixed": [
+    {
+      "id": "S13Q08",
+      "reasons": [
+        "wrong-domain AML explanation",
+        "copied/wrong-domain explanation phrase",
+        "topic metadata mismatch: Sophisticated Investors -> AML",
+        "topic corrected from content: Sophisticated Investors -> AML"
+      ],
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "AML",
+      "answer": "Threshold reporting is amount-based, while STR reporting is suspicion-based."
+    },
+    {
+      "id": "S14Q38",
+      "reasons": [
+        "wrong-domain AML explanation",
+        "topic corrected from content: Bonds -> AML"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "AML",
+      "answer": "Layering uses complex transactions to disguise the audit trail and source of funds."
+    },
+    {
+      "id": "S18Q33",
+      "reasons": [
+        "wrong-domain AML explanation",
+        "topic corrected from content: Sophisticated Investors -> AML"
+      ],
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "AML",
+      "answer": "Threshold reporting is amount-based, while STR reporting is suspicion-based."
+    },
+    {
+      "id": "S21Q41",
+      "reasons": [
+        "wrong-domain AML explanation",
+        "topic corrected from content: Bonds -> AML"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "AML",
+      "answer": "Placement introduces funds, layering obscures them, integration legitimises them."
+    },
+    {
+      "id": "S22Q04",
+      "reasons": [
+        "wrong-domain AML explanation",
+        "topic corrected from content: Bonds -> AML"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "AML",
+      "answer": "Beneficial owners and control structure."
+    },
+    {
+      "id": "S01Q21",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic metadata mismatch: AML -> PIDM",
+        "topic corrected from content: AML -> PIDM"
+      ],
+      "previousTopic": "AML",
+      "newTopic": "PIDM",
+      "answer": "A business deposit placed with the commercial bank."
+    },
+    {
+      "id": "S01Q72",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Bank A will exercise the call on the bond (redeem) at par, thus investors will face reinvestment risk."
+    },
+    {
+      "id": "S03Q33",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "A product is expected to fit the customer's objectives, horizon, finances and risk appetite."
+    },
+    {
+      "id": "S03Q65",
+      "reasons": [
+        "duplicate explanation text"
+      ],
+      "previousTopic": "Islamic Banking",
+      "newTopic": "Islamic Banking",
+      "answer": "Only statements I, II and III should be selected."
+    },
+    {
+      "id": "S04Q03",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "A swap is an agreement to exchange cash flows according to agreed reference terms."
+    },
+    {
+      "id": "S04Q11",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> Derivatives"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Derivatives",
+      "answer": "RM17.50."
+    },
+    {
+      "id": "S04Q14",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: PIDM -> Market Participants"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "Market Participants",
+      "answer": "They buy and sell instruments for clients or proprietary books and may quote spreads."
+    },
+    {
+      "id": "S04Q23",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> Derivatives"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Derivatives",
+      "answer": "RM15, using the stated inputs."
+    },
+    {
+      "id": "S04Q24",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "An option gives the buyer the right, but not the obligation, to buy or sell an underlying at a specified price."
+    },
+    {
+      "id": "S04Q30",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Commercial banks and Islamic banks are member banks for deposit insurance purposes."
+    },
+    {
+      "id": "S04Q61",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: PIDM -> Regulators"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "Regulators",
+      "answer": "It supervises and enforces Labuan international business and financial services."
+    },
+    {
+      "id": "S04Q63",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Investors' preference for either short-term or long-term maturities creates segmented supply and demand, and the interaction of these preferences determines yields."
+    },
+    {
+      "id": "S04Q72",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Guidelines -> Financial Markets"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Financial Markets",
+      "answer": "They allow investors to buy and sell securities that have already been issued."
+    },
+    {
+      "id": "S04Q73",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Principal dealers based on the facts."
+    },
+    {
+      "id": "S04Q74",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "The maximum protection for takaful certificates and insurance policies is capped at RM500,000 per policyholder."
+    },
+    {
+      "id": "S04Q78",
+      "reasons": [
+        "duplicate explanation text"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Unit trusts, stocks, NIDs and repos are not insured deposits."
+    },
+    {
+      "id": "S05Q10",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "RM250,000 falls within the applicable protection limit."
+    },
+    {
+      "id": "S05Q13",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "FSA",
+      "newTopic": "FSA",
+      "answer": "A customer of the bank who received confidential information about another customer's account from a bank officer."
+    },
+    {
+      "id": "S05Q23",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "The insured portion is RM250,000."
+    },
+    {
+      "id": "S05Q48",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "PIDM administers TIPS for eligible takaful and insurance benefits."
+    },
+    {
+      "id": "S05Q64",
+      "reasons": [
+        "topic metadata mismatch: Bonds -> PIDM"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "PIDM",
+      "answer": "Only statements I, III and IV should be selected."
+    },
+    {
+      "id": "S05Q71",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Higher potential return normally comes with higher uncertainty or risk."
+    },
+    {
+      "id": "S06Q03",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Eligible deposits are protected up to RM250,000 per depositor per member bank."
+    },
+    {
+      "id": "S06Q08",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Regulators -> Market Participants"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Market Participants",
+      "answer": "Principal Dealers are obligated to maintain a two-way market for government bonds."
+    },
+    {
+      "id": "S06Q12",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Debt Securities",
+      "newTopic": "Debt Securities",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms."
+    },
+    {
+      "id": "S06Q16",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Eligible deposit protection is automatic and depositors do not pay a separate charge for it."
+    },
+    {
+      "id": "S06Q17",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> Derivatives"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Derivatives",
+      "answer": "RM15, after applying the formula."
+    },
+    {
+      "id": "S06Q20",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "The semi-annual discount rate (annual rate ÷ 2) is applied for each 6-month period, and the number of periods is doubled (years × 2)."
+    },
+    {
+      "id": "S06Q29",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "It protected eligible deposits placed with PIDM member banks."
+    },
+    {
+      "id": "S06Q30",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Duration is the weighted average timing of cash flows and helps measure price sensitivity to yield changes."
+    },
+    {
+      "id": "S06Q33",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "They profit from temporary price differences across related markets."
+    },
+    {
+      "id": "S06Q34",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "A product should fit the customer's objectives, horizon, finances and risk appetite."
+    },
+    {
+      "id": "S06Q37",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Periodic coupon income and repayment of principal at maturity according to the bond terms."
+    },
+    {
+      "id": "S06Q41",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "YTM is the yield implied by the bond price, coupons and redemption at maturity."
+    },
+    {
+      "id": "S06Q42",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "Option premium equals intrinsic value plus time value."
+    },
+    {
+      "id": "S06Q46",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "duplicate explanation text"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Bonds can provide longer-term funding and diversify financing sources beyond short-term borrowing."
+    },
+    {
+      "id": "S06Q53",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "If a customer insists on a higher-risk product, the risks and mismatch should be explained and documented under internal procedures."
+    },
+    {
+      "id": "S06Q57",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Regulators -> Financial Markets"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Financial Markets",
+      "answer": "They are bilateral, privately negotiated markets that allow customised terms but involve counterparty risk."
+    },
+    {
+      "id": "S06Q60",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "To protect eligible deposits up to the applicable coverage limit if a member bank fails."
+    },
+    {
+      "id": "S06Q62",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Portfolio",
+      "newTopic": "Portfolio",
+      "answer": "Rebalancing restores the portfolio to the intended asset allocation."
+    },
+    {
+      "id": "S06Q63",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "A fixed-rate bond's price normally moves inversely with its required yield."
+    },
+    {
+      "id": "S06Q66",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Maintaining confidentiality and avoiding misuse of privileged information."
+    },
+    {
+      "id": "S06Q78",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "The accepting bank pays the par value of the bill to the holder upon maturity."
+    },
+    {
+      "id": "S06Q79",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "A trustee acts for bondholders under the trust deed and monitors issuer obligations where applicable."
+    },
+    {
+      "id": "S07Q03",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "The coverage amount is RM250,000."
+    },
+    {
+      "id": "S07Q05",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "It is the risk that the issuer fails to meet coupon or principal obligations when due."
+    },
+    {
+      "id": "S07Q06",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Derivatives"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Derivatives",
+      "answer": "The right, not the obligation, to sell the underlying or receive payoff as specified by the contract."
+    },
+    {
+      "id": "S07Q07",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> Derivatives"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Derivatives",
+      "answer": "Profit of RM2.00 per share."
+    },
+    {
+      "id": "S07Q12",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Regulators",
+      "answer": "Do not disclose."
+    },
+    {
+      "id": "S07Q15",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Product Disclosure -> Structured Products"
+      ],
+      "previousTopic": "Product Disclosure",
+      "newTopic": "Structured Products",
+      "answer": "Presenting only upside without risk disclosure is misleading and may breach investor-protection requirements."
+    },
+    {
+      "id": "S07Q16",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Market Structure -> Financial Markets"
+      ],
+      "previousTopic": "Market Structure",
+      "newTopic": "Financial Markets",
+      "answer": "They are where new securities are issued and sold by issuers to investors."
+    },
+    {
+      "id": "S07Q21",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "KO is active from the start and terminates if the barrier is breached."
+    },
+    {
+      "id": "S07Q23",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Commercial banks and Islamic banks are member banks for deposit insurance purposes."
+    },
+    {
+      "id": "S07Q27",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Regulators"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Regulators",
+      "answer": "BNM conducts a competitive tender auction where bids are allocated from lowest yield up to the cut-off yield."
+    },
+    {
+      "id": "S07Q34",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Product Disclosure"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Product Disclosure",
+      "answer": "It should explain material risk factors and liquidity or related facilities for structured products where required."
+    },
+    {
+      "id": "S07Q36",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Bond Y has the longer duration."
+    },
+    {
+      "id": "S07Q44",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They allow investors to buy and sell securities that have already been issued."
+    },
+    {
+      "id": "S07Q57",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Financial Markets"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Financial Markets",
+      "answer": "Futures are exchange-traded and standardised, while forwards are privately negotiated OTC contracts."
+    },
+    {
+      "id": "S07Q58",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "RM250,000 is protected."
+    },
+    {
+      "id": "S07Q60",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> Derivatives"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Derivatives",
+      "answer": "RM15, rounded as shown."
+    },
+    {
+      "id": "S07Q62",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "They illustrate possible outcomes but do not guarantee future performance of the structured product."
+    },
+    {
+      "id": "S07Q66",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Portfolio"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Portfolio",
+      "answer": "Combining assets with low or imperfect correlation can reduce overall portfolio risk."
+    },
+    {
+      "id": "S07Q77",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "If market yield is above the coupon rate, the bond normally trades below par."
+    },
+    {
+      "id": "S08Q02",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "AML",
+      "newTopic": "AML",
+      "answer": "Rapid movement of funds through multiple accounts with no apparent business purpose, round-number transactions, transactions inconsistent with the customer's known profile."
+    },
+    {
+      "id": "S08Q07",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "If a customer insists on a higher-risk product, the risks and mismatch should be explained and documented under internal procedures."
+    },
+    {
+      "id": "S08Q12",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Cannot be determined without knowing whether the investor sold during the rate moves."
+    },
+    {
+      "id": "S08Q13",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "FEA Rules",
+      "newTopic": "FEA Rules",
+      "answer": "The resident may generally invest in foreign-currency assets, subject to applicable conditions."
+    },
+    {
+      "id": "S08Q18",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "The issuer's economics may be embedded in the ZNID return, option pricing spread and product margin."
+    },
+    {
+      "id": "S08Q24",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: PIDM -> Regulators"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "Regulators",
+      "answer": "The SC regulates capital markets, licensed persons, securities and unit trust schemes."
+    },
+    {
+      "id": "S08Q34",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "A rating is an opinion on creditworthiness and default risk; it is not a repayment guarantee."
+    },
+    {
+      "id": "S08Q36",
+      "reasons": [
+        "duplicate explanation text",
+        "topic corrected from content: Bonds -> Portfolio"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Portfolio",
+      "answer": "Asset allocation spreads a portfolio across assets such as bonds, equities and cash."
+    },
+    {
+      "id": "S08Q45",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "No - principal protection depends on the issuer and product terms."
+    },
+    {
+      "id": "S08Q52",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "Upside equals the underlying gain multiplied by the participation rate, subject to terms."
+    },
+    {
+      "id": "S08Q56",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "RM250,000 is protected."
+    },
+    {
+      "id": "S08Q62",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "AML",
+      "newTopic": "AML",
+      "answer": "Money laundering hides criminal proceeds."
+    },
+    {
+      "id": "S08Q70",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Higher potential return normally comes with higher uncertainty or risk."
+    },
+    {
+      "id": "S09Q04",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Derivatives"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Derivatives",
+      "answer": "A financial instrument whose value is derived from the performance of an underlying asset, rate or index."
+    },
+    {
+      "id": "S09Q17",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Product Disclosure",
+      "newTopic": "Product Disclosure",
+      "answer": "To provide clear and concise information on salient features, key risks, fees, valuation or exit costs and complaint contacts."
+    },
+    {
+      "id": "S09Q18",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Regulators",
+      "answer": "The submission of required information and documents to the Securities Commission before launching the product."
+    },
+    {
+      "id": "S09Q31",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "CMSA",
+      "newTopic": "CMSA",
+      "answer": "The licensed person must have a reasonable basis after obtaining and considering relevant client and product information."
+    },
+    {
+      "id": "S09Q33",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: PIDM -> CMSA"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "CMSA",
+      "answer": "Client orders should be given priority unless a recognised exception applies."
+    },
+    {
+      "id": "S09Q40",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> PIDM"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "PIDM",
+      "answer": "Only statements I and III should be selected."
+    },
+    {
+      "id": "S09Q41",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Separately for each depositor at each member bank, up to the applicable RM250,000 limit."
+    },
+    {
+      "id": "S09Q42",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Negotiable instruments of deposit."
+    },
+    {
+      "id": "S09Q43",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "The maximum protection for eligible takaful certificates and insurance policies is RM500,000."
+    },
+    {
+      "id": "S09Q49",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Debt Securities -> Bonds"
+      ],
+      "previousTopic": "Debt Securities",
+      "newTopic": "Bonds",
+      "answer": "The investor's return from buying the instrument below its redemption amount."
+    },
+    {
+      "id": "S09Q57",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "Reinvestment risk."
+    },
+    {
+      "id": "S09Q63",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "A zero-coupon instrument component and a derivative or option component."
+    },
+    {
+      "id": "S09Q69",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Financial Markets"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Financial Markets",
+      "answer": "Futures are standardised and exchange-traded, while forwards are privately negotiated OTC contracts."
+    },
+    {
+      "id": "S09Q70",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "It gives the buyer the right, but not the obligation, to buy or sell the underlying at a specified exercise price."
+    },
+    {
+      "id": "S09Q71",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "Option premium equals intrinsic value plus time value."
+    },
+    {
+      "id": "S09Q80",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "A futures position can offset adverse price movement in the underlying exposure."
+    },
+    {
+      "id": "S10Q03",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> PIDM"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "PIDM",
+      "answer": "Only statements I and III should be selected."
+    },
+    {
+      "id": "S10Q06",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "It is an adviser-driven market for emerging companies and is accessible only to sophisticated investors."
+    },
+    {
+      "id": "S10Q12",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Regulators",
+      "answer": "The Ministry of Housing and Local Government."
+    },
+    {
+      "id": "S10Q16",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Product Disclosure",
+      "newTopic": "Product Disclosure",
+      "answer": "It must contain a responsibility statement and a statement of disclaimer."
+    },
+    {
+      "id": "S10Q19",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "A convertible or exchangeable feature where the investor has the discretion to convert into listed shares."
+    },
+    {
+      "id": "S10Q20",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Islamic Banking",
+      "newTopic": "Islamic Banking",
+      "answer": "The issuer must appoint a Shariah adviser."
+    },
+    {
+      "id": "S10Q25",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "CMSA",
+      "newTopic": "CMSA",
+      "answer": "For an issue, offer or invitation to subscribe for or purchase securities unless an applicable exemption or authorisation applies."
+    },
+    {
+      "id": "S10Q27",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: PIDM -> Financial Markets"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "Financial Markets",
+      "answer": "It is intended to promote integrity and professionalism among wholesale financial market participants."
+    },
+    {
+      "id": "S10Q28",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They must meet minimum fit-and-proper criteria and comply with relevant professional requirements."
+    },
+    {
+      "id": "S10Q32",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Market participants must not offer or solicit gifts that may be perceived as inappropriate inducements."
+    },
+    {
+      "id": "S10Q35",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "FSA",
+      "newTopic": "FSA",
+      "answer": "Imprisonment up to five (5) years, a fine up to RM10 million, or both."
+    },
+    {
+      "id": "S10Q39",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic metadata mismatch: PIDM -> FEA Rules",
+        "topic corrected from content: PIDM -> FEA Rules"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "FEA Rules",
+      "answer": "Export proceeds must be repatriated to Malaysia in full as per the sales contract within six (6) months from shipment, subject to specified exceptions."
+    },
+    {
+      "id": "S10Q43",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "AML",
+      "newTopic": "AML",
+      "answer": "To oversee implementation of the AML/CFT programme and reporting of suspicious transactions."
+    },
+    {
+      "id": "S10Q48",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Conduct"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Conduct",
+      "answer": "Its coupon or profit rate resets periodically based on a reference rate or formula."
+    },
+    {
+      "id": "S10Q59",
+      "reasons": [
+        "topic metadata mismatch: Structured Products -> PIDM"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "PIDM",
+      "answer": "Only statements I and III should be selected."
+    },
+    {
+      "id": "S10Q66",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Derivatives"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Derivatives",
+      "answer": "A privately negotiated OTC agreement to buy or sell an underlying at a future date on agreed terms."
+    },
+    {
+      "id": "S10Q67",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "A standardised contract traded on an organised exchange."
+    },
+    {
+      "id": "S10Q68",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Derivatives"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Derivatives",
+      "answer": "It gives the buyer the right, but not the obligation, to sell the underlying at the exercise price."
+    },
+    {
+      "id": "S10Q70",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "It reflects the value attributable to the possibility that the option may become more profitable before expiry."
+    },
+    {
+      "id": "S10Q71",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "It involves exchanging cash flows in different currencies according to agreed terms."
+    },
+    {
+      "id": "S10Q76",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "Changes in market volatility can affect the value of embedded options and therefore the bond value."
+    },
+    {
+      "id": "S10Q78",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "Counterparty credit risk arising from direct exposure to the other party."
+    },
+    {
+      "id": "S10Q80",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Tax treatment can affect the investor's net return and should be considered when evaluating bond investment."
+    },
+    {
+      "id": "S11Q03",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Rebalancing restores the portfolio to the intended asset allocation."
+    },
+    {
+      "id": "S11Q04",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Guidelines",
+      "answer": "Bonds can provide longer-term funding and diversify financing sources beyond short-term borrowing."
+    },
+    {
+      "id": "S11Q07",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "If market yield is above the coupon rate, the bond normally trades below par."
+    },
+    {
+      "id": "S11Q10",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> Derivatives"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Derivatives",
+      "answer": "RM1.15 premium."
+    },
+    {
+      "id": "S11Q11",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Periodic coupon income and repayment of principal at maturity according to the bond terms."
+    },
+    {
+      "id": "S11Q14",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "FEA Rules",
+      "newTopic": "FEA Rules",
+      "answer": "The salesperson should explain material product features, risks and differences objectively and leave the final decision to the client."
+    },
+    {
+      "id": "S11Q20",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms."
+    },
+    {
+      "id": "S11Q29",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "Option premium is calculated as intrinsic value plus time value."
+    },
+    {
+      "id": "S11Q38",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Higher potential return normally comes with higher uncertainty or risk."
+    },
+    {
+      "id": "S11Q41",
+      "reasons": [
+        "duplicate explanation text",
+        "topic corrected from content: Bonds -> Financial Markets"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Financial Markets",
+      "answer": "It supports longer-term equity and debt financing and gives investors market liquidity."
+    },
+    {
+      "id": "S11Q42",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "Fixed-rate bond prices and required yields have an inverse relationship."
+    },
+    {
+      "id": "S11Q47",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Sophisticated Investors -> Conduct"
+      ],
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "Conduct",
+      "answer": "Sophisticated status affects offering eligibility but does not permit false or misleading conduct."
+    },
+    {
+      "id": "S11Q49",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Yield to maturity links the current price with coupons and redemption proceeds."
+    },
+    {
+      "id": "S11Q60",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Portfolio"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Portfolio",
+      "answer": "A retiree dependent on savings generally needs liquidity, capital preservation and income rather than speculation."
+    },
+    {
+      "id": "S11Q61",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "If a customer insists on a higher-risk product, the risks and mismatch should be explained and documented under internal procedures."
+    },
+    {
+      "id": "S11Q63",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "A swap is an OTC agreement in which parties exchange cash flows such as interest-rate or currency cash flows."
+    },
+    {
+      "id": "S11Q76",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They are where new securities are issued and sold by issuers to investors."
+    },
+    {
+      "id": "S11Q79",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Regulators"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Regulators",
+      "answer": "The SC regulates capital and derivatives markets with investor protection as a core aim."
+    },
+    {
+      "id": "S11Q80",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "RM250,000 is protected."
+    },
+    {
+      "id": "S12Q01",
+      "reasons": [
+        "topic metadata mismatch: Financial Markets -> Derivatives"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Derivatives",
+      "answer": "RM1.15 premium."
+    },
+    {
+      "id": "S12Q05",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "CMSA",
+      "newTopic": "CMSA",
+      "answer": "Section 93 requires priority to be given to client orders, subject to limited exceptions."
+    },
+    {
+      "id": "S12Q07",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Derivatives"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Derivatives",
+      "answer": "The right, not the obligation, to sell the underlying or receive payoff as specified by the contract."
+    },
+    {
+      "id": "S12Q08",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "Eligible deposit protection is automatic and depositors do not pay a separate charge for it."
+    },
+    {
+      "id": "S12Q11",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "The product should fit the customer objectives, horizon, financial position and risk appetite."
+    },
+    {
+      "id": "S12Q17",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic metadata mismatch: Bonds -> PIDM",
+        "topic corrected from content: Bonds -> PIDM"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "PIDM",
+      "answer": "PIDM protects eligible deposits and eligible takaful or insurance benefits through separate frameworks."
+    },
+    {
+      "id": "S12Q20",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "They seek profit from temporary price differences across related markets or instruments."
+    },
+    {
+      "id": "S12Q24",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms."
+    },
+    {
+      "id": "S12Q28",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Regulators -> FEA Rules"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "FEA Rules",
+      "answer": "It enables foreign-currency trading and conversion for trade and investment."
+    },
+    {
+      "id": "S12Q30",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "Option premium equals intrinsic value plus time value."
+    },
+    {
+      "id": "S12Q32",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Fit and Proper",
+      "newTopic": "Fit and Proper",
+      "answer": "Relevant employees must meet applicable CPE requirements."
+    },
+    {
+      "id": "S12Q37",
+      "reasons": [
+        "topic metadata mismatch: Guidelines -> PIDM"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "PIDM",
+      "answer": "Only statements I and II should be selected."
+    },
+    {
+      "id": "S12Q39",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "RM250,000 per depositor per member bank."
+    },
+    {
+      "id": "S12Q40",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Sales personnel should avoid aggressive tactics and should not unfairly discredit competitors."
+    },
+    {
+      "id": "S12Q44",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Derivatives -> Portfolio"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Portfolio",
+      "answer": "Asset allocation spreads a portfolio across assets such as bonds, equities and cash."
+    },
+    {
+      "id": "S12Q46",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "To provide potential upside exposure to the underlying asset."
+    },
+    {
+      "id": "S12Q49",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "It is the risk that the issuer fails to meet coupon or principal obligations when due."
+    },
+    {
+      "id": "S12Q57",
+      "reasons": [
+        "duplicate explanation text",
+        "topic corrected from content: Bonds -> Islamic Banking"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Islamic Banking",
+      "answer": "Only statements I and II should be selected."
+    },
+    {
+      "id": "S12Q59",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "An option gives the buyer the right, but not the obligation, to buy or sell an underlying at a specified price."
+    },
+    {
+      "id": "S12Q60",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Higher potential return normally comes with higher uncertainty or risk."
+    },
+    {
+      "id": "S12Q65",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "CMSA",
+      "newTopic": "CMSA",
+      "answer": "Section 97 calls for disclosure."
+    },
+    {
+      "id": "S12Q74",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Regulators",
+      "answer": "The objective is to maintain price stability while supporting sustainable economic growth."
+    },
+    {
+      "id": "S12Q79",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "Participation rate determines how much underlying performance is passed to the investor."
+    },
+    {
+      "id": "S12Q80",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "If a customer insists on a higher-risk product, the risks and mismatch should be explained and documented under internal procedures."
+    },
+    {
+      "id": "S13Q07",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Guidelines",
+      "answer": "Brokers match buyers and sellers and earn fees or commissions."
+    },
+    {
+      "id": "S13Q20",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "Sophisticated Investors",
+      "answer": "LEAP Market shares are accessible only to sophisticated investors."
+    },
+    {
+      "id": "S13Q21",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "A swap is an OTC agreement in which parties exchange cash flows such as interest-rate or currency cash flows."
+    },
+    {
+      "id": "S13Q25",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Structured Products"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Structured Products",
+      "answer": "A zero-coupon component can support principal repayment, while an option component provides upside exposure."
+    },
+    {
+      "id": "S13Q36",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Portfolio"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Portfolio",
+      "answer": "Combining assets with low or imperfect correlation can reduce overall portfolio risk."
+    },
+    {
+      "id": "S13Q41",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "YTM is the return measure that uses price, coupon cash flows and maturity value."
+    },
+    {
+      "id": "S13Q46",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "Bond price and required yield move inversely for a fixed-rate bond."
+    },
+    {
+      "id": "S13Q50",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They allow investors to buy and sell securities that have already been issued."
+    },
+    {
+      "id": "S13Q57",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "They are issued below par and the investor earns return from the difference between purchase price and redemption value."
+    },
+    {
+      "id": "S13Q58",
+      "reasons": [
+        "topic metadata mismatch: Financial Markets -> Derivatives"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Derivatives",
+      "answer": "RM12."
+    },
+    {
+      "id": "S13Q59",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "CMSA",
+      "newTopic": "CMSA",
+      "answer": "Client orders must be given priority, subject to limited exceptions such as conditions attached to the order."
+    },
+    {
+      "id": "S13Q61",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Sophisticated Investors",
+      "newTopic": "Sophisticated Investors",
+      "answer": "A capital-market-product portfolio above RM1 million can qualify."
+    },
+    {
+      "id": "S13Q65",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "To accrete towards the protected principal amount at maturity."
+    },
+    {
+      "id": "S13Q70",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Best execution requires prompt and fair execution and truthful communication."
+    },
+    {
+      "id": "S13Q80",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "PIDM",
+      "newTopic": "PIDM",
+      "answer": "RM125,000 is protected."
+    },
+    {
+      "id": "S14Q01",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Rebalancing restores the portfolio to the intended asset allocation."
+    },
+    {
+      "id": "S14Q02",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "If a customer insists on a higher-risk product, the risks and mismatch should be explained and documented under internal procedures."
+    },
+    {
+      "id": "S14Q03",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Duration measures bond price sensitivity to yield changes."
+    },
+    {
+      "id": "S14Q05",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "Option premium equals intrinsic value plus time value."
+    },
+    {
+      "id": "S14Q07",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "Early termination uses prevailing market value, so proceeds can be below principal before maturity."
+    },
+    {
+      "id": "S14Q08",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Sales personnel should not switch or repurchase investments merely to generate commission or volume."
+    },
+    {
+      "id": "S14Q15",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "The issuer benefits because it can redeem the bond early under the call terms, usually."
+    },
+    {
+      "id": "S14Q18",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Product Disclosure"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Product Disclosure",
+      "answer": "It should explain material risk factors and liquidity or related facilities for structured products where required."
+    },
+    {
+      "id": "S14Q19",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Sophisticated Investors"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Sophisticated Investors",
+      "answer": "A capital-market-product portfolio above RM1 million can qualify."
+    },
+    {
+      "id": "S14Q22",
+      "reasons": [
+        "duplicate explanation text"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Guidelines",
+      "answer": "Principal protection depends on the product terms and issuer/guarantor creditworthiness."
+    },
+    {
+      "id": "S14Q23",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Financial Markets",
+      "answer": "They are borrowing instruments under which issuers pay interest/profit and repay principal according to the terms."
+    },
+    {
+      "id": "S14Q31",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "Potential upside exposure to the underlying."
+    },
+    {
+      "id": "S14Q34",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Portfolio"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Portfolio",
+      "answer": "Combining assets with low or imperfect correlation can reduce overall portfolio risk."
+    },
+    {
+      "id": "S14Q43",
+      "reasons": [
+        "topic metadata mismatch: Financial Markets -> Derivatives"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Derivatives",
+      "answer": "RM12.00, using spot less strike."
+    },
+    {
+      "id": "S14Q44",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "An option gives the buyer a right, not an obligation, to buy or sell the underlying at the exercise price."
+    },
+    {
+      "id": "S14Q47",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Derivatives"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Derivatives",
+      "answer": "An option gives the buyer the right, but not the obligation, to buy or sell an underlying at a specified price."
+    },
+    {
+      "id": "S14Q50",
+      "reasons": [
+        "topic metadata mismatch: Bonds -> PIDM"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "PIDM",
+      "answer": "Only statements I and II should be selected."
+    },
+    {
+      "id": "S14Q52",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "The required yield tends to rise and the bond price tends to fall."
+    },
+    {
+      "id": "S14Q56",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Regulators",
+      "newTopic": "Regulators",
+      "answer": "BNM reports to the Minister of Finance and promotes monetary and financial stability."
+    },
+    {
+      "id": "S14Q57",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "It determines the proportion of the underlying asset's positive performance credited to the investor."
+    },
+    {
+      "id": "S14Q60",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "If market yield is above the coupon rate, the bond normally trades below par."
+    },
+    {
+      "id": "S14Q67",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: KYC -> Portfolio"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "Portfolio",
+      "answer": "Higher potential return normally comes with higher uncertainty or risk."
+    },
+    {
+      "id": "S14Q68",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: FEA Rules -> Financial Markets"
+      ],
+      "previousTopic": "FEA Rules",
+      "newTopic": "Financial Markets",
+      "answer": "They are bilateral, privately negotiated markets that allow customised terms but involve counterparty risk."
+    },
+    {
+      "id": "S14Q69",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Portfolio"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Portfolio",
+      "answer": "Asset allocation spreads a portfolio across assets such as bonds, equities and cash."
+    },
+    {
+      "id": "S14Q71",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Structured Products",
+      "answer": "Upside equals the underlying gain multiplied by the participation rate, subject to terms."
+    },
+    {
+      "id": "S15Q03",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "A swap is an agreement to exchange cash flows according to agreed reference terms."
+    },
+    {
+      "id": "S15Q06",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "They are issued below par and the investor earns return from the difference between purchase price and redemption value."
+    },
+    {
+      "id": "S15Q10",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Product Disclosure"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Product Disclosure",
+      "answer": "It should explain material risk factors and liquidity or related facilities for structured products where required."
+    },
+    {
+      "id": "S15Q12",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Duration is the weighted average timing of cash flows and helps measure price sensitivity to yield changes."
+    },
+    {
+      "id": "S15Q13",
+      "reasons": [
+        "stale/generic explanation phrase confirmed",
+        "topic corrected from content: Derivatives -> Bonds"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Bonds",
+      "answer": "When the required market yield is higher than the coupon rate."
+    },
+    {
+      "id": "S15Q19",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Guidelines -> Bonds"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Bonds",
+      "answer": "The issuer has the right to redeem the bond before maturity under the stated call terms."
+    },
+    {
+      "id": "S15Q21",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Structured Products -> Bonds"
+      ],
+      "previousTopic": "Structured Products",
+      "newTopic": "Bonds",
+      "answer": "Current yield uses annual coupon divided by current price, while YTM considers coupon income plus capital gain/loss to maturity."
+    },
+    {
+      "id": "S15Q24",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "A premium price usually indicates the bond's coupon is above the market yield for similar risk and maturity."
+    },
+    {
+      "id": "S15Q25",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "KYC",
+      "newTopic": "KYC",
+      "answer": "If a customer insists on a higher-risk product, the risks and mismatch should be explained and documented under internal procedures."
+    },
+    {
+      "id": "S15Q26",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Guidelines -> Market Participants"
+      ],
+      "previousTopic": "Guidelines",
+      "newTopic": "Market Participants",
+      "answer": "To match buyers and sellers and earn a brokerage fee or commission."
+    },
+    {
+      "id": "S15Q27",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Conduct",
+      "newTopic": "Conduct",
+      "answer": "Sales personnel should avoid aggressive sales practices and unfairly discrediting competitors."
+    },
+    {
+      "id": "S15Q30",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Derivatives",
+      "answer": "A swap is an OTC agreement in which parties exchange cash flows such as interest-rate or currency cash flows."
+    },
+    {
+      "id": "S15Q35",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "Sensitivity of bond price to changes in yield."
+    },
+    {
+      "id": "S15Q37",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "The investor may earn less than YTM to final maturity and must reinvest earlier at prevailing rates."
+    },
+    {
+      "id": "S15Q38",
+      "reasons": [
+        "stale/generic explanation phrase confirmed"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "YTM measures the return implied by price, coupons and redemption at maturity."
+    },
+    {
+      "id": "S15Q40",
+      "reasons": [
+        "topic metadata mismatch: Financial Markets -> Derivatives"
+      ],
+      "previousTopic": "Financial Markets",
+      "newTopic": "Derivatives",
+      "answer": "RM30."
+    },
+    {
+      "id": "S15Q41",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "For a fixed-rate bond, price and required yield move inversely."
+    },
+    {
+      "id": "S15Q44",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Derivatives -> Financial Markets"
+      ],
+      "previousTopic": "Derivatives",
+      "newTopic": "Financial Markets",
+      "answer": "Futures are exchange-traded and standardised, while forwards are privately negotiated OTC contracts."
+    },
+    {
+      "id": "S15Q46",
+      "reasons": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Bonds",
+      "answer": "A trustee acts for bondholders under the trust deed and monitors issuer obligations where applicable."
+    },
+    {
+      "id": "S15Q49",
+      "reasons": [
+        "copied/wrong-domain explanation phrase",
+        "topic corrected from content: Bonds -> Market Participants"
+      ],
+      "previousTopic": "Bonds",
+      "newTopic": "Market Participants",
+      "answer": "A broker matches buyers and sellers or executes client orders for a fee or commission."
+    }
+  ],
+  "skipped": [
+    {
+      "id": "S01Q79",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Regulators",
+      "inferred": "CMSA",
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S03Q08",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Bonds",
+      "inferred": null,
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S03Q70",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Regulators",
+      "inferred": "Regulators",
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S04Q06",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Bonds",
+      "inferred": "Bonds",
+      "predicted": "AML",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S04Q27",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Derivatives",
+      "inferred": "Bonds",
+      "predicted": "AML",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S04Q62",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Bonds",
+      "inferred": "Bonds",
+      "predicted": "AML",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S05Q03",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Bonds",
+      "inferred": "Bonds",
+      "predicted": "AML",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S05Q05",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S05Q11",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "Product Disclosure",
+      "inferred": "Product Disclosure",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S05Q80",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Structured Products",
+      "inferred": null,
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S06Q21",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "CMSA",
+      "inferred": "CMSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S07Q39",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S07Q67",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S07Q68",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "Regulators",
+      "inferred": null,
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S08Q35",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S08Q73",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S09Q35",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S09Q36",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S09Q73",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Derivatives",
+      "inferred": "Derivatives",
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S10Q47",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Bonds",
+      "inferred": "Bonds",
+      "predicted": "AML",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S11Q27",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S11Q36",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S11Q37",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Bonds",
+      "inferred": "Bonds",
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S11Q65",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S11Q71",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Conduct",
+      "inferred": "Conduct",
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S12Q02",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S12Q25",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "CMSA",
+      "inferred": "CMSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S12Q69",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Structured Products",
+      "inferred": "Structured Products",
+      "predicted": "PIDM",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S13Q40",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S13Q77",
+      "categories": [
+        "copied/wrong-domain explanation phrase"
+      ],
+      "topic": "FSA",
+      "inferred": "FSA",
+      "predicted": null,
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    },
+    {
+      "id": "S15Q29",
+      "categories": [
+        "topic metadata mismatch"
+      ],
+      "topic": "Guidelines",
+      "inferred": "Bonds",
+      "predicted": "Structured Products",
+      "note": "Audit flag not confirmed from stem/answer/explanation, or explanation was already specific enough."
+    }
+  ],
+  "validationNote": "Independent validation ignores stale-marker text when it is part of the correct answer itself; regenerated explanations no longer echo wrong-option text."
+}

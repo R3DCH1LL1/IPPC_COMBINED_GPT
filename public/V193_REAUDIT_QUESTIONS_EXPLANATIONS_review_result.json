@@ -1,0 +1,398 @@
+{
+  "auditFile": "C:/Users/Chee Hong/Desktop/V193_REAUDIT_QUESTIONS_EXPLANATIONS.md",
+  "checkedAgainst": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "detailedRowsInMarkdown": 78,
+  "uniqueQuestionsInDetailedRows": 76,
+  "uniqueQuestionsConfirmedAndFixed": 69,
+  "detailedPatchActions": 69,
+  "uniqueQuestionsNotConfirmedOrAlreadyAcceptable": 7,
+  "validationAfterPatch": {
+    "detailedRowsStillMatchingWrongDomainOrGenericPatterns": 0,
+    "orphanWhetherStemsRemaining": 0
+  },
+  "note": "Some questions appeared in more than one audit section, so row count and unique-question count differ. This review covers the detailed rows present in the markdown re-audit. Headline aggregate warnings were not accompanied by a full row-level JSON file.",
+  "fixes": [
+    {
+      "id": "S01Q02",
+      "category": "Critical explanation domain",
+      "action": "Removed AML filler from market-structure explanation."
+    },
+    {
+      "id": "S01Q03",
+      "category": "Critical explanation domain",
+      "action": "Corrected topic and removed AML filler."
+    },
+    {
+      "id": "S01Q04",
+      "category": "Critical explanation domain",
+      "action": "Removed AML filler from Labuan FSA explanation."
+    },
+    {
+      "id": "S01Q07",
+      "category": "Critical explanation domain",
+      "action": "Removed AML filler from exchange-market explanation."
+    },
+    {
+      "id": "S01Q17",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with qualification-specific explanation."
+    },
+    {
+      "id": "S01Q30",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Portfolio and fixed suitability explanation."
+    },
+    {
+      "id": "S01Q33",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with investor-category threshold reasoning."
+    },
+    {
+      "id": "S01Q47",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Debt Securities and fixed money-market explanation."
+    },
+    {
+      "id": "S01Q50",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with bond-issuance rationale."
+    },
+    {
+      "id": "S01Q53",
+      "category": "Critical explanation domain",
+      "action": "Corrected topic and structured-product explanation."
+    },
+    {
+      "id": "S01Q56",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with option definition."
+    },
+    {
+      "id": "S01Q65",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with principal-protection explanation."
+    },
+    {
+      "id": "S01Q66",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with structured-product component explanation."
+    },
+    {
+      "id": "S01Q71",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with swap definition."
+    },
+    {
+      "id": "S01Q76",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with early-redemption valuation explanation."
+    },
+    {
+      "id": "S01Q78",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Structured Products and fixed bearish payoff explanation."
+    },
+    {
+      "id": "S01Q79",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML/PIDM filler with regulator-Act explanation."
+    },
+    {
+      "id": "S02Q20",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with early-termination explanation."
+    },
+    {
+      "id": "S02Q21",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with product-understanding rationale."
+    },
+    {
+      "id": "S02Q41",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Regulators and fixed Labuan FSA explanation."
+    },
+    {
+      "id": "S02Q55",
+      "category": "Critical explanation domain",
+      "action": "Removed market-structure wording from fit-and-proper statements."
+    },
+    {
+      "id": "S02Q73",
+      "category": "Critical explanation domain",
+      "action": "Replaced AML filler with FEA payment explanation."
+    },
+    {
+      "id": "S11Q70",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Conduct and removed AML filler."
+    },
+    {
+      "id": "S11Q71",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Conduct and fixed churning explanation."
+    },
+    {
+      "id": "S12Q38",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Islamic Banking and removed AML filler."
+    },
+    {
+      "id": "S14Q78",
+      "category": "Critical explanation domain",
+      "action": "Removed AML filler from FEA explanation."
+    },
+    {
+      "id": "S15Q05",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Islamic Banking and removed AML filler."
+    },
+    {
+      "id": "S18Q68",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Sophisticated Investors and fixed criteria explanation."
+    },
+    {
+      "id": "S20Q02",
+      "category": "Critical explanation domain",
+      "action": "Removed AML filler from option-component explanation."
+    },
+    {
+      "id": "S20Q07",
+      "category": "Critical explanation domain",
+      "action": "Changed topic to Debt Securities and fixed tenor explanation."
+    },
+    {
+      "id": "S01Q05",
+      "category": "Metadata/domain",
+      "action": "Changed topic from AML to CMSA and fixed explanation."
+    },
+    {
+      "id": "S01Q11",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Islamic Banking and fixed explanation."
+    },
+    {
+      "id": "S01Q13",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Guidelines and corrected BNM-role filler."
+    },
+    {
+      "id": "S01Q19",
+      "category": "Metadata/domain",
+      "action": "Replaced generic investor classification explanation."
+    },
+    {
+      "id": "S01Q28",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Product Disclosure and made disclosure explanation specific."
+    },
+    {
+      "id": "S01Q29",
+      "category": "Metadata/domain",
+      "action": "Made CMSA prospectus explanation specific."
+    },
+    {
+      "id": "S01Q34",
+      "category": "Metadata/domain",
+      "action": "Replaced market-structure filler in accredited-investor explanation."
+    },
+    {
+      "id": "S01Q42",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Sophisticated Investors and fixed explanation."
+    },
+    {
+      "id": "S01Q48",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Debt Securities and fixed explanation."
+    },
+    {
+      "id": "S02Q15",
+      "category": "Metadata/domain",
+      "action": "Changed topic to KYC and clarified suitability inputs."
+    },
+    {
+      "id": "S02Q16",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Debt Securities and fixed liquidity-risk explanation."
+    },
+    {
+      "id": "S02Q18",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Structured Products and made statement analysis specific."
+    },
+    {
+      "id": "S02Q23",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Structured Products and removed AML filler."
+    },
+    {
+      "id": "S02Q24",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Structured Products and fixed explanation."
+    },
+    {
+      "id": "S02Q25",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Structured Products and clarified market risk."
+    },
+    {
+      "id": "S02Q27",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Product Disclosure and kept specific statement rationale."
+    },
+    {
+      "id": "S02Q34",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Financial Markets and fixed fiscal-policy explanation."
+    },
+    {
+      "id": "S02Q35",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Regulators and fixed SC function explanation."
+    },
+    {
+      "id": "S02Q36",
+      "category": "Metadata/domain",
+      "action": "Changed topic from AML to Market Structure and fixed Bursa explanation."
+    },
+    {
+      "id": "S02Q39",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Market Structure and fixed Bursa statement analysis."
+    },
+    {
+      "id": "S02Q48",
+      "category": "Metadata/domain",
+      "action": "Made product transparency explanation specific."
+    },
+    {
+      "id": "S02Q50",
+      "category": "Metadata/domain",
+      "action": "Changed topic to KYC and fixed suitability/misrepresentation explanation."
+    },
+    {
+      "id": "S02Q52",
+      "category": "Metadata/domain",
+      "action": "Changed topic to CMSA and fixed debenture trustee explanation."
+    },
+    {
+      "id": "S02Q58",
+      "category": "Metadata/domain",
+      "action": "Changed topic to AML and fixed layering explanation."
+    },
+    {
+      "id": "S02Q65",
+      "category": "Metadata/domain",
+      "action": "Made portfolio explanation specific."
+    },
+    {
+      "id": "S02Q70",
+      "category": "Metadata/domain",
+      "action": "Made KYC benefit explanation specific."
+    },
+    {
+      "id": "S02Q74",
+      "category": "Metadata/domain",
+      "action": "Changed topic to Debt Securities and fixed rating-requirement explanation."
+    },
+    {
+      "id": "S02Q75",
+      "category": "Metadata/domain",
+      "action": "Clarified retail PDS issuance requirements."
+    },
+    {
+      "id": "S02Q76",
+      "category": "Metadata/domain",
+      "action": "Made eligible-issuer explanation specific."
+    },
+    {
+      "id": "S02Q78",
+      "category": "Metadata/domain",
+      "action": "Changed topic to PIDM and fixed protection explanation."
+    },
+    {
+      "id": "S03Q41",
+      "category": "Metadata/domain",
+      "action": "Fixed mismatched explanations for sales-conduct statements."
+    },
+    {
+      "id": "S03Q77",
+      "category": "Metadata/domain",
+      "action": "Fixed sales-conduct statement explanations."
+    },
+    {
+      "id": "S05Q78",
+      "category": "Calculation",
+      "action": "Added PIDM protection working."
+    },
+    {
+      "id": "S08Q68",
+      "category": "Calculation",
+      "action": "Removed false numeric framing and made FEA explanation specific."
+    },
+    {
+      "id": "S17Q52",
+      "category": "Calculation/Language",
+      "action": "Fixed orphan stem and added PIDM working."
+    },
+    {
+      "id": "S01Q25",
+      "category": "Language",
+      "action": "Fixed awkward phrasing in explanation."
+    },
+    {
+      "id": "S01Q44",
+      "category": "Language",
+      "action": "Clarified PIDM wording."
+    },
+    {
+      "id": "S02Q14",
+      "category": "Language",
+      "action": "Fixed malformed stem and statement explanation."
+    },
+    {
+      "id": "S18Q34",
+      "category": "Language",
+      "action": "Fixed orphan stem and made tipping-off explanation specific."
+    }
+  ],
+  "notPatched": [
+    {
+      "id": "S03Q03",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    },
+    {
+      "id": "S03Q08",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    },
+    {
+      "id": "S03Q28",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    },
+    {
+      "id": "S03Q32",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    },
+    {
+      "id": "S03Q44",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    },
+    {
+      "id": "S03Q46",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    },
+    {
+      "id": "S03Q47",
+      "section": "Metadata/domain mismatch warnings",
+      "reason": "Not patched: current row was already specific/acceptable or audit warning was heuristic-only."
+    }
+  ]
+}

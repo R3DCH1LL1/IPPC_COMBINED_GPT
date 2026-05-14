@@ -1,0 +1,46 @@
+{
+  "sourceAudit": "C:/Users/Chee Hong/Desktop/IPPC_AICB/V193_GO_REFINED_FINAL_RERUN_AUDIT.md",
+  "questionBank": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "confirmedAndFixed": 2,
+  "fixed": [
+    {
+      "id": "S07Q67",
+      "issue": "option analysis treated permitted police/court-order examples as breaches and option B had a grammar error",
+      "action": "fixed option B and rewrote explanation so C is the clear breach"
+    },
+    {
+      "id": "S21Q01",
+      "issue": "option C was also potentially problematic as written",
+      "action": "rewrote option C as a clearly authorised internal compliance disclosure and rewrote explanation"
+    }
+  ],
+  "exactDuplicateExplanationGroups": 0,
+  "duplicateStemGroups": 0,
+  "invalidAnswerIndexes": [],
+  "emptyExplanations": [],
+  "answerLetterMismatches": [],
+  "spotCheck": {
+    "S07Q67": {
+      "topic": "FSA",
+      "options": [
+        "A bank discloses account information to the police in response to a written request signed by an officer of at least inspector rank.",
+        "A bank discloses account information after receiving the customer's written consent for that specific disclosure.",
+        "A bank's compliance manager shares a customer's account details with a competitor bank's CEO during a networking event, claiming it helps them price their services competitively.",
+        "A bank discloses account information pursuant to a court order requiring production of records."
+      ],
+      "answer": "A bank's compliance manager shares a customer's account details with a competitor bank's CEO during a networking event, claiming it helps them price their services competitively.",
+      "explanation": "Correct answer: C - A bank's compliance manager shares a customer's account details with a competitor bank's CEO during a networking event, claiming it helps them price their services competitively.\nFSA Section 133 protects customer information. Disclosure is permitted only where the FSA/IFSA framework recognises a valid consent, legal, court, regulatory or statutory ground.\n\nOption analysis:\nA. Incorrect - this describes a legal-authority scenario, so it is not the clearest breach in the options.\nB. Incorrect - specific written customer consent is a recognised permitted-disclosure basis.\nC. Correct - sharing account details with a competitor at a networking event for pricing or cross-selling has no customer consent, legal authority or regulatory basis.\nD. Incorrect - disclosure pursuant to a court order is a recognised permitted-disclosure ground."
+    },
+    "S21Q01": {
+      "topic": "FSA",
+      "options": [
+        "Disclose customer information after receiving the customer's written permission for that specific disclosure.",
+        "Disclose client holdings to a third-party marketer for cross-selling.",
+        "Disclose customer information to an authorised internal compliance officer for a documented regulatory review.",
+        "Confirm that the secrecy obligation can continue even after employment ends."
+      ],
+      "answer": "Disclose client holdings to a third-party marketer for cross-selling.",
+      "explanation": "Correct answer: B - Disclose client holdings to a third-party marketer for cross-selling.\nUnder the FSA/IFSA permitted-disclosure framework, customer information should not be released unless a recognised consent, legal, regulatory or internal-authority basis applies.\n\nOption analysis:\nA. Incorrect - written customer permission for the specific disclosure is a recognised permitted-disclosure basis.\nB. Correct - giving client holdings to a third-party marketer for cross-selling has no proper permitted-disclosure basis and is the most problematic option.\nC. Incorrect - disclosure to an authorised internal compliance officer for a documented regulatory review is framed as a controlled internal/legal basis, not the most problematic disclosure.\nD. Incorrect - this is a true secrecy principle, not a disclosure that creates the problem asked for in the stem."
+    }
+  }
+}

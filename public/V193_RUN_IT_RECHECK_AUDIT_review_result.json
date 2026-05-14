@@ -1,0 +1,161 @@
+{
+  "sourceAudit": "C:/Users/Chee Hong/Desktop/IPPC_AICB/V193_RUN_IT_RECHECK_AUDIT.md",
+  "questionBank": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "auditDuplicateExplanationGroupsListed": 8,
+  "listedDuplicateExplanationStillReal": 0,
+  "exactDuplicateExplanationGroups": 0,
+  "duplicateStemGroups": 0,
+  "duplicateStems": [],
+  "fixedRows": 8,
+  "fixed": [
+    {
+      "id": "S21Q79",
+      "topic": "CMSA",
+      "answer": "Accepting deposits as a licensed banking activity.",
+      "category": "duplicate stem",
+      "action": "rewrote weaker duplicate S21Q79 and retained S22Q20 as the other CMSA banking-activity item"
+    },
+    {
+      "id": "S23Q64",
+      "topic": "FSA",
+      "answer": "I, II and III only.",
+      "category": "repeated Roman-statement block",
+      "action": "rewrote one side of S21Q32/S23Q64"
+    },
+    {
+      "id": "S23Q05",
+      "topic": "CMSA",
+      "answer": "I and II only.",
+      "category": "repeated Roman-statement block",
+      "action": "rewrote one side of S21Q57/S23Q05"
+    },
+    {
+      "id": "S23Q25",
+      "topic": "Structured Products",
+      "answer": "I, II and III only.",
+      "category": "repeated Roman-statement block",
+      "action": "rewrote one side of S22Q05/S23Q25"
+    },
+    {
+      "id": "S24Q46",
+      "topic": "Derivatives",
+      "answer": "I, II and III only.",
+      "category": "repeated Roman-statement block",
+      "action": "rewrote one side of S23Q54/S24Q46"
+    },
+    {
+      "id": "S07Q12",
+      "topic": "FSA",
+      "answer": "Do not disclose unless proper lawful authority or a recognised permitted-disclosure basis is verified.",
+      "category": "answer-length cue and topic/explanation correction",
+      "action": "balanced correct option and retagged from Regulators to FSA"
+    },
+    {
+      "id": "S22Q21",
+      "topic": "Market Participants",
+      "answer": "An arbitrager exploiting temporary price differences between similar instruments.",
+      "category": "answer-length cue",
+      "action": "balanced correct option and replaced generic explanation"
+    },
+    {
+      "id": "S22Q66",
+      "topic": "Structured Products",
+      "answer": "An equity index made up of multiple constituent shares.",
+      "category": "answer-length cue",
+      "action": "balanced correct option and replaced wrong-domain distractors"
+    }
+  ],
+  "invalidAnswerIndexes": [],
+  "emptyExplanations": [],
+  "answerLetterMismatches": [],
+  "finalValidationSpotCheck": {
+    "S21Q79": {
+      "topic": "CMSA",
+      "answer": "Accepting deposits as a licensed banking activity.",
+      "optionLengths": [
+        67,
+        50,
+        54,
+        49
+      ],
+      "stem": "A trainee is separating CMSA Schedule 2 capital-market activities from ordinary banking business. Which item should be classified outside CMSA Schedule 2 regula"
+    },
+    "S23Q64": {
+      "topic": "FSA",
+      "answer": "I, II and III only.",
+      "optionLengths": [
+        19,
+        19,
+        20,
+        18
+      ],
+      "stem": "A bank officer is reviewing whether customer information may be disclosed under FSA secrecy rules. Which statements are correct? I. A former employee can remain"
+    },
+    "S23Q05": {
+      "topic": "CMSA",
+      "answer": "I and II only.",
+      "optionLengths": [
+        15,
+        14,
+        16,
+        14
+      ],
+      "stem": "Which statements correctly reflect CMSA investor-protection controls? I. False or misleading statements to investors can create liability. II. Client orders gen"
+    },
+    "S23Q25": {
+      "topic": "Structured Products",
+      "answer": "I, II and III only.",
+      "optionLengths": [
+        19,
+        20,
+        18,
+        19
+      ],
+      "stem": "A client is assessing a principal-protected structured product before maturity. Which statements are correct? I. Principal protection depends on the product ter"
+    },
+    "S24Q46": {
+      "topic": "Derivatives",
+      "answer": "I, II and III only.",
+      "optionLengths": [
+        14,
+        20,
+        19,
+        19
+      ],
+      "stem": "Which statements correctly distinguish common derivative rights and trading formats? I. An option buyer has a right, not an obligation, to exercise. II. Futures"
+    },
+    "S07Q12": {
+      "topic": "FSA",
+      "answer": "Do not disclose unless proper lawful authority or a recognised permitted-disclosure basis is verified.",
+      "optionLengths": [
+        77,
+        102,
+        85,
+        63
+      ],
+      "stem": "In a case review, a compliance officer receives an urgent call from someone claiming to be a police officer, requesting immediate verbal disclosure of a custome"
+    },
+    "S22Q21": {
+      "topic": "Market Participants",
+      "answer": "An arbitrager exploiting temporary price differences between similar instruments.",
+      "optionLengths": [
+        61,
+        57,
+        81,
+        67
+      ],
+      "stem": "A market participant trades a temporary pricing gap between similar debt instruments. Which role is being performed?"
+    },
+    "S22Q66": {
+      "topic": "Structured Products",
+      "answer": "An equity index made up of multiple constituent shares.",
+      "optionLengths": [
+        53,
+        54,
+        53,
+        55
+      ],
+      "stem": "A client wants equity-linked exposure with less single-company concentration risk. Which underlying is generally more diversified than one ordinary share?"
+    }
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "auditFile": "C:/Users/Chee Hong/Desktop/V193_FULL_QUESTION_EXPLANATION_AUDIT.md",
+  "checkedAgainst": "C:/Users/Chee Hong/Documents/New project/ippc-work/ippc-github-vercel-v193-set19-clo-metadata-patch/public/questions.packed.json",
+  "visibleDetailedFlags": 120,
+  "confirmedAndFixed": 49,
+  "notConfirmedOrAlreadyAcceptable": 71,
+  "validationAfterPatch": {
+    "visibleDetailedFlagsStillReproducing": 0
+  },
+  "caveat": "The markdown audit references a separate full JSON report for every flag, but that JSON report was not provided in the request. This review covers all detailed flags visible in the markdown file.",
+  "fixes": [
+    {
+      "id": "S01Q75",
+      "category": "Explanation Quality",
+      "action": "Replaced generic bond wording with duration-specific reasoning."
+    },
+    {
+      "id": "S03Q45",
+      "category": "Explanation Quality",
+      "action": "Clarified zero-coupon plus option structure and retained statement-combination logic."
+    },
+    {
+      "id": "S05Q03",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Bonds and made embedded-option duration explanation specific."
+    },
+    {
+      "id": "S06Q71",
+      "category": "Language/Explanation",
+      "action": "Fixed typo in statement III and tightened structured-product risk explanation."
+    },
+    {
+      "id": "S07Q69",
+      "category": "Explanation Quality",
+      "action": "Removed loose payoff wording and tied the answer to dividend entitlement."
+    },
+    {
+      "id": "S07Q71",
+      "category": "Explanation Quality",
+      "action": "Replaced structured-product fallback with duration-hedging reasoning."
+    },
+    {
+      "id": "S08Q57",
+      "category": "Explanation Quality",
+      "action": "Made immunisation explanation specific and removed generic option text."
+    },
+    {
+      "id": "S11Q08",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Structured Products and clarified early-termination risk."
+    },
+    {
+      "id": "S13Q72",
+      "category": "Explanation Quality",
+      "action": "Replaced generic statement I wording with product-specific rationale."
+    },
+    {
+      "id": "S17Q15",
+      "category": "Explanation Quality",
+      "action": "Replaced generic structured-product statement analysis."
+    },
+    {
+      "id": "S03Q16",
+      "category": "Explanation Quality",
+      "action": "Removed generic KYC fallback from documentation options."
+    },
+    {
+      "id": "S03Q62",
+      "category": "Explanation Quality",
+      "action": "Made CMSA licensing explanation specific."
+    },
+    {
+      "id": "S04Q06",
+      "category": "Explanation Quality",
+      "action": "Explained the actual risk-premium components."
+    },
+    {
+      "id": "S04Q07",
+      "category": "Explanation Quality",
+      "action": "Made RP-status explanation specific."
+    },
+    {
+      "id": "S04Q10",
+      "category": "Explanation Quality",
+      "action": "Replaced generic yield-curve wording with theory-specific explanation."
+    },
+    {
+      "id": "S04Q12",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Bonds and fixed WI-trading explanation."
+    },
+    {
+      "id": "S04Q13",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Derivatives and corrected option concept explanation."
+    },
+    {
+      "id": "S04Q17",
+      "category": "Explanation Quality",
+      "action": "Explained current-yield versus YTM relationship."
+    },
+    {
+      "id": "S04Q36",
+      "category": "Explanation Quality",
+      "action": "Made trust-money investor category explanation specific."
+    },
+    {
+      "id": "S04Q37",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Sophisticated Investors and clarified threshold."
+    },
+    {
+      "id": "S04Q39",
+      "category": "Explanation Quality",
+      "action": "Clarified corporate-bond interest tax exemption."
+    },
+    {
+      "id": "S04Q41",
+      "category": "Answer/Explanation",
+      "action": "Expanded correct option so both transactions are classified."
+    },
+    {
+      "id": "S04Q42",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Bonds and fixed callable-bond explanation."
+    },
+    {
+      "id": "S04Q43",
+      "category": "Explanation Quality",
+      "action": "Removed bond fallback from portfolio explanation."
+    },
+    {
+      "id": "S04Q46",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to CMSA and explained Section 93 specifically."
+    },
+    {
+      "id": "S04Q47",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Guidelines and clarified product-governance aim."
+    },
+    {
+      "id": "S04Q51",
+      "category": "Option/Explanation",
+      "action": "Made correct option distinguish auction from reopening."
+    },
+    {
+      "id": "S04Q58",
+      "category": "Explanation Quality",
+      "action": "Clarified premium bond price/yield relationship."
+    },
+    {
+      "id": "S04Q59",
+      "category": "Explanation Quality",
+      "action": "Explained discount-security return source."
+    },
+    {
+      "id": "S04Q60",
+      "category": "Explanation Quality",
+      "action": "Made PHS disclosure purpose specific."
+    },
+    {
+      "id": "S04Q62",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Bonds and corrected longest-duration explanation."
+    },
+    {
+      "id": "S04Q65",
+      "category": "Explanation Quality",
+      "action": "Made PEP/EDD explanation specific."
+    },
+    {
+      "id": "S05Q08",
+      "category": "Explanation Quality",
+      "action": "Explained approximate YTM denominator assumption."
+    },
+    {
+      "id": "S05Q15",
+      "category": "Answer/Explanation",
+      "action": "Corrected answer from Sophisticated investors to Retail investors."
+    },
+    {
+      "id": "S05Q16",
+      "category": "Option/Explanation",
+      "action": "Made option C answer the comparison asked in the stem."
+    },
+    {
+      "id": "S05Q17",
+      "category": "Explanation Quality",
+      "action": "Explained why yield quotation is more comparable than price alone."
+    },
+    {
+      "id": "S05Q21",
+      "category": "Explanation Quality",
+      "action": "Made CPE explanation specific."
+    },
+    {
+      "id": "S05Q34",
+      "category": "Explanation Quality",
+      "action": "Explained duration strategy for falling rates."
+    },
+    {
+      "id": "S05Q35",
+      "category": "Explanation Quality",
+      "action": "Clarified Section 92(5) suitability protection."
+    },
+    {
+      "id": "S05Q37",
+      "category": "Explanation Quality",
+      "action": "Made BNM role explanation specific."
+    },
+    {
+      "id": "S05Q38",
+      "category": "Explanation Quality",
+      "action": "Clarified risk-profile mismatch documentation."
+    },
+    {
+      "id": "S05Q40",
+      "category": "Explanation Quality",
+      "action": "Explained current-yield formula."
+    },
+    {
+      "id": "S05Q41",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Financial Markets and clarified capital-market function."
+    },
+    {
+      "id": "S05Q45",
+      "category": "Explanation Quality",
+      "action": "Made PDS explanation specific."
+    },
+    {
+      "id": "S05Q47",
+      "category": "Answer/Calculation",
+      "action": "Corrected IRS option and added netting calculation."
+    },
+    {
+      "id": "S05Q54",
+      "category": "Explanation Quality",
+      "action": "Clarified Islamic late-payment treatment."
+    },
+    {
+      "id": "S05Q57",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Islamic Banking and clarified sukuk treatment."
+    },
+    {
+      "id": "S05Q58",
+      "category": "Metadata/Explanation",
+      "action": "Changed topic to Financial Markets and explained five-market list."
+    },
+    {
+      "id": "S05Q60",
+      "category": "Explanation Quality",
+      "action": "Replaced price-discounting logic with reinvestment-rate explanation."
+    }
+  ]
+}
