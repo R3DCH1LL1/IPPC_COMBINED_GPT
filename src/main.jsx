@@ -144,7 +144,11 @@ async function loadPacked(){
     styleOverride:q[7]||''
   })));
 }
-const setLabel=n=>Number(n)>20?`Hard ${Number(n)-20}`:`Set ${n}`;
+const SPECIAL_SET_LABELS={26:'Acts/Reg/Fine'};
+const setLabel=n=>{
+  const num=Number(n);
+  return SPECIAL_SET_LABELS[num]|| (num>20?`Hard ${num-20}`:`Set ${num}`);
+};
 function Pill({children}){return <span className="soft-pill">{children}</span>}
 function isCalculationQuestion(q){return Boolean(q?.calc)||/\bFormula\s*:/i.test(String(q?.explanation||''))||/\b(calculate|computed?|current yield|bond value|present value|approximate YTM|yield to maturity|option payoff|intrinsic value|time value|modified duration|accrued interest|dirty price|clean price|participation rate|annualised yield|annualized yield|real yield|Fisher relation)\b/i.test(String(q?.text||''));}
 function extractExplanationFormula(explanation){
@@ -412,7 +416,7 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
     {settingsOpen&&<div className="settings-overlay"><button className="settings-backdrop" onClick={()=>setSettingsOpen(false)} aria-label="Close settings"/><aside className="settings-drawer"><div className="settings-head"><div><span className="eyebrow muted">Settings</span><h3>Display preferences</h3></div><button className="drawer-close-btn" onClick={()=>setSettingsOpen(false)} aria-label="Close settings">×</button></div><div className="settings-body"><div className="settings-row settings-theme-row"><span>Theme</span><CurtainThemeButton theme={theme} onThemeChange={toggleTheme} label /></div><button className="settings-row" onClick={()=>setCompact(v=>!v)}><span>Compact mode</span><strong>{compact?'On':'Off'}</strong></button><button className="settings-row" onClick={()=>{localStorage.removeItem(HISTORY_KEY);localStorage.removeItem(WRONG_KEY);setHistory([])}}><span>Reset local progress</span><strong>Clear</strong></button></div></aside></div>}
 
     {screen==='home'&&<main className="page page-home">
-      <BookPageHead eyebrow="Examination hall · 80 questions · 120 minutes" title="The" em="examination hall" lede="Generate a fresh sitting, drill the topics you keep losing, or build a custom paper from the bank." stats={[["2,000","Question bank"],["25","Sets + 5 Hard"],["12/36/32","CLO split"],["120m","Per sitting"]]} />
+      <BookPageHead eyebrow="Examination hall · 80 questions · 120 minutes" title="The" em="examination hall" lede="Generate a fresh sitting, drill the topics you keep losing, or build a custom paper from the bank." stats={[["2,064","Question bank"],["26","Sets + legal"],["12/36/32","CLO split"],["120m","Per sitting"]]} />
       <section className="hero-card surface"><div className="hero-copy"><span className="eyebrow">Mock generator mode</span><h1>Turn the bank into a real revision dashboard.</h1><p>Generated mocks lock to 80 questions and the 12/36/32 CLO split. Practice mode supports wrong-question drilling, confidence marking, review mode, and saved attempt history.</p><div className="quick-start-block"><h2>Quick Start</h2><div className="hero-actions"><button className="primary-btn" onClick={()=>start('generated')}>Generate fresh mock</button><button className="primary-btn practice-quick-btn" onClick={()=>start('practice')}>Practice</button><button className="secondary-btn calc-quick-btn" onClick={()=>start('calc')}>Calculation drill</button><button className="secondary-btn wrong-quick-btn" onClick={()=>start('wrong')}>Wrong questions only</button><button className="secondary-btn bank-quick-btn" onClick={()=>setScreen('bank')}>Browse bank</button></div></div></div><div className="hero-stats-grid"><div className="stat-card accent"><strong>80</strong><span>Generated mock questions</span></div><div className="stat-card"><strong>12</strong><span>CLO1 questions</span></div><div className="stat-card"><strong>36</strong><span>CLO2 questions</span></div><div className="stat-card"><strong>32</strong><span>CLO3 questions</span></div></div></section>
       <section className="home-grid"><div className="surface config-card"><div className="section-head"><div><h2>Build a custom session</h2><p>Use mock generator for exam simulation, or custom filters for targeted revision.</p></div></div><div className="mode-switch"><button className={mode==='generated'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('generated');setCount(80)}}><span>Mock generator</span><small>Fresh 80 Q · 2 hours · 12/36/32 split</small></button><button className={mode==='hard'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('hard');setCount(80)}}><span>Hard Mode</span><small>5 advanced sets · only hard traps</small></button><button className={mode==='calc'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('calc');setCount(80)}}><span>Calculation drill</span><small>Bonds · options · payoffs</small></button><button className={mode==='mock'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('mock');setCount(80)}}><span>Custom timed</span><small>Your filters · timed</small></button><button className={mode==='practice'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('practice');setCount(80)}}><span>Practice</span><small>Instant answers</small></button><button className={mode==='wrong'?'mode-btn active-mode':'mode-btn'} onClick={()=>{setMode('wrong');setCount(80)}}><span>Wrong only</span><small>Drill previous mistakes</small></button></div>{mode==='hard'&&<div className="control-block hard-mode-panel"><div className="section-label-row"><h3>Advanced Hard Mode</h3><span className="soft-pill">80 Q · 2 hours · 100% Hard</span></div><p className="count-helper">Choose one fixed hard set, or use Mixed to draw 80 questions across all five advanced sets.</p><div className="chip-group"><button className={hardSet==='mixed'?'chip chip-on':'chip'} onClick={()=>setHardSet('mixed')}>Mixed hard</button>{[1,2,3,4,5].map(n=><button key={n} className={hardSet===String(n)?'chip chip-on':'chip'} onClick={()=>setHardSet(String(n))}>Hard {n}</button>)}</div></div>}{mode!=='generated'&&mode!=='hard'&&<div className="control-block"><div className="section-label-row"><h3>Question count</h3><span className="soft-pill">Available: {mode==='wrong'?getWrong().size:mode==='calc'?available.filter(isCalculationQuestion).length:available.length}</span></div><div className="number-count-card"><label className="count-input-wrap"><span>Number of questions</span><input type="number" min="1" max={sessionAvailableCount||bank.length||1600} value={count} onChange={e=>setCount(Math.max(1,Math.floor(Number(e.target.value)||1)))}/></label><div className="range-meta"><strong>{count}</strong><span>{mode==='mock'?`${Math.round(count*1.5)} min estimate`:'Custom practice session'}</span></div><p className="count-helper">You can type any number. The app will use all matching questions if the requested number is higher than available.</p></div></div>}<div className="control-block"><div className="section-label-row"><h3>Sets</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setSets(new Set())}>Clear</button><button className="text-btn" onClick={()=>setSets(new Set(setNumbers.filter(n=>n<=20)))}>Select core</button></div></div><div className="chip-group">{setNumbers.map(n=><button key={n} className={sets.has(n)?'chip chip-on':'chip'} onClick={()=>toggleSet(n)}>{setLabel(n)}</button>)}</div></div><div className="control-block"><div className="section-label-row"><h3>CLO focus</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setClo(new Set())}>Clear</button><button className="text-btn" onClick={()=>setClo(new Set([1,2,3]))}>Select all</button></div></div><div className="chip-group chip-group-wide">{[1,2,3].map(n=><button key={n} className={clo.has(n)?'chip chip-on':'chip'} onClick={()=>toggleClo(n)}>CLO {n}<small>{CLO_LABEL[n]}</small></button>)}</div></div><div className="control-block"><div className="section-label-row"><h3>Topics</h3><div className="filter-actions"><button className="text-btn" onClick={()=>setTopics(new Set())}>Clear</button><button className="text-btn" onClick={()=>setTopics(new Set(allTopics))}>Select all</button></div></div><div className="chip-group scroll-chips">{allTopics.map(t=><button key={t} className={topics.has(t)?'chip chip-on':'chip'} onClick={()=>toggleTopic(t)}>{t}</button>)}</div></div><div className="button-row sticky-actions"><button className="secondary-btn" onClick={()=>{setSets(new Set(setNumbers.filter(n=>n<=20)));setTopics(new Set());setClo(new Set());setCount(80)}}>Reset filters</button><button className="primary-btn" onClick={()=>start(mode)}>Begin session</button></div></div><div className="home-side-stack"><div className="surface info-card"><div className="section-head compact"><div><h2>Attempt history</h2><p>{history.length?`Last score: ${history[0].pct}% · Weakest: CLO ${topWeak?.clo}`:'No attempts saved yet.'}</p></div></div><div className="blueprint-list">{history.slice(0,4).map(h=><div className="blueprint-item" key={h.id}><div><strong>{h.pct}%</strong><span>{new Date(h.date).toLocaleDateString()} · {h.mode}</span></div><b>{h.score}/{h.total}</b></div>)}</div><div className="button-row" style={{marginTop:16}}><button className="secondary-btn" onClick={()=>setScreen('history')}>View history</button></div></div><div className="surface info-card"><div className="section-head compact"><div><h2>New study features</h2><p>Review mode, confidence labels, formula helpers, textbook references, and difficulty tags are now integrated.</p></div></div><ul className="feature-list"><li>Wrong-question practice from saved attempts</li><li>Review all wrong, flagged, unanswered, or by CLO</li><li>Confidence tracking: confident, guessed, unsure</li><li>Formula helper and calculation drill for quick-win formulas</li><li>Practice mode gives instant result and explanation after each answer</li><li>Fresh topic-balanced mock generator</li><li>Advanced Hard Mode: 5 dedicated 80-question trap sets</li></ul></div></div></section>
     </main>}
@@ -542,9 +546,9 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 const REPORT_SUMMARY_PATH=(typeof window!=='undefined'&&window.__IPPC_AUDIT_SUMMARY_URI__)||'/v172_super_deep_audit_summary.md';
 const REPORT_PDF_PATH=REPORT_SUMMARY_PATH;
 const AUDIT_SITE_PATH='#colophon';
-const PRINTABLE_NOTES_PDF_PATH=(typeof window!=='undefined'&&window.__IPPC_PRINTABLE_PDF__)||'/IPPC_Printable_Study_Notes_With_Missing_Items_Addendum_Visual_Fixed.pdf';
+const PRINTABLE_NOTES_PDF_PATH=(typeof window!=='undefined'&&window.__IPPC_PRINTABLE_PDF__)||'/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
 const PRINTABLE_NOTES_VIEW_PATH=PRINTABLE_NOTES_PDF_PATH+'#toolbar=0&navpanes=0&scrollbar=1';
-const PRINTABLE_NOTES_PAGE_COUNT=53;
+const PRINTABLE_NOTES_PAGE_COUNT=38;
 
 function BookThemeToggle({theme,toggleTheme}){
   const isDark=theme==='dark';
@@ -1053,7 +1057,7 @@ function DonutChart({data,size=180,thickness=28,label='',sublabel=''}){
 function CombinedLanding({onEnter,theme,toggleTheme}){
   const chapterCards=[
     {id:'notes',roman:'I.',kicker:'Study first',title:'Notes',suffix:'— the reading room',body:'Audited chapter notes, formulas, key dates, Acts, schedules, fines, and exam traps — set in long form, with margins for your own annotation.',stats:[['14','Chapters'],['38','Printable pages'],['V195','Baseline']],enter:'Enter the reading room',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>},
-    {id:'mock',roman:'II.',kicker:'Practise next',title:'Mock Test',suffix:'— the examination hall',body:'Generate timed eighty-question sittings, drill the topics you keep losing, and review structured explanations alongside the source clause.',stats:[['2,000','Questions'],['25','Sets'],['120m','Per sitting']],enter:'Enter the examination hall',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>},
+    {id:'mock',roman:'II.',kicker:'Practise next',title:'Mock Test',suffix:'— the examination hall',body:'Generate timed eighty-question sittings, drill the topics you keep losing, and review structured explanations alongside the source clause.',stats:[['2,064','Questions'],['26','Sets'],['120m','Per sitting']],enter:'Enter the examination hall',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>},
     {id:'flashcards',roman:'III.',kicker:'Memorise rules',title:'Flashcards',suffix:'— the recall corridor',body:'Straight recall for the four high-yield memory decks: important dates, Acts and Schedules, fines / penalties / jail terms, and Islamic terms.',stats:[[String(FLASHCARD_DATA.length),'Cards'],[String(FLASHCARD_CATEGORIES.length-1),'Decks'],['MCQ','Quiz']],enter:'Enter the recall corridor',icon:<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 2v6"/><path d="M8 2v6"/><path d="M2 10h20"/></svg>},
   ];
   const referenceCards=[
@@ -1123,9 +1127,9 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
           </div>
           {/* inline mini-stats bar */}
           <div className="hero-mini-stats reveal d5">
-            <div className="hms-item has-tooltip" data-tooltip="2,000 audited MCQs across 25 sets — 20 core sets plus 5 advanced (Hard) sets." tabIndex={0}><AnimatedCount value={2000} className="hms-n"/><span className="hms-l">questions</span></div>
+            <div className="hms-item has-tooltip" data-tooltip="2,064 audited MCQs across 26 sets — 20 core sets, 5 advanced (Hard) sets, and the Acts/Reg/Fine set." tabIndex={0}><AnimatedCount value={2064} className="hms-n"/><span className="hms-l">questions</span></div>
             <div className="hms-div"/>
-            <div className="hms-item has-tooltip" data-tooltip="25 themed sets of 80 questions each — covering all three CLOs in topic-balanced proportions." tabIndex={0}><AnimatedCount value={25} className="hms-n"/><span className="hms-l">sets</span></div>
+            <div className="hms-item has-tooltip" data-tooltip="26 themed sets, including a dedicated Acts/Reg/Fine set for legal provisions, breaches, penalties and fines." tabIndex={0}><AnimatedCount value={26} className="hms-n"/><span className="hms-l">sets</span></div>
             <div className="hms-div"/>
             <div className="hms-item has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards for direct recall — dates, Acts, Schedules, penalties and Islamic terms.`} tabIndex={0}><AnimatedCount value={FLASHCARD_DATA.length} className="hms-n"/><span className="hms-l">flashcards</span></div>
             <div className="hms-div"/>
@@ -1146,7 +1150,7 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
           </div>
           {/* Animated figure grid */}
           <div className="book-figures reveal d4">
-            <div className="book-fig animated-fig"><span className="num"><AnimatedCount value={2000}/>qs</span><span className="lab">Mock Bank</span><span className="desc">across 25 sets, with Hard Sets I–V</span></div>
+            <div className="book-fig animated-fig"><span className="num"><AnimatedCount value={2064}/>qs</span><span className="lab">Mock Bank</span><span className="desc">across 26 sets, with Hard Sets I–V and Acts/Reg/Fine</span></div>
             <div className="book-fig animated-fig"><span className="num"><AnimatedCount value={FLASHCARD_DATA.length}/></span><span className="lab">Flashcards</span><span className="desc">for legal anchors and fact recall</span></div>
             <div className="book-fig animated-fig"><span className="num">80</span><span className="lab">Per Paper</span><span className="desc">timed, IPPC-aligned MCQs</span></div>
             <div className="book-fig animated-fig"><span className="num">3<span className="unit">clo</span></span><span className="lab">Blueprint</span><span className="desc">12 / 36 / 32 generated-paper split</span></div>
@@ -1180,9 +1184,9 @@ function CombinedLanding({onEnter,theme,toggleTheme}){
       {/* ── Animated stats strip ────────────────────────────────────── */}
       <section className="book-stats-strip animated-stats-strip">
         <p className="book-stats-intro">A running tally <span className="em">of what is inside</span> — the volume's measure, in figures.</p>
-        <div className="book-stat-block has-tooltip" data-tooltip="2,000 audited multiple-choice questions, every one with a verified answer key and full structured explanation." tabIndex={0}><div className="num"><AnimatedCount value={2000}/></div><div className="lab">Mock questions</div><div className="note">audited and explained</div></div>
+        <div className="book-stat-block has-tooltip" data-tooltip="2,064 audited multiple-choice questions, every one with a verified answer key and full structured explanation." tabIndex={0}><div className="num"><AnimatedCount value={2064}/></div><div className="lab">Mock questions</div><div className="note">audited and explained</div></div>
         <div className="book-stat-block has-tooltip" data-tooltip={`${FLASHCARD_DATA.length} flashcards across four decks for dates, legal anchors, penalties and Islamic terms — built for spaced repetition.`} tabIndex={0}><div className="num amber"><AnimatedCount value={FLASHCARD_DATA.length}/></div><div className="lab">Flashcards</div><div className="note">straight fact recall</div></div>
-        <div className="book-stat-block has-tooltip" data-tooltip="25 question sets — 20 core sets plus 5 advanced (Hard) sets focused on trap scenarios and statement-combination items." tabIndex={0}><div className="num"><AnimatedCount value={25}/></div><div className="lab">Question sets</div><div className="note">including five hard sets</div></div>
+        <div className="book-stat-block has-tooltip" data-tooltip="26 question sets — 20 core sets, 5 advanced (Hard) sets, and a dedicated Acts/Reg/Fine set." tabIndex={0}><div className="num"><AnimatedCount value={26}/></div><div className="lab">Question sets</div><div className="note">including legal penalties</div></div>
         <div className="book-stat-block has-tooltip" data-tooltip="38 printable A4 pages of audited notes — black-and-white, designed for offline revision with marginalia space." tabIndex={0}><div className="num"><AnimatedCount value={38}/></div><div className="lab">Printable pages</div><div className="note">offline revision ready</div></div>
       </section>
 
@@ -1324,21 +1328,21 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
   const cloData=[
     {clo:1,label:'Financial System',count:12,pct:15,color:'#d6a84d',topics:['Financial Markets','Market Structure','Market Participants','Regulators','Islamic Banking','BNM']},
     {clo:2,label:'Regulations & Conduct',count:36,pct:45,color:'#4cc38a',topics:['Guidelines','Product Disclosure','KYC','CMSA','FSA','FEA Rules','PIDM','AML','Sophisticated Investors','Qualifications','Fit & Proper','Conduct']},
-    {clo:3,label:'Debt & Structured',count:32,pct:40,color:'#9f7aea',topics:['Debt Securities','Bonds','Derivatives','Structured Products','Portfolio']},
+    {clo:3,label:'Debt & Structured',count:32,pct:40,color:'#8f7450',topics:['Debt Securities','Bonds','Derivatives','Structured Products','Portfolio']},
   ];
   const styleData=[
-    {label:'Recall',count:757,pct:38,color:'#4fc3f7',delay:0.1},
-    {label:'Scenario-based',count:671,pct:34,color:'#d6a84d',delay:0.25},
-    {label:'Statement-combination',count:360,pct:18,color:'#9f7aea',delay:0.4},
+    {label:'Recall',count:757,pct:38,color:'#e2a64a',delay:0.1},
+    {label:'Scenario-based',count:735,pct:36,color:'#d6a84d',delay:0.25},
+    {label:'Statement-combination',count:360,pct:18,color:'#8f7450',delay:0.4},
     {label:'Calculation',count:212,pct:11,color:'#f06f72',delay:0.55},
   ];
   const diffData=[
     {label:'Easy',count:223,pct:11,color:'#4cc38a'},
     {label:'Medium',count:528,pct:26,color:'#d6a84d'},
-    {label:'Hard',count:1249,pct:63,color:'#f06f72'},
+    {label:'Hard',count:1313,pct:64,color:'#f06f72'},
   ];
   const qualityCriteria=[
-    {title:'Answer accuracy',pct:100,color:'#4cc38a',desc:'Full deep-audit script returned zero remaining issue flags across the 2,000-question bank.'},
+    {title:'Answer accuracy',pct:100,color:'#4cc38a',desc:'Targeted audit pass corrected the flagged Set 8 items and added a balanced Acts/Reg/Fine legal set.'},
     {title:'Explanation completeness',pct:100,color:'#4cc38a',desc:'Sets 3–25 now use targeted why-correct and why-wrong reasoning, with generic fallback language removed from recall, scenario and statement-combination explanations.'},
     {title:'CLO alignment',pct:98,color:'#4cc38a',desc:'Generated sets follow the 12/36/32 blueprint; official Sets 1 and 2 remain source-preserved.'},
     {title:'Distractor quality',pct:94,color:'#d6a84d',desc:'Answer choices follow the rule: one clearly wrong, one true-but-not-answer, and two close options with one correct.'},
@@ -1356,10 +1360,10 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
     {v:'V194–V195',date:'May 2026',title:'Explanation and UI sign-off',desc:'Final explanation-only review checked 1,840 questions across Sets 3–25, removed remaining broad fallback wording, repaired content mismatches that explanation alone could not fix, and extended the structured explanation-card UI from statement-combination items to scenario-based and recall questions.'},
   ];
   const metrics=[
-    {label:'Total Questions',value:2000,icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,sub:'Across 25 sets',color:'#d6a84d',detail:'2,000 multiple-choice questions distributed across 25 sets — 20 core sets plus 5 advanced (Hard) sets. Every question reviewed for accuracy against the IPPC Study Text 3rd Edition.'},
-    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V173/V195 baseline',color:'#4cc38a',detail:'All 2,000 questions verified through the V173–V195 quality cycle — six targeted content patches, zero duplicate stems, 218 calculation questions with formula and workings, CLO metadata corrected to 12/36/32, and explanation UI standardised across recall, scenario and statement-combination items.'},
-    {label:'CLO Accuracy',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#9f7aea',detail:'Generated-set questions map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
-    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#4fc3f7',detail:'Every question includes a structured explanation; recall and scenario explanations now render in the same card UI as statement combinations, and calculation questions show formula-led workings.'},
+    {label:'Total Questions',value:2064,icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>,sub:'Across 26 sets',color:'#d6a84d',detail:'2,064 multiple-choice questions distributed across 26 sets — 20 core sets, 5 advanced (Hard) sets, and the Acts/Reg/Fine set for provisions, breaches, penalties and fines.'},
+    {label:'Audited',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,sub:'V173/V195 baseline',color:'#4cc38a',detail:'The bank includes the V173–V195 quality cycle plus the new Acts/Reg/Fine set, with corrected Set 8 items and balanced legal-answer distribution.'},
+    {label:'CLO Accuracy',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,sub:'Blueprint adherence',color:'#8f7450',detail:'Generated-set questions map to their stated CLO (1, 2, or 3). The generated mock paper enforces the official 12 / 36 / 32 blueprint split exactly.'},
+    {label:'Explained',value:100,suf:'%',icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,sub:'Every question',color:'#e2a64a',detail:'Every question includes a structured explanation; recall and scenario explanations now render in the same card UI as statement combinations, and calculation questions show formula-led workings.'},
   ];
 
   const TABS=['overview','quality','timeline'];
@@ -1441,10 +1445,10 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
         <section id="rp-sec-style" className="rp-section rp-section-anchor">
           <div className="rp-section-head">
             <h2>Question Style Distribution</h2>
-            <p className="rp-drop-cap">Distribution by cognitive engagement type across the full 2,000-question bank — recall, scenario, statement-combination, and calculation.</p>
+            <p className="rp-drop-cap">Distribution by cognitive engagement type across the full 2,064-question bank — recall, scenario, statement-combination, and calculation.</p>
           </div>
           <div className="rp-style-layout">
-            <DonutChart size={190} thickness={30} label="2,000" sublabel="questions" data={styleData}/>
+            <DonutChart size={190} thickness={30} label="2,064" sublabel="questions" data={styleData}/>
             <div className="rp-style-legend">
               {styleData.map((s,i)=><RpStyleLegRow key={s.label} s={s} i={i}/>)}
             </div>
@@ -1461,7 +1465,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
         <section id="rp-sec-diff" className="rp-section rp-section-anchor">
           <div className="rp-section-head">
             <h2>Difficulty Breakdown</h2>
-            <p className="rp-drop-cap">Distribution across Easy, Medium, and Hard tiers across the full 2,000-question bank — calibrated so that any topic-balanced mock paper covers all three difficulty levels.</p>
+            <p className="rp-drop-cap">Distribution across Easy, Medium, and Hard tiers across the full 2,064-question bank — calibrated so that any topic-balanced mock paper covers all three difficulty levels.</p>
           </div>
           <div className="rp-diff-grid">
             {diffData.map((d,i)=><RpDiffCard key={d.label} d={d} i={i}/>)}
@@ -1494,7 +1498,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
           {timeline.map((t,i)=>(
             <div key={t.v} className={`rp-tl-item ${expandedTl===i?'rp-tl-expanded':''}`} onClick={()=>setExpandedTl(expandedTl===i?null:i)} style={{animationDelay:`${i*0.1}s`}}>
               <div className="rp-tl-spine" aria-hidden="true">
-                <div className="rp-tl-dot" style={{background:i===timeline.length-1?'var(--gold)':'var(--book-amber, #d6a84d)'}}/>
+                <div className="rp-tl-dot" style={{background:i===timeline.length-1?'var(--gold)':'var(--book-amber, #e2a64a)'}}/>
                 {i<timeline.length-1&&<div className="rp-tl-line"/>}
               </div>
               <div className="rp-tl-content">
@@ -1517,7 +1521,7 @@ function ReportPortal({onBack,onMock,onNotes,theme,toggleTheme}){
       <section id="rp-sec-pdf" className="rp-section rp-pdf-section rp-section-anchor">
         <div className="rp-section-head">
           <h2>Full Deep Audit Summary</h2>
-          <p>V195 closes the current quality cycle on the V173 baseline: 2,000 questions, zero duplicate stems, 218 calculation questions with formula and workings, statement-by-statement Roman explanations, Set 19 CLO split restored to 12/36/32, and structured explanation cards now applied to recall, scenario and statement-combination questions.</p>
+          <p>V195 closes the current quality cycle on the V173 baseline, now extended to 2,064 questions with a dedicated Acts/Reg/Fine set: zero duplicate stems, 218 calculation questions with formula and workings, statement-by-statement Roman explanations, Set 19 CLO split restored to 12/36/32, and structured explanation cards now applied to recall, scenario and statement-combination questions.</p>
           <button className="book-btn book-btn-secondary rp-pdf-toggle" onClick={()=>setPdfOpen(v=>!v)}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             {pdfOpen?'Hide':'Open'} audit summary
@@ -1680,7 +1684,7 @@ function NotesPortal({onBack,onMock,theme,toggleTheme}){
           <p>Use the contents list to jump through the actual notes. The full legacy notes content is merged below. Tables and long cards now scroll or wrap instead of being clipped.</p>
           <div className="mini-stat"><span className="v">3</span><span className="l">Core chapters</span></div>
           <div className="mini-stat"><span className="v">V193</span><span className="l">Merged UI</span></div>
-          <div className="mini-stat"><span className="v">2,000</span><span className="l">Question links</span></div>
+          <div className="mini-stat"><span className="v">2,064</span><span className="l">Question links</span></div>
           <button className="full-btn" onClick={openNotesFull}>Open legacy full page</button>
           <button className="full-btn ghost" onClick={()=>{window.location.hash='printable'}}>Printable notes</button>
           <div className="book-notes-mini-nav">

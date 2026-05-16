@@ -7,23 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0f14;
-    --surface: #151820;
-    --surface2: #1c2030;
-    --surface3: #222840;
-    --border: #2a3050;
-    --text: #e8ecf4;
-    --text-muted: #c8cfe0;
-    --text-dim: #9aa3b8;
-    --accent: #4fc3f7;
-    --accent2: #f6c90e;
-    --accent3: #56cfba;
-    --accent4: #ff7b7b;
-    --accent5: #b47aff;
-    --ch1: #4fc3f7;
-    --ch2: #56cfba;
-    --ch3: #f6c90e;
-    --accent-formula: #ff9f43;
+    --bg: #16110a;
+    --surface: #1f1a13;
+    --surface2: #241d12;
+    --surface3: #2c2416;
+    --border: #3a2f1d;
+    --text: #f0e6d0;
+    --text-muted: #d8cba8;
+    --text-dim: #9c8a64;
+    --accent: #e2a64a;
+    --accent2: #f0b961;
+    --accent3: #a78b4a;
+    --accent4: #b65555;
+    --accent5: #8f7450;
+    --ch1: #e2a64a;
+    --ch2: #a78b4a;
+    --ch3: #f0b961;
+    --accent-formula: #e2a64a;
     --heading-font: 'Playfair Display', Georgia, serif;
     --body-font: 'DM Sans', sans-serif;
     --mono-font: 'DM Mono', monospace;
@@ -39,18 +39,18 @@
     --surface2: #f4e7d5;
     --surface3: #eadcc7;
     --border: #dac8ae;
-    --text: #1a1a2e;
-    --text-muted: #3a3a5a;
-    --text-dim: #606088;
-    --accent: #0277bd;
-    --accent2: #c6900a;
-    --accent3: #00796b;
-    --accent4: #c62828;
-    --accent5: #6a1b9a;
-    --ch1: #0277bd;
-    --ch2: #00796b;
-    --ch3: #c6900a;
-    --accent-formula: #e67e22;
+    --text: #1f1a13;
+    --text-muted: #3a3024;
+    --text-dim: #6b5b41;
+    --accent: #b07a1a;
+    --accent2: #8a5a0c;
+    --accent3: #7a6a3e;
+    --accent4: #b65555;
+    --accent5: #8f7450;
+    --ch1: #b07a1a;
+    --ch2: #7a6a3e;
+    --ch3: #8a5a0c;
+    --accent-formula: #b07a1a;
     --shadow: 0 4px 24px rgba(0,0,0,0.12);
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
   }
@@ -83,7 +83,7 @@
     top: -80px; left: -80px;
     width: 320px; height: 320px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(79,195,247,0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(226,166,74,0.10) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero::after {
@@ -92,7 +92,7 @@
     bottom: -60px; right: 100px;
     width: 220px; height: 220px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(246,201,14,0.07) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(240,185,97,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero-inner {
@@ -602,8 +602,8 @@
 
   /* Call-out / exam tip */
   .exam-tip {
-    background: linear-gradient(135deg, rgba(246,201,14,0.07), rgba(246,201,14,0.02));
-    border: 1px solid rgba(246,201,14,0.2);
+    background: linear-gradient(135deg, rgba(240,185,97,0.07), rgba(240,185,97,0.02));
+    border: 1px solid rgba(240,185,97,0.2);
     border-radius: var(--radius-sm);
     padding: 14px 18px;
     margin-bottom: 16px;
@@ -635,9 +635,9 @@
     color: var(--text-muted);
     background: var(--surface2);
   }
-  .tag.blue { border-color: rgba(79,195,247,0.3); color: var(--accent); background: rgba(79,195,247,0.08); }
-  .tag.green { border-color: rgba(86,207,186,0.3); color: var(--accent3); background: rgba(86,207,186,0.08); }
-  .tag.yellow { border-color: rgba(246,201,14,0.3); color: var(--accent2); background: rgba(246,201,14,0.08); }
+  .tag.blue { border-color: rgba(226,166,74,0.3); color: var(--accent); background: rgba(226,166,74,0.08); }
+  .tag.green { border-color: rgba(167,139,74,0.3); color: var(--accent3); background: rgba(167,139,74,0.08); }
+  .tag.yellow { border-color: rgba(240,185,97,0.3); color: var(--accent2); background: rgba(240,185,97,0.08); }
   .tag.red { border-color: rgba(255,123,123,0.3); color: var(--accent4); background: rgba(255,123,123,0.08); }
   .tag.purple { border-color: rgba(180,122,255,0.3); color: var(--accent5); background: rgba(180,122,255,0.08); }
 
@@ -720,9 +720,9 @@
     font-family: var(--mono-font);
     font-weight: 600;
   }
-  .badge-blue { background: rgba(79,195,247,0.15); color: var(--accent); }
-  .badge-green { background: rgba(86,207,186,0.15); color: var(--accent3); }
-  .badge-yellow { background: rgba(246,201,14,0.15); color: var(--accent2); }
+  .badge-blue { background: rgba(226,166,74,0.15); color: var(--accent); }
+  .badge-green { background: rgba(167,139,74,0.15); color: var(--accent3); }
+  .badge-yellow { background: rgba(240,185,97,0.15); color: var(--accent2); }
   .badge-red { background: rgba(255,123,123,0.15); color: var(--accent4); }
 
   /* Flow diagram */
@@ -987,7 +987,7 @@
   .search-result:hover { background: var(--surface2); color: var(--text); }
   .search-result-title { display:block; color: var(--text); font-weight: 700; font-size: 13px; margin-bottom: 3px; }
   .search-result-snippet { display:block; font-size: 12px; color: var(--text-dim); line-height: 1.45; }
-  mark.search-hit { background: rgba(246,201,14,0.35); color: var(--text); padding: 0 2px; border-radius: 3px; }
+  mark.search-hit { background: rgba(240,185,97,0.35); color: var(--text); padding: 0 2px; border-radius: 3px; }
   .tool-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
   .tool-btn {
     background: var(--surface2);
@@ -1218,7 +1218,7 @@
 #reading-progress {
   position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 500;
   background: linear-gradient(90deg, var(--accent), var(--accent3), var(--accent2));
-  box-shadow: 0 0 12px rgba(79,195,247,.35);
+  box-shadow: 0 0 12px rgba(226,166,74,.28);
 }
 .dashboard {
   max-width: 1140px; margin: 28px auto 0; padding: 0 24px;
@@ -1243,12 +1243,12 @@
 .weight-fill.ch3 { width:40%; background:var(--ch3); }
 .topic-chip-bar { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
 .topic-chip { border:1px solid var(--border); background:rgba(255,255,255,.02); color:var(--text-dim); border-radius:999px; padding:6px 10px; font-family:var(--mono-font); font-size:10px; cursor:pointer; }
-.topic-chip:hover, .topic-chip.active { color:var(--text); border-color:var(--accent); background:rgba(79,195,247,.09); }
+.topic-chip:hover, .topic-chip.active { color:var(--text); border-color:var(--accent); background:rgba(226,166,74,.09); }
 .study-tools { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
 .tool-btn.primary { background:linear-gradient(90deg,var(--accent),var(--accent3)); color:#061016; border-color:transparent; }
 .info-box { border-top:1px solid var(--border); border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
-.info-box.yellow { background: linear-gradient(135deg, rgba(246,201,14,.08), rgba(246,201,14,.02)); }
-.info-box.green { background: linear-gradient(135deg, rgba(86,207,186,.08), rgba(86,207,186,.02)); }
+.info-box.yellow { background: linear-gradient(135deg, rgba(240,185,97,.08), rgba(240,185,97,.02)); }
+.info-box.green { background: linear-gradient(135deg, rgba(167,139,74,.08), rgba(167,139,74,.02)); }
 .info-box.red, .trap-box { background: linear-gradient(135deg, rgba(255,123,123,.10), rgba(255,123,123,.025)); }
 .info-box.purple { background: linear-gradient(135deg, rgba(180,122,255,.08), rgba(180,122,255,.02)); }
 .trap-box { border:1px solid rgba(255,123,123,.28); border-left:3px solid var(--accent4); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:14px 18px; margin:16px 0; color:var(--text-muted); font-size:13.5px; }
@@ -1310,8 +1310,8 @@ body.focus-mode::before { content:'Focus mode'; position:fixed; right:14px; top:
   }
   .simple-summary {
     display:none;
-    background: linear-gradient(135deg, rgba(79,195,247,.075), rgba(86,207,186,.035));
-    border:1px solid rgba(79,195,247,.18);
+    background: linear-gradient(135deg, rgba(226,166,74,.075), rgba(167,139,74,.04));
+    border:1px solid rgba(226,166,74,.18);
     border-radius:16px;
     padding:16px 18px;
     margin:12px 0 18px;
@@ -1356,7 +1356,7 @@ body.focus-mode::before { content:'Focus mode'; position:fixed; right:14px; top:
     display:block;
     padding:9px 18px;
     border-bottom:1px solid var(--border);
-    background:rgba(79,195,247,.045);
+    background:rgba(226,166,74,.045);
     color:var(--text-dim);
     font-family:var(--mono-font);
     font-size:10px;
@@ -1563,7 +1563,7 @@ body.focus-mode::before { content:'Focus mode'; position:fixed; right:14px; top:
   min-height:42px;padding:0 16px;font-family:var(--body-font);font-weight:800;cursor:pointer;white-space:nowrap;
   box-shadow:var(--shadow-sm);
 }
-.suite-brand{letter-spacing:.34em;font-family:var(--mono-font);font-size:11px;color:var(--accent2);border-color:rgba(246,201,14,.35);}
+.suite-brand{letter-spacing:.34em;font-family:var(--mono-font);font-size:11px;color:var(--accent2);border-color:rgba(240,185,97,.35);}
 .suite-note-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
 .suite-settings-toggle{width:42px!important;padding:0!important;display:inline-grid!important;place-items:center!important;font-size:18px!important;}
 .suite-note-actions button:hover{border-color:var(--accent);color:var(--text);}
@@ -2612,7 +2612,7 @@ body.settings-open.notes-tools-fixed .top-nav{display:none!important;}
 <style id="v140-reader-redesign">
 /* V140 reader redesign: make the embedded notes visibly match the app */
 :root{--v140-bg:#f3eadb;--v140-surface:#fffaf2;--v140-ink:#24190f;--v140-muted:#776855;--v140-line:#e1cfb6;--v140-accent:#b47a26;--v140-accent-soft:#f4dfb7;}
-html[data-theme="dark"]{--v140-bg:#0c111d;--v140-surface:#141c2b;--v140-ink:#f4ead6;--v140-muted:#a99f91;--v140-line:#263247;--v140-accent:#f0c76c;--v140-accent-soft:rgba(240,199,108,.14);}
+html[data-theme="dark"]{--v140-bg:#16110a;--v140-surface:#1f1a13;--v140-ink:#f4ead6;--v140-muted:#a99f91;--v140-line:#3a2f1d;--v140-accent:#e2a64a;--v140-accent-soft:rgba(226,166,74,.14);}
 html,body{background:var(--v140-bg)!important;color:var(--v140-ink)!important;}
 body{font-family:Inter,"DM Sans",system-ui,sans-serif!important;line-height:1.68!important;}
 main,.container,.page,.content,.notes-container,.app,.shell{max-width:980px!important;margin-inline:auto!important;}
@@ -4406,7 +4406,7 @@ blockquote,.exam-trap,.key-point,.formula,.warning,.tip{background:var(--v140-ac
 
     <!-- Quick Reference Summary Card -->
     <div class="chapter-card" style="animation-delay:0.2s">
-      <div class="chapter-header" style="background: linear-gradient(135deg, rgba(79,195,247,0.05), rgba(86,207,186,0.05), rgba(246,201,14,0.05))">
+      <div class="chapter-header" style="background: linear-gradient(135deg, rgba(226,166,74,0.06), rgba(167,139,74,0.05), rgba(240,185,97,0.05))">
         <div class="ch-num" style="background:linear-gradient(90deg,var(--ch1),var(--ch2),var(--ch3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Quick Reference</div>
         <div class="ch-title" style="font-size:20px">Key Numbers, Dates & Thresholds to Remember</div>
         <div class="ch-desc">Critical facts for the IPPC examination — memorise these.</div>
