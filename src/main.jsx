@@ -546,9 +546,9 @@ function MockApp({onBack=()=>{},onNotes=()=>{},theme:sharedTheme,toggleTheme:sha
 const REPORT_SUMMARY_PATH=(typeof window!=='undefined'&&window.__IPPC_AUDIT_SUMMARY_URI__)||'/v172_super_deep_audit_summary.md';
 const REPORT_PDF_PATH=REPORT_SUMMARY_PATH;
 const AUDIT_SITE_PATH='#colophon';
-const PRINTABLE_NOTES_PDF_PATH=(typeof window!=='undefined'&&window.__IPPC_PRINTABLE_PDF__)||'/IPPC_Printable_Study_Notes_Audited_Fixed_Pages_36_38_Consistent.pdf';
+const PRINTABLE_NOTES_PDF_PATH=(typeof window!=='undefined'&&window.__IPPC_PRINTABLE_PDF__)||'/IPPC_Printable_Study_Notes_With_Acts_Regulations_Penalties_Table_Last.pdf';
 const PRINTABLE_NOTES_VIEW_PATH=PRINTABLE_NOTES_PDF_PATH+'#toolbar=0&navpanes=0&scrollbar=1';
-const PRINTABLE_NOTES_PAGE_COUNT=38;
+const PRINTABLE_NOTES_PAGE_COUNT=58;
 
 function BookThemeToggle({theme,toggleTheme}){
   const isDark=theme==='dark';
